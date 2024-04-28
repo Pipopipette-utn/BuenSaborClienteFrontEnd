@@ -1,15 +1,11 @@
+import "bootstrap/dist/css/bootstrap.min.css";
+import { AppRouter } from "./routes/AppRouter";
 
-
-
-
-function App() {
- 
-
+export const App = () => {
   return (
-    <>
-     
-    </>
-  )
-}
+    <div>
+      <AppRouter />
+    </div>
+  );
+};
 
-export default App

@@ -4,9 +4,8 @@ import Carrousel from '../../ui/Carrousel/Carrousel'
 export const Home = () => {
   return (
     <div>
-           <Carrousel>
-           </Carrousel>
-
+           <Carrousel/>
+            cards con las promos
     </div>
   )
 }

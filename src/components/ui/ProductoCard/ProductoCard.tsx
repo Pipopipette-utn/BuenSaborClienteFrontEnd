@@ -1,14 +1,14 @@
 
+import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { useState } from 'react'; // Import useState for state management
 
-function ProductCard({ nombre, imagen, descripcion }) {
-  const [quantity, setQuantity] = useState(1); // Initial quantity state
+function ProductoCard({ nombre, imagen, descripcion, precio }) {
+  const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = (event) => {
     const newQuantity = parseInt(event.target.value);
-    if (newQuantity > 0) { // Ensure positive quantity
+    if (newQuantity > 0) {
       setQuantity(newQuantity);
     }
   };
@@ -20,7 +20,9 @@ function ProductCard({ nombre, imagen, descripcion }) {
         <Card.Title>{nombre}</Card.Title>
         <Card.Text>{descripcion}</Card.Text>
 
-        {/* Quantity selection */}
+        {/* Display precio */}
+        <Card.Text>Precio: ${precio}</Card.Text>
+
         <div className="quantity-selector">
           <label htmlFor="quantity">Cantidad:</label>
           <input
@@ -29,7 +31,7 @@ function ProductCard({ nombre, imagen, descripcion }) {
             name="quantity"
             value={quantity}
             onChange={handleQuantityChange}
-            min="1" // Set minimum quantity to 1
+            min="1"
           />
         </div>
 
@@ -39,4 +41,4 @@ function ProductCard({ nombre, imagen, descripcion }) {
   );
 }
 
-export default ProductCard;
+export default ProductoCard;
