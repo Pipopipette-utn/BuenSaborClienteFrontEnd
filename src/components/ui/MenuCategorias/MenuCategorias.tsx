@@ -1,5 +1,5 @@
-import React from 'react';
-import { Nav, Col } from 'react-bootstrap';
+import React from "react";
+import { Nav, Col } from "react-bootstrap";
 
 interface Categoria {
   id: number;
@@ -7,7 +7,7 @@ interface Categoria {
 }
 
 interface Props {
-    categorias: Categoria[];
+  categorias: Categoria[];
 }
 
 export const MenuCategoria: React.FC<Props> = ({ categorias }) => {
@@ -17,7 +17,11 @@ export const MenuCategoria: React.FC<Props> = ({ categorias }) => {
         <Nav.Item>
           <Nav.Link disabled>Categorías</Nav.Link>
           {categorias.map((categoria) => (
-            <Nav.Link key={categoria.id} href={`#${categoria.name}`} className="pl-4">
+            <Nav.Link
+              key={categoria.id}
+              href={`#${categoria.name}`}
+              className="pl-4"
+            >
               {categoria.name}
             </Nav.Link>
           ))}
@@ -26,4 +30,3 @@ export const MenuCategoria: React.FC<Props> = ({ categorias }) => {
     </Col>
   );
 };
-

@@ -9,15 +9,17 @@ import Footer from "../components/ui/Footer/Footer";
 export const AppRouter = () => {
   return (
     <div>
-       <ResponsiveAppBar />
+      <ResponsiveAppBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/pedido" element={<Pedido />} />
         <Route path="/cuenta" element={<Cuenta />} />
-        <Route path="/categorias/:category" element={<Categorias />} />
-      </Routes> 
-       <Footer/>
+        {
+          //        <Route path="/categorias/:category" element={<Categorias />} />
+        }
+      </Routes>
+      <Footer />
     </div>
   );
 };

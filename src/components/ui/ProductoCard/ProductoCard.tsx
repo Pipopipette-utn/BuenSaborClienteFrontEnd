@@ -1,7 +1,6 @@
-
-import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 
 function ProductoCard({ nombre, imagen, descripcion, precio }) {
   const [quantity, setQuantity] = useState(1);
@@ -14,7 +13,7 @@ function ProductoCard({ nombre, imagen, descripcion, precio }) {
   };
 
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src={imagen} />
       <Card.Body>
         <Card.Title>{nombre}</Card.Title>

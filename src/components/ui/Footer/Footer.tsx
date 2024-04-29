@@ -1,6 +1,8 @@
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 //agregar los iconos de ig,x,face,yt
 
 function Footer() {
@@ -9,16 +11,24 @@ function Footer() {
       <Container>
         <Row className="justify-content-center align-items-center">
           <Col xs="auto" className="social-icon">
-            <a href="#" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+            <a href="#" target="_blank" rel="noopener noreferrer">
+              <FaInstagram />
+            </a>
           </Col>
           <Col xs="auto" className="social-icon">
-            <a href="#" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
+            <a href="#" target="_blank" rel="noopener noreferrer">
+              <FaTwitter />
+            </a>
           </Col>
           <Col xs="auto" className="social-icon">
-            <a href="#" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
+            <a href="#" target="_blank" rel="noopener noreferrer">
+              <FaFacebook />
+            </a>
           </Col>
           <Col xs="auto" className="social-icon">
-            <a href="#" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
+            <a href="#" target="_blank" rel="noopener noreferrer">
+              <FaYoutube />
+            </a>
           </Col>
         </Row>
       </Container>
