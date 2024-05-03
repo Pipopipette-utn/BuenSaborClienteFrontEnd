@@ -32,5 +32,9 @@ export const lightTheme = createTheme({
     h6: {
       fontWeight: 600,
     },
+    button: {
+      fontWeight: 600,
+      fontSize: "0.9rem",
+    },
   },
 });
