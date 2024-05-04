@@ -11,9 +11,25 @@ import { lightTheme } from "../components/Themes/LightTheme";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import "./button.css";
 import CustomSwitch from "../components/ui/CustomSwitch/CustomSwitch";
+import React from "react";
+import Switch from "@mui/material/Switch/Switch";
+import styles from "../components/ui/CustomSwitch/CustomSwitch.module.css";
 
 export const AppRouter = () => {
+  const [checked, setChecked] = React.useState(false);
   const [currentTheme, setCurrentTheme] = useState(lightTheme); // State to manage the theme
+
+  const toggleTheme = () => {
+    setCurrentTheme(currentTheme === lightTheme ? darkTheme : lightTheme); // Toggle between themes
+  };
+
+  const handleChange = (event: {
+    target: { checked: boolean | ((prevState: boolean) => boolean) };
+  }) => {
+    setChecked(event.target.checked);
+    toggleTheme();
+    currentTheme === lightTheme ? "Dark Mode" : "Light Mode";
+  };
   return (
     <ThemeProvider theme={currentTheme}>
       <div>
@@ -28,8 +44,13 @@ export const AppRouter = () => {
           }
         </Routes>
         <Footer />
-        <CustomSwitch />
-        {currentTheme === lightTheme ? "Dark Mode" : "Light Mode"}
+        <Switch
+          checked={checked}
+          onChange={handleChange}
+          classes={{
+            switchBase: checked ? styles.sunSwitch : styles.moonSwitch,
+          }}
+        />
       </div>
     </ThemeProvider>
   );

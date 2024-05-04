@@ -16,7 +16,8 @@ export default function CustomSwitch() {
     target: { checked: boolean | ((prevState: boolean) => boolean) };
   }) => {
     setChecked(event.target.checked);
-    toggleTheme;
+    toggleTheme();
+    currentTheme === lightTheme ? "Dark Mode" : "Light Mode";
   };
 
   return (
