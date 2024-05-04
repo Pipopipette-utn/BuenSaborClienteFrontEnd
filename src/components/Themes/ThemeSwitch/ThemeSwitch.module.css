@@ -1,0 +1,24 @@
+.sunSwitch {
+    background-color: #f9e756; /* Yellow color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Inner shadow */
+  }
+  
+  .moonSwitch {
+    background-color: #ccc; /* Gray color */
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    transform: rotate(100deg);
+  }
+  
+  .moonSwitch ::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #b8c22b; /* Crescent shape */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Inner shadow */
+  }
+  
