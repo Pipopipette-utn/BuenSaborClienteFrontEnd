@@ -2,21 +2,12 @@ import Switch from "@mui/material/Switch";
 import styles from "./ThemeSwitch.module.css";
 import { darkTheme } from "../DarkTheme"; //No borrar
 import { lightTheme } from "../LightTheme";
-import { useThemeToggle } from "../../Utils/ThemeUtil";
 
-export const ThemeSwitch = () => {
-  const { currentTheme, toggleTheme } = useThemeToggle();
-
-  const handleChange = (event: {
-    target: { checked: boolean | ((prevState: boolean) => boolean) };
-  }) => {
-    toggleTheme();
-  };
-
+export const ThemeSwitch = ({ currentTheme, toggleTheme }) => {
   return (
     <Switch
-      checked={currentTheme === lightTheme}
-      onChange={handleChange}
+      checked={currentTheme === darkTheme}
+      onChange={toggleTheme}
       classes={{
         switchBase:
           currentTheme === lightTheme ? styles.sunSwitch : styles.moonSwitch,

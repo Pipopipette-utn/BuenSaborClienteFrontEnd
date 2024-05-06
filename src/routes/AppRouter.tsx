@@ -11,8 +11,7 @@ import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
 import { useThemeToggle } from "../components/Utils/ThemeUtil";
 
 export const AppRouter = () => {
-  const { currentTheme } = useThemeToggle();
-
+  const { currentTheme, toggleTheme } = useThemeToggle();
   return (
     <ThemeProvider theme={currentTheme}>
       <div>
@@ -27,8 +26,9 @@ export const AppRouter = () => {
           }
         </Routes>
         <Footer />
-        <ThemeSwitch />
+        <ThemeSwitch currentTheme={currentTheme} toggleTheme={toggleTheme} />
       </div>
     </ThemeProvider>
   );
 };
+//import styles from "../components/Themes/ThemeSwitch/ThemeSwitch.module.css";
