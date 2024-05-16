@@ -1,16 +1,13 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import React from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import styled from "@emotion/styled";
 
 // Define el estilo del componente Slider
-const useStyles = makeStyles({
-  slide: {
-    textAlign: 'center',
-  },
-});
-
+const StyledSlide = styled.div`
+  text-align: center;
+`;
 // Interfaz para definir la estructura de los elementos en el slider
 interface SlideItem {
   id: number;
@@ -25,8 +22,6 @@ interface SliderProps {
 }
 
 export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
-  const classes = useStyles();
-
   // Configuración del slider
   const settings = {
     dots: true,
@@ -38,15 +33,13 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
 
   return (
     <Slider {...settings}>
-      {items.map(item => (
-        <div key={item.id} className={classes.slide}>
+      {items.map((item) => (
+        <StyledSlide key={item.id}>
           <img src={item.imagen} alt={item.nombre} />
           <h3>{item.nombre}</h3>
           <p>Precio: ${item.precio}</p>
-        </div>
+        </StyledSlide>
       ))}
     </Slider>
   );
 };
-
-
