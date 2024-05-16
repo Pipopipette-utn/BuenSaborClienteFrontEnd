@@ -14,7 +14,7 @@ export const AppRouter = () => {
   const { currentTheme, toggleTheme } = useThemeToggle();
   return (
     <ThemeProvider theme={currentTheme}>
-      <div>
+      <>
         <ResponsiveAppBar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -27,7 +27,7 @@ export const AppRouter = () => {
         </Routes>
         <Footer />
         <ThemeSwitch currentTheme={currentTheme} toggleTheme={toggleTheme} />
-      </div>
+      </>
     </ThemeProvider>
   );
 };
