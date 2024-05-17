@@ -9,6 +9,14 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import "./button.css";
 import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
 import { useThemeToggle } from "../components/Utils/ThemeUtil";
+import Sidebar from "../components/ui/SideBar/Sidebar";
+
+//Hardcodeo, reemplazar cuando use redux u ooootro componente que envuelva eso
+const categories = [
+  { label: "Bebidas" },
+  { label: "Hamburguesas" },
+  { label: "Pizzas" },
+];
 
 export const AppRouter = () => {
   const { currentTheme, toggleTheme } = useThemeToggle();
@@ -19,7 +27,15 @@ export const AppRouter = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
-          <Route path="/pedido" element={<Pedido />} />
+          <Route
+            path="/pedido"
+            element={
+              <>
+                <Pedido />
+                <Sidebar categories={categories} />
+              </>
+            }
+          />
           <Route path="/cuenta" element={<Cuenta />} />
           {
             //        <Route path="/categorias/:category" element={<Categorias />} />
