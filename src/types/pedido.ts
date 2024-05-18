@@ -3,7 +3,7 @@ import { IArticulo } from "./empresa";
 export interface IDetallePedido extends BaseEntity {
 	cantidad: number;
 	subTotal: number;
-	articulo?: IArticulo;
+	articulo: IArticulo;
 }
 
 /*export interface IPedido extends BaseEntity {

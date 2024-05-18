@@ -4,7 +4,7 @@ import { ReactNode, createContext, useState } from 'react'
 
 // Definimos el tipo de dato que se almacenará en el contexto del carrito
 interface CartContextType {
-  cart: Instrumento[];
+  cart: DetallePedido[];
   addCarrito: (product: Instrumento) => void;
   removeCarrito: (product: Instrumento) => void;
   removeItemCarrito: (product: Instrumento) => void;

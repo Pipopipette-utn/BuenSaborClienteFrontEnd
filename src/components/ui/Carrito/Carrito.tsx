@@ -1,17 +1,19 @@
 
+import { IDetallePedido } from "../../../types/pedido"
 
 
-function CartItem (item:Instrumento) {
+
+function CartItem (item:IDetallePedido) {
 
   return (
       <div key={item.id}>
         <span>
             <img width={50} height={50}
-            src={`public/img/${item.imagen}`}
-            alt={item.instrumento}
+            src={`public/img/${item.articulo.imagenes}`} 
+            alt={item.articulo.denominacion} 
             />
             <div>
-                <strong>{item.instrumento}</strong> - ${item.precio}
+                <strong>{item.articulo.denominacion}</strong> - ${item.articulo.precioVenta}
             </div>
             <div>
                 <b>{item.cantidad} {item.cantidad == 1 ? 'unidad' : 'unidades'} </b>
@@ -35,13 +37,13 @@ export function Carrito () {
     <>
       <aside className='cart'>
         <ul>
-          {cart.map((instrumento:Instrumento, index) => 
+          {cart.map((detallePedido:IDetallePedido, index) => 
             <CartItem 
-            id={instrumento.id} 
-            instrumento={instrumento.instrumento} 
-            precio={instrumento.precio} 
+            id={detallePedido.articulo.id}
+            producto={detallePedido.articulo.denominacion} 
+            precio={detallePedido.articulo.precioVenta} 
             key={index}
-            imagen={instrumento.imagen} 
+            imagenes={detallePedido.articulo.imagenes} 
             descripcion={instrumento.descripcion} 
             idCategoria={instrumento.idCategoria} 
             cantidad={instrumento.cantidad} 
@@ -63,13 +65,10 @@ export function Carrito () {
             </svg>
         </button>
         <br></br>
-        <button onClick={mostrarCarritoJSON}>
+        <button onClick={mostrarCarritoJSON}> //cambiar a boton para ver pedido
         
         </button>
         <br></br>
-    
-        
-        
         
       </aside>
     </>
