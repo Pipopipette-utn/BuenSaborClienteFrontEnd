@@ -1,5 +1,5 @@
-import { useCarrito } from '../hooks/useCarrito.tsx'
-import { Instrumento } from '../types/types.ts'
+
+
 
 function CartItem (item:Instrumento) {
 

@@ -42,26 +42,6 @@ export interface IArticulo extends BaseEntity {
 	unidadMedidaId?: number;
 }
 
-export interface IArticuloInsumo extends IArticulo{
-	precioCompra: number;
-	stockActual: number;
-	stockMaximo: number;
-	stockMinimo: number;
-	esParaElaborar: boolean;
-}
-
-export interface IArticuloManufacturado extends IArticulo {
-	descripcion: string;
-	tiempoEstimadoMinutos: number;
-	preparacion: string;
-	articuloManufacturadoDetalle: IArticuloManufacturadoDetalle;
-}
-
-export interface IArticuloManufacturadoDetalle extends BaseEntity {
-	cantidad: number;
-	tiempoEstimadoMinutos: IArticuloInsumo;
-}
-
 export interface IUnidadMedida extends BaseEntity {
 	denominacion: string;
 }
