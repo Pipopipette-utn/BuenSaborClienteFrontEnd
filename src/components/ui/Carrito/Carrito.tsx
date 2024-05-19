@@ -1,5 +1,6 @@
 
 import { IDetallePedido } from "../../../types/pedido"
+import { useCarrito } from "../../hooks/useCarrito"
 
 
 
@@ -39,15 +40,13 @@ export function Carrito () {
         <ul>
           {cart.map((detallePedido:IDetallePedido, index) => 
             <CartItem 
-            id={detallePedido.articulo.id}
-            producto={detallePedido.articulo.denominacion} 
-            precio={detallePedido.articulo.precioVenta} 
+            id={detallePedido.id}
+            articulo={detallePedido.articulo} 
+            cantidad={detallePedido.cantidad} 
+            subTotal={detallePedido.subTotal} 
             key={index}
-            imagenes={detallePedido.articulo.imagenes} 
-            descripcion={instrumento.descripcion} 
-            idCategoria={instrumento.idCategoria} 
-            cantidad={instrumento.cantidad} 
-            addCarrito={() => addCarrito(instrumento)}/>
+            
+            addCarrito={() => addCarrito(detallePedido)}/>
           )}
         </ul>
         <div>

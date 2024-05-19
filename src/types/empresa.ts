@@ -1,3 +1,4 @@
+import { ChangeEventHandler } from "react";
 import { IDomicilio } from "./ubicacion";
 
 
@@ -40,6 +41,7 @@ export interface IArticulo extends BaseEntity {
 	categoriaId?: number;
 	unidadMedida?: IUnidadMedida;
 	unidadMedidaId?: number;
+	addCarrito?: ChangeEventHandler;
 }
 
 export interface IUnidadMedida extends BaseEntity {
