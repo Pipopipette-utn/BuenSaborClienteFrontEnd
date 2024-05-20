@@ -5,7 +5,7 @@ import { CardArticulo } from './CardArticulo';
 import supabase from "../../../services/SupabaseClient";
 
 
-export const Menu: React.FC = () => {
+export const PantallaMenu: React.FC = () => {
   const [articulos, setArticulos] = useState<IArticulo[]>([]);
   const [loading, setLoading] = useState(true);
 

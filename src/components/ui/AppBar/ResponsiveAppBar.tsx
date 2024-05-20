@@ -13,6 +13,9 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
+import { Home } from "../../screens/Home/Home";
+import { Pedido } from "../../screens/Pedido/Pedido";
+import { PantallaMenu } from "../../screens/Menu/Menu";
 
 const pages = ["Home", "Menú", "Mi Pedido"];
 const settings = ["Mi Cuenta", "Cerrar Sesión"];
@@ -46,13 +49,13 @@ function ResponsiveAppBar() {
     //navigate(`/${page}`);
     switch (page) {
       case "Home":
-        navigate("/");
+        navigate(`/${Home}`);
         break;
       case "Menú":
-        navigate("/menu");
+        navigate(`/${PantallaMenu}`)
         break;
       case "Mi Pedido":
-        navigate("/pedido");
+        navigate(`/${Pedido}`)
         break;
       default:
         break;
