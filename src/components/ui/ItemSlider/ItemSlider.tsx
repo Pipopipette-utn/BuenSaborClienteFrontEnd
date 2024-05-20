@@ -13,7 +13,6 @@ interface SlideItem {
   id: number;
   imagen: string;
   nombre: string;
-  precio: number;
 }
 
 // Props para el componente Slider
@@ -37,7 +36,6 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
         <StyledSlide key={item.id}>
           <img src={item.imagen} alt={item.nombre} />
           <h3>{item.nombre}</h3>
-          <p>Precio: ${item.precio}</p>
         </StyledSlide>
       ))}
     </Slider>
