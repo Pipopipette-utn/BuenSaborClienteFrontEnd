@@ -1,12 +1,12 @@
 import { ChangeEventHandler } from "react";
 import { IDomicilio } from "./ubicacion";
-
+import { ISucursalDTO } from "./dto";
 
 export interface IEmpresa extends BaseEntity {
 	nombre: string;
 	razonSocial: string;
 	cuil: number;
-	icon: string;
+	logo: string;
 	sucursales?: ISucursal[];
 }
 
@@ -14,18 +14,19 @@ export interface ISucursal extends BaseEntity {
 	nombre: string;
 	horarioApertura: string;
 	horarioCierre: string;
-	icon: string;
+	logo: string;
+	esCasaMatriz: boolean;
 	empresa?: IEmpresa;
-	empresaId?: number;
 	domicilio?: IDomicilio;
-	domicilioId?: number;
 	categorias?: ICategoria[];
+	articulos?: IArticulo[];
 }
 
 export interface ICategoria extends BaseEntity {
 	denominacion: string;
-	subcategorias?: ICategoria[];
+	subCategorias?: ICategoria[];
 	categoriaPadreId?: number;
+	sucursales?: ISucursalDTO[];
 }
 
 export interface ICategoriaSucursal extends BaseEntity {
@@ -44,12 +45,26 @@ export interface IArticulo extends BaseEntity {
 	addCarrito?: ChangeEventHandler;
 }
 
+export interface IArticuloManufacturado extends IArticulo {
+	descripcion: string;
+	tiempoEstimadoMinutos: number;
+	preparacion: string;
+	articuloManufacturadoDetalles?: IArticuloManufacturadoDetalle[];
+	
+}
+
+export interface IArticuloManufacturadoDetalle extends BaseEntity {
+	cantidad: number;
+}
+
 export interface IUnidadMedida extends BaseEntity {
 	denominacion: string;
 }
 
-export interface IImagen extends BaseEntity {
-	denominacion: string;
+export interface IImagen {
+	id: string;
+	url: string;
+	name: string;
 }
 
 export interface IUsuario extends BaseEntity {

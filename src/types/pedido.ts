@@ -6,12 +6,12 @@ export interface IDetallePedido extends BaseEntity {
 	articulo: IArticulo;
 }
 
-/*export interface IPedido extends BaseEntity {
+export interface IPedido extends BaseEntity {
 	cantidad: number;
-	subTotal: number;
-	articulo?: IArticulo;
-    empleado IEmpleado;
-}*/
+	total: number;
+	detallesPedido?: IDetallePedido[];
+    
+}
 
 export interface ICarrito extends BaseEntity {
 	cantidadTotal: number;

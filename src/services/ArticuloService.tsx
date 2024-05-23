@@ -1,7 +1,6 @@
 // Importamos el tipo de dato IEmpresa y la clase BackendClient
 import {
 	IArticulo,
-	IArticuloInsumo,
 	IArticuloManufacturado,
 	ICategoria,
 	IUnidadMedida,
