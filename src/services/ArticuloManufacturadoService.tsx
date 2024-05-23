@@ -14,6 +14,7 @@ export class ArticuloManufacturadoService extends BackendClient<IArticuloManufac
 				precioVenta: producto.precioVenta ? `$${producto.precioVenta}` : "-",
 				unidadMedida: producto.unidadMedida?.denominacion,
 				categoria: producto.categoria ? producto.categoria.denominacion : "-",
+				articuloManufacturadoDetalle: [],
 			};
 			return productoDTO as IArticuloManufacturadoTableDTO;
 		});

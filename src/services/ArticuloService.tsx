@@ -19,10 +19,10 @@ export class ArticuloService extends BackendClient<IArticulo> {
 		const articulosMapeados = articulosHijos.map((producto) => {
 			const articulo = articulosPadres?.find((a) => a.id == producto.id);
 			const unidadMedida = unidadMedidas.find(
-				(u: IUnidadMedida) => u.id == articulo!.unidadMedidaId
+				(u: IUnidadMedida) => u.id == articulo!.unidadMedida?.id
 			);
 			let categoria: ICategoria | undefined = categorias.find(
-				(c: ICategoria) => c.id == articulo!.categoriaId
+				(c: ICategoria) => c.id == articulo!.categoria?.id
 			);
 
 			if (categoria !== undefined)

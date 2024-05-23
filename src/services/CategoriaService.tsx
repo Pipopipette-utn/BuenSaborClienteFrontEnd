@@ -1,46 +1,38 @@
 // Importamos el tipo de dato IEmpresa y la clase BackendClient
+import { ISucursalDTO } from "../types/dto";
 import { ICategoria } from "../types/empresa";
 import { BackendClient } from "./BakendClient";
-import { CategoriaSucursalService } from "./CategoriaSucursalService";
 
 // Clase CategoriaService que extiende BackendClient para interactuar con la API de categorias
 export class CategoriaService extends BackendClient<ICategoria> {
-	//Este metodo organiza las categorías de manera recursiva -> cat1: {..., subgategorias: [cat2, cat3] }
-	mapCategorias = (
-		categorias: ICategoria[],
-		parentId?: number
-	): ICategoria[] => {
-		return categorias
-			.filter((categoria) => categoria.categoriaPadreId == parentId)
-			.map((categoria) => ({
-				...categoria,
-				subcategorias: this.mapCategorias(categorias, categoria.id),
-			}));
-	};
-
 	filterBySucursal = async (
 		categorias: ICategoria[],
-		sucursalId?: number
+		sucursalId: number
 	): Promise<ICategoria[]> => {
-		const categoriaSucursalService = new CategoriaSucursalService(
-			"/categoriasSucursales"
-		);
-		const categoriasSucursales = await categoriaSucursalService.getAll();
-		const categoriasFiltradas: ICategoria[] = [];
-
-		const categoriasSucursal = categoriasSucursales.filter(
-			(cs) => cs.sucursalId == sucursalId
+		const categoriasSucursal = categorias.filter((categoria) =>
+			categoria.sucursales?.some((s) => s.id === sucursalId)
 		);
 
-		categoriasSucursal.forEach((categoriaSucursal) => {
-			const categoria = categorias.find(
-				(c) => c.id == categoriaSucursal.categoriaId
-			);
-			if (categoria) categoriasFiltradas.push(categoria);
-		});
-
-		return categoriasFiltradas;
+		return categoriasSucursal;
 	};
+
+	async baja(id: number, sucursal: ISucursalDTO) {
+		try {
+			const response = await fetch(`${this.baseUrl}/baja/${id}`, {
+				method: "DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(sucursal),
+			});
+			if (!response.ok) {
+				throw Error(response.statusText);
+			}
+		} catch (error) {
+			console.error(error); // Imprime el error en la consola
+		}
+	}
+
 }
 
 /*

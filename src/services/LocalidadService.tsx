@@ -1,9 +1,10 @@
 // Importamos el tipo de dato IEmpresa y la clase BackendClient
-import { ILocalidad, IProvincia } from "../types/ubicacion";
+import { ILocalidad } from "../types/ubicacion";
 import { BackendClient } from "./BakendClient";
 
 // Clase EmpresaService que extiende BackendClient para interactuar con la API de personas
 export class LocalidadService extends BackendClient<ILocalidad> {
+	/*
 	async getAllMapped(provincias: IProvincia[]): Promise<ILocalidad[]> {
 		try {
 			const localidades = await this.getAll();
@@ -19,5 +20,5 @@ export class LocalidadService extends BackendClient<ILocalidad> {
 		} catch (error) {
 			return Promise.reject(error);
 		}
-	}
+	}*/
 }

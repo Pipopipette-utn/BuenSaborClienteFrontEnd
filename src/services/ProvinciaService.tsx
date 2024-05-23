@@ -1,7 +1,8 @@
-import { IPais, IProvincia } from "../types/ubicacion";
+import { IProvincia } from "../types/ubicacion";
 import { BackendClient } from "./BakendClient";
 
 export class ProvinciaService extends BackendClient<IProvincia> {
+	/*
 	async getAllMapped(paises: IPais[]):Promise<IProvincia[]> {
 		try {
 			const provincias = await this.getAll();
@@ -18,4 +19,5 @@ export class ProvinciaService extends BackendClient<IProvincia> {
 			return Promise.reject(error); 
 		}
 	}
+	*/
 }
