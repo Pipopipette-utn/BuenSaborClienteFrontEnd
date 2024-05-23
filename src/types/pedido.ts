@@ -7,10 +7,19 @@ export interface IDetallePedido extends BaseEntity {
 }
 
 export interface IPedido extends BaseEntity {
-	cantidad: number;
+	horaEstimadaFinalizacion: number;
 	total: number;
+	totalCosto: number;
+	estado: Estado;
+	tipoEnvio: TipoEnvio;
+	formaPago: FormaPago;
+	fechaPedido: Date;
+	domicilio: Domicilio;
+	sucursal: Sucursal;
+	factura: Factura;
+	cliente: Cliente;
 	detallesPedido?: IDetallePedido[];
-    
+    empleado: Empleado;
 }
 
 export interface ICarrito extends BaseEntity {
