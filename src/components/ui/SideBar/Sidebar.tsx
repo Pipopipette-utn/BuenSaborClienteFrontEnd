@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import CategoryButton from "../CategoryButton/CategoryButton";
 import { List, Paper, Typography } from "@mui/material";
 import { ICategoria } from "../../../types/empresa";
-import { useFetch } from "../../hooks/UseFetch";
+import { useFetch } from "../../../hooks/UseFetch";
 
 const StyledSidebar = styled(Box)(({ theme }) => ({
   position: "relative",

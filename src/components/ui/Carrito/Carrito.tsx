@@ -1,6 +1,6 @@
 
 import { IDetallePedido } from "../../../types/pedido"
-import { useCarrito } from "../../hooks/useCarrito"
+import { useCarrito } from "../../../hooks/useCarrito"
 
 
 
