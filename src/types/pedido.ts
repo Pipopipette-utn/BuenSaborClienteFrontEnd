@@ -1,4 +1,7 @@
-import { IArticulo } from "./empresa";
+import { IArticulo, ISucursal } from "./empresa";
+import { Estado, FormaPago, TipoEnvio } from "./enums";
+import { ICliente, IEmpleado } from "./persona";
+import { IDomicilio } from "./ubicacion";
 
 export interface IDetallePedido extends BaseEntity {
 	cantidad: number;
@@ -14,12 +17,12 @@ export interface IPedido extends BaseEntity {
 	tipoEnvio: TipoEnvio;
 	formaPago: FormaPago;
 	fechaPedido: Date;
-	domicilio: Domicilio;
-	sucursal: Sucursal;
-	factura: Factura;
-	cliente: Cliente;
+	domicilio: IDomicilio;
+	sucursal: ISucursal;
+	factura: IFactura;
+	cliente: ICliente;
 	detallesPedido?: IDetallePedido[];
-    empleado: Empleado;
+    empleado: IEmpleado;
 }
 
 export interface ICarrito extends BaseEntity {

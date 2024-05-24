@@ -1,6 +1,7 @@
 import { ChangeEventHandler } from "react";
 import { IDomicilio } from "./ubicacion";
 import { ISucursalDTO } from "./dto";
+import { TipoPromocion } from "./enums";
 
 export interface IEmpresa extends BaseEntity {
 	nombre: string;
@@ -74,10 +75,21 @@ export interface IUsuario extends BaseEntity {
 
 
 export interface IPromocionDetalle extends BaseEntity {
-	
+	cantidad: number;
+	articulo: IArticulo;
 }
 export interface IPromocion extends BaseEntity {
-	
+	denominacion: string;
+	fechaDesde: Date;
+	fechaHasta: Date;
+	horaDesde:Date;
+	horaHasta:Date;
+	descripcionDescuento: string;
+	precioPromocional: number;
+	tipoPromocion: TipoPromocion;
+	promocionDetalles: IPromocionDetalle;
+	imagenes:IImagen[];
+	sucursales: ISucursal[];
 }
 
 
