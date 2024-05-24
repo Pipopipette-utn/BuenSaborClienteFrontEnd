@@ -41,7 +41,6 @@ export const CardArticulo: React.FC<CardArticuloProps> = ({ articulo }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Agregar al carrito</Button>
           <Button size="small" onClick={handleOpen}>Detalle</Button>
         </CardActions>
       </Card>
