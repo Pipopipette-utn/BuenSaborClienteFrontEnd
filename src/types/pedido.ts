@@ -28,3 +28,20 @@ export interface ICarrito extends BaseEntity {
 	detallesPedido?: IDetallePedido[];
 }
 
+export interface IFormaPago extends BaseEntity {
+	cantidadTotal: number;
+	total: number;
+	detallesPedido?: IDetallePedido[];
+}
+
+export interface IFactura extends BaseEntity {
+	fechaFacturacion: Date;
+	mpPaymentId: number;
+	mpMerchantOrderId: number;
+	mpPreferenceId: string;
+	mpPaymentType: string;
+	formaPago: FormaPago;
+	totalVenta: number;
+
+}
+

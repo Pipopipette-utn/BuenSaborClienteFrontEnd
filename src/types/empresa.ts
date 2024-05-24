@@ -71,3 +71,13 @@ export interface IUsuario extends BaseEntity {
 	username: string;
 	password: string;
 }
+
+
+export interface IPromocionDetalle extends BaseEntity {
+	
+}
+export interface IPromocion extends BaseEntity {
+	
+}
+
+
