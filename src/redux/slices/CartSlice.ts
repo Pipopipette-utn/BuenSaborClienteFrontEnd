@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Instrumento, PedidoDetalle } from '../../types/types';
 import { RootState } from '../Store';
 import { IDetallePedido } from '../../types/pedido';
 import { IArticulo, IArticuloManufacturado, IArticuloManufacturadoDetalle } from '../../types/empresa';
@@ -22,10 +21,10 @@ const cartSlice = createSlice({
       const articulo = action.payload;
       const existingItemIndex = state.items.findIndex(item => item.id === articulo.id);
       if (existingItemIndex !== -1) {
-        // Si el artículo ya está en el carrito, aumenta la cantidad en lugar de agregar un nuevo elemento
+        // Si el artículo ya está en el carrito, aumenta la cantidad 
         state.items[existingItemIndex].cantidad += 1;
       } else {
-        // Si el artículo no está en el carrito, agrégalo con cantidad inicial 1
+        // Si el artículo no está en el carrito, lo agrega con cantidad inicial 1
         state.items.push({
             articulo: articulo, 
             cantidad: 1,

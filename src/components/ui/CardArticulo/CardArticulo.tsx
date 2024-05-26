@@ -6,30 +6,41 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { ModalDetalle } from "../ModalDetalle/ModalDetalle";
-import { IArticulo } from "../../../types/empresa";
+import { IArticulo, IImagen } from "../../../types/empresa";
+import useCloudinary from "../../../hooks/useCloudinary";
+import { Grid } from "@mui/material";
 
 interface CardArticuloProps {
   articulo: IArticulo;
 }
 
 export const CardArticulo: React.FC<CardArticuloProps> = ({ articulo }) => {
+  const imageUrls = useCloudinary(articulo.imagenes || []);
+
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const obtenerImagenPrincipal = (articulo: IArticulo): string | undefined => {
-    return articulo.imagenes.length > 0 ? articulo.imagenes[0] : undefined;
+  const obtenerImagenPrincipal = (articulo: IArticulo): IImagen | undefined => {
+    return articulo.imagenes!.length > 0 ? articulo.imagenes![0] : undefined;
   };
 
   return (
     <>
       <Card sx={{ maxWidth: 345 }}>
-        <CardMedia
-          sx={{ height: 140 }}
-          imagen={obtenerImagenPrincipal}
-          titulo={articulo.denominacion}
-        />
+        <Grid container spacing={2}>
+          {imageUrls.map((url, index) => (
+            //<Grid item xs={6} md={4} key={index}>
+            <CardMedia
+              component="img"
+              //sx={{ height: 140 }} //tamaño
+              image={url}
+              alt={`${articulo.denominacion} ${index + 1}`}
+            />
+            //</Grid>
+          ))}
+        </Grid>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {articulo.denominacion}

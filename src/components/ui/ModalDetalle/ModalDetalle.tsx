@@ -30,6 +30,7 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
   handleClose,
   articulo,
   addToCart,
+  /*addCarrito,*/
 }) => {
   const [cantidad, setCantidad] = useState<number>(1);
 
