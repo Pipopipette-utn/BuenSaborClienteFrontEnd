@@ -5,7 +5,7 @@ import { IDomicilio } from "./ubicacion";
 
 export interface IDetallePedido extends BaseEntity {
 	cantidad: number;
-	subTotal: number;
+	subTotal?: number;
 	articulo: IArticulo;
 }
 
