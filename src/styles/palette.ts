@@ -1,3 +1,5 @@
+//BORRAR REDUNDANTE, YA EXISTE
+
 export const background = {
 	main: "#EEECEC",
   light: "#FCFCFC",

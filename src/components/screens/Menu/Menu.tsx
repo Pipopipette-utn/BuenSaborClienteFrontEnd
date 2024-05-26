@@ -1,41 +1,45 @@
 import { MenuCategoria } from "../../ui/MenuCategorias/MenuCategorias";
-import React, { useEffect, useState } from 'react';
-import { IArticulo } from '../../../types/empresa';
-import { CardArticulo } from './CardArticulo';
-import supabase from "../../../services/SupabaseClient";
-
+import React, { useEffect, useState } from "react";
+import { IArticulo } from "../../../types/empresa";
+import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
+import { useFetch } from "../../../hooks/UseFetch";
+import { Alert } from "@mui/material";
 
 export const PantallaMenu: React.FC = () => {
-  const [articulos, setArticulos] = useState<IArticulo[]>([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    data: articulos,
+    loading: loadingArticulos,
+    error: errorArticulos,
+  } = useFetch<IArticulo[]>("http://localhost:8080/articulosManufacturados");
 
-  useEffect(() => {
-    const fetchArticulos = async () => {
-      const { data, error } = await supabase
-        .from<IArticulo>('articulos')
-        .select('*');
+  const {
+    data: categorias,
+    loading: loadingCategorias,
+    error: errorCategorias,
+  } = useFetch<[]>("http://localhost:8080/categorias");
+  console.log("Loading Articulos:", loadingArticulos);
+  console.log("Error Articulos:", errorArticulos);
+  console.log("Articulos:", articulos);
 
-      if (error) {
-        console.error('Error fetching articles:', error);
-      } else {
-        setArticulos(data || []);
-      }
-      setLoading(false);
-    };
+  console.log("Loading Categorias:", loadingCategorias);
+  console.log("Error Categorias:", errorCategorias);
+  console.log("Categorias:", categorias);
 
-    fetchArticulos();
-  }, []);
-
-  if (loading) {
-    return <p>Cargando...</p>;
+  // Renderizar "Cargando..." si loading es verdadero
+  if (loadingArticulos || loadingCategorias) {
+    return <div>Cargando...</div>;
   }
 
+  // Renderizar el mensaje de error si hay un error
+  if (errorArticulos || errorCategorias) {
+    return <div>Error</div>;
+  }
   return (
-    <div>
-        <MenuCategoria categorias={[]} />
-      {articulos.map((articulo) => (
+    <>
+      <MenuCategoria categorias={[]} />
+      {articulos?.map((articulo) => (
         <CardArticulo key={articulo.id} articulo={articulo} />
       ))}
-    </div>
+    </>
   );
 };

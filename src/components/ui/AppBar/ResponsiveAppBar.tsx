@@ -49,13 +49,13 @@ function ResponsiveAppBar() {
     //navigate(`/${page}`);
     switch (page) {
       case "Home":
-        navigate(`/${Home}`);
+        navigate(`/`);
         break;
       case "Menú":
-        navigate(`/${PantallaMenu}`)
+        navigate(`/Menu`);
         break;
       case "Mi Pedido":
-        navigate(`/${Pedido}`)
+        navigate(`/Pedido`);
         break;
       default:
         break;
