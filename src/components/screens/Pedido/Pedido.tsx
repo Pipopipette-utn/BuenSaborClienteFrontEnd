@@ -2,6 +2,7 @@ import Slider from "react-slick";
 import Sidebar from "../../ui/SideBar/Sidebar";
 import { useFetch } from "../../../hooks/UseFetch";
 import { IEmpresa } from "../../../types/empresa";
+import { Carrito } from "../../ui/Carrito/Carrito";
 
 export const Pedido = () => {
   const { data: empresa, loading: loadingEmpresa } = useFetch<IEmpresa>(
@@ -14,6 +15,7 @@ export const Pedido = () => {
       <div>slider</div>
       <Slider></Slider>
       <div>Carrito</div>
+      <Carrito />
     </>
   );
 };

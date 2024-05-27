@@ -26,7 +26,7 @@ const StyledSidebar = styled(Box)(({ theme }) => ({
 
 const Sidebar = () => {
   const { data: categories } = useFetch<ICategoria[]>(
-    "http://localhost:8080/categorias" //cambiar mas adelante por "http://localhost:8080/sucursales/${id}/categorias" y que switchee
+    `http://localhost:8080/sucursales/1/categorias` //cambiar mas adelante por "http://localhost:8080/sucursales/${id}/categorias" y que switchee
   );
 
   return (

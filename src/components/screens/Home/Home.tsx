@@ -1,8 +1,17 @@
+import { useFetch } from "../../../hooks/UseFetch";
 import Carrousel from "../../ui/Carrousel/Carrousel";
 import { SliderGenerico } from "../../ui/ItemSlider/ItemSlider";
 
 export const Home = () => {
+  /*
+  const {
+    data: categorias,
+    loading: loadingCategorias,
+    error: errorCategorias,
+  } = useFetch<[]>("http://localhost:8080/categorias");
+  */
   //HARDCODEOOO
+
   const categorias = [
     { id: 1, nombre: "Electrónica", imagen: "ruta-a-imagen1.jpg" },
     { id: 2, nombre: "Moda", imagen: "ruta-a-imagen2.jpg" },

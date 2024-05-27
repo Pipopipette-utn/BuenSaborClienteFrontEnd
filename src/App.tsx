@@ -2,11 +2,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { AppRouter } from "./routes/AppRouter";
 import { ThemeProvider } from "@mui/material";
 import { lightTheme } from "./components/Themes/LightTheme";
+import { Provider } from "react-redux";
+import store from "./redux/Store";
 
 export const App = () => {
   return (
     <ThemeProvider theme={lightTheme}>
-      <AppRouter />
+      <Provider store={store}>
+        <AppRouter />
+      </Provider>
     </ThemeProvider>
   );
 };

@@ -36,7 +36,14 @@ export const PantallaMenu: React.FC = () => {
   }
   return (
     <>
-      <MenuCategoria categorias={[]} />
+      {/**<MenuCategoria categorias={[]} /> //Esta comentado porque no asbemos que uso darle */}
+      {/*
+      <Grid>  
+      <SideBar/> 
+      aca van articulos
+      <Carrito/>
+      </Grid>
+      */}
       {articulos?.map((articulo) => (
         <CardArticulo key={articulo.id} articulo={articulo} />
       ))}
