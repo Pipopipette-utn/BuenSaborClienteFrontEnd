@@ -9,6 +9,8 @@ import {
 import { Button } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/Store";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 
 /*
 function CartItem (item:IDetallePedido) {

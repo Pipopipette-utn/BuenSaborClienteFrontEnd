@@ -10,18 +10,18 @@ const StyledSidebar = styled(Box)(({ theme }) => ({
   position: "relative",
   top: "calc(1.6rem + 56px)", // Añade la altura de navbar a la posición superior
   //left: 25, // Posición de origen de sidebar
-  margin: "5%",
-  width: "25%",
+  margin: "0 5% 70% 0", // Establece el margen izquierdo en 0
+  width: "15%",
   minHeight: "90vh",
   backgroundColor: "transparent",
   border: "1px solid black",
   boxShadow: "none",
   padding: theme.spacing(1), //mete un espaciado interior con sistema de mui
-  display: "absolute",
+  display: "flex",
   flexDirection: "column",
   borderRadius: theme.shape.borderRadius,
   alignItems: "center", // Centra horizontalmente
-  justifyContent: "center", // Centra verticalmente
+  justifyContent: "flex-start", //  con center + absolute en display el boton ocupa todo el ancho
 }));
 
 const Sidebar = () => {

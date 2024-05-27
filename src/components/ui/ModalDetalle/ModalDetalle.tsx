@@ -30,7 +30,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
+//meterle uso de la store de redux
 export const ModalDetalle: React.FC<ModalDetalleProps> = ({
   open,
   handleClose,

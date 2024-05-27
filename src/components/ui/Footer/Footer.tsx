@@ -2,6 +2,7 @@ import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { lightTheme } from "../../Themes/LightTheme";
 
 //agregar los iconos de ig,x,face,yt
 
@@ -12,22 +13,22 @@ function Footer() {
         <Row className="justify-content-center align-items-center">
           <Col xs="auto" className="social-icon">
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <FaInstagram />
+              <FaInstagram color={lightTheme.palette.primary.main} />
             </a>
           </Col>
           <Col xs="auto" className="social-icon">
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <FaTwitter />
+              <FaTwitter color={lightTheme.palette.primary.main} />
             </a>
           </Col>
           <Col xs="auto" className="social-icon">
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <FaFacebook />
+              <FaFacebook color={lightTheme.palette.primary.main} />
             </a>
           </Col>
           <Col xs="auto" className="social-icon">
             <a href="#" target="_blank" rel="noopener noreferrer">
-              <FaYoutube />
+              <FaYoutube color={lightTheme.palette.primary.main} />
             </a>
           </Col>
         </Row>

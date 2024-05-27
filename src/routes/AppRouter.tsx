@@ -11,13 +11,6 @@ import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
 import { useThemeToggle } from "../components/Utils/ThemeUtil";
 import Sidebar from "../components/ui/SideBar/Sidebar";
 
-//Hardcodeo, reemplazar cuando use redux u ooootro componente que envuelva eso
-const categories = [
-  { label: "Bebidas" },
-  { label: "Hamburguesas" },
-  { label: "Pizzas" },
-];
-
 export const AppRouter = () => {
   const { currentTheme, toggleTheme } = useThemeToggle();
   return (
@@ -26,13 +19,21 @@ export const AppRouter = () => {
         <ResponsiveAppBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/menu" element={<PantallaMenu />} />
+          <Route
+            path="/menu"
+            element={
+              <>
+                <PantallaMenu />
+                {/*                <Sidebar />
+                 */}
+              </>
+            }
+          />
           <Route
             path="/pedido"
             element={
               <>
                 <Pedido />
-                <Sidebar />
               </>
             }
           />

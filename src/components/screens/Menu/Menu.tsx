@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import { IArticulo } from "../../../types/empresa";
 import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
 import { useFetch } from "../../../hooks/UseFetch";
-import { Alert } from "@mui/material";
+import { Alert, Grid } from "@mui/material";
+import Sidebar from "../../ui/SideBar/Sidebar";
+import { Carrito } from "../../ui/Carrito/Carrito";
 
 export const PantallaMenu: React.FC = () => {
   const {
@@ -36,17 +38,27 @@ export const PantallaMenu: React.FC = () => {
   }
   return (
     <>
-      {/**<MenuCategoria categorias={[]} /> //Esta comentado porque no asbemos que uso darle */}
-      {/*
-      <Grid>  
-      <SideBar/> 
-      aca van articulos
-      <Carrito/>
+      <Grid container spacing={0}>
+        {/* Barra lateral */}
+
+        <Sidebar />
+
+        {/* Mapeo de artículos */}
+        <Grid item xs={6}>
+          <Grid container spacing={2}>
+            {articulos?.map((articulo) => (
+              <Grid item xs={6}>
+                <CardArticulo key={articulo.id} articulo={articulo} />
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+
+        {/* Carrito */}
+        <Grid item xs={3}>
+          <Carrito />
+        </Grid>
       </Grid>
-      */}
-      {articulos?.map((articulo) => (
-        <CardArticulo key={articulo.id} articulo={articulo} />
-      ))}
     </>
   );
 };
