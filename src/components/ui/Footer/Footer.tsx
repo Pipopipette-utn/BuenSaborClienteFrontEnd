@@ -12,23 +12,23 @@ function Footer() {
       <Container>
         <Row className="justify-content-center align-items-center">
           <Col xs="auto" className="social-icon">
-            <a href="#" target="_blank" rel="noopener noreferrer">
-              <FaInstagram color={lightTheme.palette.primary.main} />
+            <a href="https://www.instagram.com/el__buen__sabor_/" target="_blank" rel="noopener noreferrer">
+              <FaInstagram />
             </a>
           </Col>
           <Col xs="auto" className="social-icon">
-            <a href="#" target="_blank" rel="noopener noreferrer">
-              <FaTwitter color={lightTheme.palette.primary.main} />
+            <a href="https://x.com/RestaurantBuen1" target="_blank" rel="noopener noreferrer">
+              <FaTwitter />
             </a>
           </Col>
           <Col xs="auto" className="social-icon">
-            <a href="#" target="_blank" rel="noopener noreferrer">
-              <FaFacebook color={lightTheme.palette.primary.main} />
+            <a href="https://www.facebook.com/elbuensaborTEG?mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer">
+              <FaFacebook />
             </a>
           </Col>
           <Col xs="auto" className="social-icon">
-            <a href="#" target="_blank" rel="noopener noreferrer">
-              <FaYoutube color={lightTheme.palette.primary.main} />
+            <a href="https://youtu.be/378EPtgKC_g?si=5tmGNmSfTYJuC-zI" target="_blank" rel="noopener noreferrer">
+              <FaYoutube />
             </a>
           </Col>
         </Row>
