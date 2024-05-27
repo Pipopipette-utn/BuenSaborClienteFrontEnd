@@ -15,3 +15,10 @@ export interface IArticuloManufacturadoTableDTO {
 export interface ISucursalDTO extends BaseEntity{
 	nombre: string;
 }
+
+export interface IPedidoDTO {
+	id: number;
+	total: number;
+	fechaPedido: Date;
+	
+}
