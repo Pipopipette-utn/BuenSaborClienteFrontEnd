@@ -24,19 +24,25 @@ const StyledSidebar = styled(Box)(({ theme }) => ({
   justifyContent: "center", // Centra verticalmente
 }));
 
-const Sidebar: React.FC<{ categories: ICategoria[] }> = ({ categories }) => {
-  //const Sidebar = () => {   //reemplazar por este cuando conecte a una db
-  //const { data: categories, loading, error } = useFetch<ICategoria[]>("");
+const Sidebar = () => {
+  const { data: categories } = useFetch<ICategoria[]>(
+    "http://localhost:8080/categorias" //cambiar mas adelante por "http://localhost:8080/sucursales/${id}/categorias" y que switchee
+  );
+
   return (
     <StyledSidebar>
       <Paper>
         <List>
-          {categories.map((categoria) => (
-            <CategoryButton
-              key={categoria.denominacion}
-              label={categoria.denominacion}
-            />
-          ))}
+          {categories
+            ?.filter(
+              (categoria) => categoria.categoriaPadreId == null || undefined
+            )
+            .map((filteredCategoria) => (
+              <CategoryButton
+                key={filteredCategoria.denominacion}
+                label={filteredCategoria.denominacion}
+              />
+            ))}
         </List>
       </Paper>
     </StyledSidebar>

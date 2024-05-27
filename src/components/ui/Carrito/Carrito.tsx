@@ -1,9 +1,16 @@
+import { IDetallePedido } from "../../../types/pedido";
+import { useCarrito } from "../../../hooks/useCarrito";
+import { useAppDispatch } from "../../../redux/HookReducer";
+import {
+  reduceItem,
+  addItem,
+  clearItems,
+} from "../../../redux/slices/CartSlice";
+import { Button } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/Store";
 
-import { IDetallePedido } from "../../../types/pedido"
-import { useCarrito } from "../../../hooks/useCarrito"
-
-
-
+/*
 function CartItem (item:IDetallePedido) {
 
   return (
@@ -24,16 +31,74 @@ function CartItem (item:IDetallePedido) {
       </div>      
   )
 }
+*/
+export function Carrito() {
+  const items = useSelector((state: RootState) => state.cart.items);
+  const dispatch = useAppDispatch();
+  const { cart, removeCarrito, addCarrito, limpiarCarrito, totalPedido } =
+    useCarrito();
 
-export function Carrito () {
-  
-  const { cart, removeCarrito, addCarrito, limpiarCarrito, totalPedido } = useCarrito()
-  
   const mostrarCarritoJSON = () => {
-    console.log(cart)
-  }
+    console.log(cart);
+  };
+  const calculateSubtotal = () => {
+    return items.reduce(
+      (acc, item) => acc + item.cantidad * item.articulo.precioVenta,
+      0
+    );
+  };
 
-  
+  const calculateTotal = () => {
+    return calculateSubtotal();
+  };
+  const handleGuardarCarrito = () => {
+    console.log("Guardar carrito");
+  };
+  return (
+    <>
+      <div className="cart">
+        <h2>Carrito de Compras</h2>
+        {items.length === 0 ? (
+          <p>El carrito está vacío</p>
+        ) : (
+          <div>
+            <ul>
+              {items.map((item) => (
+                <li key={item.articulo.id}>
+                  {item.articulo.denominacion} -
+                  <Button
+                    onClick={() => dispatch(reduceItem(item.articulo))}
+                    style={{ fontSize: "0.5em", marginRight: "4px" }}
+                  >
+                    {/*<FontAwesomeIcon icon={faMinus} style={{ fontSize: '1.5em' }} />*/}
+                  </Button>
+                  x{item.cantidad}
+                  <Button
+                    onClick={() => dispatch(addItem(item.articulo))}
+                    style={{ fontSize: "0.5em", marginLeft: "4px" }}
+                  >
+                    {/*<FontAwesomeIcon icon={faPlus} style={{ fontSize: '1.5em' }} />*/}
+                  </Button>
+                  - ${item.articulo.precioVenta * item.cantidad}
+                </li>
+              ))}
+            </ul>
+            <div>Subtotal: ${calculateSubtotal()}</div>
+            <div>Total: ${calculateTotal()}</div>
+            <Button
+              onClick={() => dispatch(clearItems())}
+              style={{ marginRight: "5rem" }}
+            >
+              Cancelar
+            </Button>
+            <Button onClick={handleGuardarCarrito}>Guardar Carrito</Button>
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
+/*
   return (
     <>
       <aside className='cart'>
@@ -73,3 +138,4 @@ export function Carrito () {
     </>
   )
 }
+*/

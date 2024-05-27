@@ -32,7 +32,7 @@ export const AppRouter = () => {
             element={
               <>
                 <Pedido />
-                <Sidebar categories={categories} />
+                <Sidebar />
               </>
             }
           />
