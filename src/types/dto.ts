@@ -1,7 +1,12 @@
-import { IArticuloManufacturadoDetalle } from "./empresa";
+import { IArticuloManufacturadoDetalle, ISucursal } from "./empresa";
+import { FormaPago, TipoEnvio } from "./enums";
+import { IDomicilio } from "./ubicacion";
 
+interface BaseEntityDTO {
+	id?: number;
+}
 
-export interface IArticuloManufacturadoTableDTO {
+export interface IArticuloManufacturadoTableDTO extends BaseEntityDTO{
     denominacion: string;
 	precioVenta: string;
 	categoria?: string;
@@ -12,13 +17,23 @@ export interface IArticuloManufacturadoTableDTO {
 	articuloManufacturadoDetalle: IArticuloManufacturadoDetalle[];
 }
 
-export interface ISucursalDTO extends BaseEntity{
+export interface ISucursalDTO extends BaseEntityDTO{
 	nombre: string;
 }
 
-export interface IPedidoDTO {
-	id: number;
+export interface IArticuloPedidoDTO extends BaseEntityDTO{}
+
+export interface IPedidoDTO extends BaseEntityDTO {
 	total: number;
-	fechaPedido: Date;
-	
+	tipoEnvio: TipoEnvio;
+	formaPago: FormaPago;
+	domicilio?: IDomicilio;
+	sucursal: ISucursal;
+	detallesPedido?: IDetallePedidoPostDTO[];
+}
+
+export interface IDetallePedidoPostDTO {
+	cantidad: number;
+	subTotal?: number;
+	articulo: IArticuloPedidoDTO;
 }
