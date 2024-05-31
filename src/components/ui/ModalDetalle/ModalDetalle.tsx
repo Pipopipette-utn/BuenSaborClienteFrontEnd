@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -8,12 +8,12 @@ import { Box, CardMedia, Grid, IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-import { lightTheme } from "../../Themes/LightTheme";
-import { useCarrito } from "../../../hooks/useCarrito";
 import { useAppDispatch } from "../../../redux/HookReducer";
-import { addItem, addItems } from "../../../redux/slices/CartSlice";
+import { addItems } from "../../../redux/slices/CartSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/Store";
+import styles from "./ModalDetalle.module.css";
+
 interface ModalDetalleProps {
   open: boolean;
   handleClose: () => void;
@@ -21,21 +21,6 @@ interface ModalDetalleProps {
   addToCart: (articulo: IArticulo, cantidad: number) => void;
 }
 
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: { xs: "90%", sm: "80%", md: "60%", lg: "45%" },
-  minHeight: "90%",
-  maxHeight: "95%",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  borderRadius: "20px",
-  boxShadow: 24,
-  p: 4,
-};
-//meterle uso de la store de redux
 export const ModalDetalle: React.FC<ModalDetalleProps> = ({
   open,
   handleClose,
@@ -43,12 +28,12 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
 }) => {
   const imageUrls = useCloudinary(articulo.imagenes || []);
   const [cantidad, setCantidad] = useState<number>(1);
-  //const items = useSelector((state: RootState) => state.cart.items); //No lo uso
+  //const items = useSelector((state: RootState) => state.cart.items);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (open) {
-      setCantidad(1);
+      setCantidad(1); // Reset cantidad a 1 cada vez que el modal se abre
     }
   }, [open]);
 
@@ -69,12 +54,13 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Box sx={style}>
+      <Box className={styles.modalBox}>
         <Grid container spacing={2}>
           {imageUrls.map((url, index) => (
             <CardMedia
+              key={index} // Asegúrate de agregar la key al map
               component="img"
-              sx={{ height: 240, borderRadius: "20px" }} //tamaño
+              className={styles.modalBoxMedia}
               image={url}
               alt={`${articulo.denominacion} ${index + 1}`}
             />
@@ -99,11 +85,7 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
         >
           <IconButton
             disableRipple
-            sx={{
-              backgroundColor: lightTheme.palette.primary.main,
-              borderRadius: 1,
-              marginRight: "10px",
-            }}
+            className={styles.incrementDecrementButton}
             onClick={handleDecrement}
           >
             <RemoveIcon />
@@ -111,11 +93,7 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
           <Typography variant="body1">{cantidad}</Typography>
           <IconButton
             disableRipple
-            sx={{
-              backgroundColor: lightTheme.palette.primary.main,
-              borderRadius: 1,
-              marginLeft: "10px",
-            }}
+            className={styles.incrementDecrementButton}
             onClick={handleIncrement}
           >
             <AddIcon />
@@ -124,13 +102,7 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
         <Button
           variant="contained"
           onClick={handleAddToCart}
-          sx={{
-            mt: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-          }}
+          className={styles.addToCartButton}
           startIcon={<ShoppingCartIcon />}
         >
           Agregar al carrito
