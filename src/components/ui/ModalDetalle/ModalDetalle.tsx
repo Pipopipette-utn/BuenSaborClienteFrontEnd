@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -43,8 +43,14 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
 }) => {
   const imageUrls = useCloudinary(articulo.imagenes || []);
   const [cantidad, setCantidad] = useState<number>(1);
-  const producto = useSelector((state: RootState) => state.cart.items);
+  //const items = useSelector((state: RootState) => state.cart.items); //No lo uso
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (open) {
+      setCantidad(1);
+    }
+  }, [open]);
 
   const handleIncrement = () => {
     setCantidad(cantidad + 1);
