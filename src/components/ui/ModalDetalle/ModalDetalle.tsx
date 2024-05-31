@@ -9,6 +9,11 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { lightTheme } from "../../Themes/LightTheme";
+import { useCarrito } from "../../../hooks/useCarrito";
+import { useAppDispatch } from "../../../redux/HookReducer";
+import { addItem, addItems } from "../../../redux/slices/CartSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/Store";
 interface ModalDetalleProps {
   open: boolean;
   handleClose: () => void;
@@ -35,11 +40,11 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
   open,
   handleClose,
   articulo,
-  addToCart,
-  /*addCarrito,*/
 }) => {
   const imageUrls = useCloudinary(articulo.imagenes || []);
   const [cantidad, setCantidad] = useState<number>(1);
+  const producto = useSelector((state: RootState) => state.cart.items);
+  const dispatch = useAppDispatch();
 
   const handleIncrement = () => {
     setCantidad(cantidad + 1);
@@ -52,7 +57,7 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
   };
 
   const handleAddToCart = () => {
-    addToCart(articulo, cantidad);
+    dispatch(addItems({ articulo, cantidad }));
     handleClose();
   };
 
@@ -87,16 +92,26 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
           }}
         >
           <IconButton
+            disableRipple
             sx={{
               backgroundColor: lightTheme.palette.primary.main,
               borderRadius: 1,
+              marginRight: "10px",
             }}
             onClick={handleDecrement}
           >
             <RemoveIcon />
           </IconButton>
           <Typography variant="body1">{cantidad}</Typography>
-          <IconButton onClick={handleIncrement}>
+          <IconButton
+            disableRipple
+            sx={{
+              backgroundColor: lightTheme.palette.primary.main,
+              borderRadius: 1,
+              marginLeft: "10px",
+            }}
+            onClick={handleIncrement}
+          >
             <AddIcon />
           </IconButton>
         </Box>

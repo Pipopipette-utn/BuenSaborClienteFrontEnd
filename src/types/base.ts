@@ -1,4 +1,4 @@
 interface BaseEntity {
 	id?: number;
-	baja: boolean;
+	baja?: boolean;
 }
