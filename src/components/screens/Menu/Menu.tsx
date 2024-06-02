@@ -6,6 +6,7 @@ import { useFetch } from "../../../hooks/UseFetch";
 import { Alert, Grid } from "@mui/material";
 import Sidebar from "../../ui/SideBar/Sidebar";
 import { Carrito } from "../../ui/Carrito/Carrito";
+import { Buscador } from "./Buscador";
 
 export const PantallaMenu: React.FC = () => {
   const {
@@ -37,7 +38,9 @@ export const PantallaMenu: React.FC = () => {
     return <div>Error</div>;
   }
   return (
+    
     <>
+    <Buscador/>
       <Grid container spacing={0}>
         {/* Barra lateral */}
 
