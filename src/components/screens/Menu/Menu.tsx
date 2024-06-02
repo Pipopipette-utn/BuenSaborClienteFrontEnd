@@ -3,16 +3,14 @@ import { IArticulo } from "../../../types/empresa";
 import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
 import { useFetch } from "../../../hooks/UseFetch";
 import { Grid } from "@mui/material";
-import Sidebar from "../../ui/SideBar/Sidebar";
+import {Sidebar} from "../../ui/SideBar/Sidebar";
 import { Carrito } from "../../ui/Carrito/Carrito";
 import { Buscador } from "./Buscador";
 import { useEffect, useState } from "react";
 
 export const PantallaMenu: React.FC = () => {
-  
-  const [totalRows, setTotalRows] = useState(0);
-	const [page, setPage] = useState(0);
-	const [rowsPerPage, setRowsPerPage] = useState(6);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
+  const [terminoBusqueda, setTerminoBusqueda] = useState<string>('');
 
   const {
     data: articulos,
@@ -24,15 +22,8 @@ export const PantallaMenu: React.FC = () => {
     data: categorias,
     loading: loadingCategorias,
     error: errorCategorias,
-  } = useFetch<[]>("http://localhost:8080/categorias");
-  console.log("Loading Articulos:", loadingArticulos);
-  console.log("Error Articulos:", errorArticulos);
-  console.log("Articulos:", articulos);
-
-  console.log("Loading Categorias:", loadingCategorias);
-  console.log("Error Categorias:", errorCategorias);
-  console.log("Categorias:", categorias);
-
+  } = useFetch<[]>( "http://localhost:8080/categorias");
+  
   // Renderizar "Cargando..." si loading es verdadero
   if (loadingArticulos || loadingCategorias) {
     return <div>Cargando...</div>;
@@ -43,20 +34,25 @@ export const PantallaMenu: React.FC = () => {
     return <div>Error</div>;
   }
 
-  return (  
+  // Filtrar los artículos por categoría seleccionada
+  const articulosFiltrados = articulos?.filter(articulo => 
+    (!categoriaSeleccionada || articulo.categoriaId === categoriaSeleccionada) &&
+    (articulo.denominacion.toLowerCase().includes(terminoBusqueda.toLowerCase()))
+  );
+
+  return (
     <>
-      <Buscador/>
+      <Buscador onSearch={setTerminoBusqueda} categoriaSeleccionada={categoriaSeleccionada} />
       <Grid container spacing={0}>
         {/* Barra lateral */}
-
-        <Sidebar />
+        <Sidebar categorias={categorias} onSelectCategoria={setCategoriaSeleccionada} />
 
         {/* Mapeo de artículos */}
         <Grid item xs={6}>
           <Grid container spacing={2}>
-            {articulos?.map((articulo) => (
-              <Grid item xs={6}>
-                <CardArticulo key={articulo.id} articulo={articulo} />
+            {articulosFiltrados?.map((articulo) => (
+              <Grid item xs={6} key={articulo.id}>
+                <CardArticulo articulo={articulo} />
               </Grid>
             ))}
           </Grid>

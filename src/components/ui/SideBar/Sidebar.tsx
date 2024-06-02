@@ -1,4 +1,4 @@
-import * as React from "react";
+/*import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import CategoryButton from "../CategoryButton/CategoryButton";
@@ -50,3 +50,27 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+*/
+
+import React from 'react';
+import { List, ListItem, ListItemText } from '@mui/material';
+
+interface SidebarProps {
+  categorias: { id: number; nombre: string }[];
+  onSelectCategoria: (categoriaId: number | null) => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ categorias, onSelectCategoria }) => {
+  return (
+    <List>
+      <ListItem button onClick={() => onSelectCategoria(null)}>
+        <ListItemText primary="Todas las categorías" />
+      </ListItem>
+      {categorias.map((categoria) => (
+        <ListItem button key={categoria.id} onClick={() => onSelectCategoria(categoria.id)}>
+          <ListItemText primary={categoria.nombre} />
+        </ListItem>
+      ))}
+    </List>
+  );
+};
