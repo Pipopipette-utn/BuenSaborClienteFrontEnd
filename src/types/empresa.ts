@@ -44,6 +44,7 @@ export interface IArticulo extends BaseEntity {
 	unidadMedida?: IUnidadMedida;
 	unidadMedidaId?: number;
 	addCarrito?: ChangeEventHandler;
+	esInsumo: boolean;
 }
 
 export interface IArticuloManufacturado extends IArticulo {

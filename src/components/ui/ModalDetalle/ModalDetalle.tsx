@@ -13,6 +13,7 @@ import { addItems } from "../../../redux/slices/CartSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/Store";
 import styles from "./ModalDetalle.module.css";
+import CarouselModal from "./CarouselModal";
 
 interface ModalDetalleProps {
   open: boolean;
@@ -56,15 +57,9 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
     <Modal open={open} onClose={handleClose}>
       <Box className={styles.modalBox}>
         <Grid container spacing={2}>
-          {imageUrls.map((url, index) => (
-            <CardMedia
-              key={index}
-              component="img"
-              className={styles.modalBoxMedia}
-              image={url}
-              alt={`${articulo.denominacion} ${index + 1}`}
-            />
-          ))}
+        <Grid item xs={12}>
+            <CarouselModal imageUrls={imageUrls} />
+          </Grid>
         </Grid>
         <Typography variant="h3" component="h2">
           {articulo.denominacion}

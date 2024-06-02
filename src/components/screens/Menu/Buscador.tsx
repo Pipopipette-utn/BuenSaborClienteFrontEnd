@@ -54,7 +54,7 @@ export const Buscador = () => {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder="Buscar..."
               inputProps={{ 'aria-label': 'search' }}
             />
         </Search>

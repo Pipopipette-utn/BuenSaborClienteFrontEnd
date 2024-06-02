@@ -6,8 +6,14 @@ import { Grid } from "@mui/material";
 import Sidebar from "../../ui/SideBar/Sidebar";
 import { Carrito } from "../../ui/Carrito/Carrito";
 import { Buscador } from "./Buscador";
+import { useEffect, useState } from "react";
 
 export const PantallaMenu: React.FC = () => {
+  
+  const [totalRows, setTotalRows] = useState(0);
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(6);
+
   const {
     data: articulos,
     loading: loadingArticulos,
@@ -36,8 +42,8 @@ export const PantallaMenu: React.FC = () => {
   if (errorArticulos || errorCategorias) {
     return <div>Error</div>;
   }
-  return (
-    
+
+  return (  
     <>
       <Buscador/>
       <Grid container spacing={0}>

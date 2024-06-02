@@ -52,7 +52,8 @@ export const emptyArticulo: IArticulo = {
 	categoria: emptyCategoria,
 	categoriaId: 0,
 	unidadMedida: emptyUnidadMedida,
-	unidadMedidaId: 0
+	unidadMedidaId: 0,
+	esInsumo: false
 }
 
 export const emptyDetallePedido: IDetallePedido= {
