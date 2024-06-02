@@ -39,7 +39,7 @@ export const PantallaMenu: React.FC = () => {
   return (
     
     <>
-    <Buscador/>
+      <Buscador/>
       <Grid container spacing={0}>
         {/* Barra lateral */}
 

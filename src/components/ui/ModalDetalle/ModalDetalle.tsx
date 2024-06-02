@@ -58,7 +58,7 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
         <Grid container spacing={2}>
           {imageUrls.map((url, index) => (
             <CardMedia
-              key={index} // Asegúrate de agregar la key al map
+              key={index}
               component="img"
               className={styles.modalBoxMedia}
               image={url}
