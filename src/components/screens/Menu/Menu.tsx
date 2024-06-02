@@ -1,9 +1,8 @@
-import { MenuCategoria } from "../../ui/MenuCategorias/MenuCategorias";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { IArticulo } from "../../../types/empresa";
 import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
 import { useFetch } from "../../../hooks/UseFetch";
-import { Alert, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import Sidebar from "../../ui/SideBar/Sidebar";
 import { Carrito } from "../../ui/Carrito/Carrito";
 import { Buscador } from "./Buscador";

@@ -1,0 +1,35 @@
+.modalBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 45%;
+    min-height: 90%;
+    max-height: 95%;
+    background-color: #fff; /* Ajustar para background.paper */
+    border: 2px solid #000;
+    border-radius: 20px;
+    box-shadow: 24px;
+    padding: 16px; /* Ajustar para p: 4 (4 * 4 = 16px) */
+  }
+  
+  .modalBoxMedia {
+    height: 240px;
+    border-radius: 20px;
+  }
+  
+  .incrementDecrementButton {
+    background-color: var(--primary-color); /* Ajustar para lightTheme.palette.primary.main */
+    border-radius: 1px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  .addToCartButton {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
