@@ -59,7 +59,6 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
         </Typography>
         <Typography variant="h6" sx={{ mt: 2 }}>
           {articulo.descripcion}
-          {/* aca debo de usar el atributo descripcion de articuloManufacturado */}
         </Typography>
         <Typography variant="h6" sx={{ mt: 2 }}>
           Precio: ${articulo.precioVenta}

@@ -29,7 +29,7 @@ export interface IPedidoDTO extends BaseEntityDTO {
 	formaPago: FormaPago;
 	domicilio?: IDomicilio;
 	sucursal?: ISucursalDTO;		//Sacar "?" cuando ande bien bien
-	detallesPedido?: IDetallePedidoPostDTO[];
+	detallePedidos?: IDetallePedidoPostDTO[];
 }
 
 export interface IDetallePedidoPostDTO {

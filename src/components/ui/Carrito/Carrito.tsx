@@ -41,8 +41,10 @@ export function Carrito() {
       total: calculateTotal(),
       tipoEnvio: TipoEnvio.TAKE_AWAY, // Hardcodeado hasta que profe diga algo
       formaPago: FormaPago.EFECTIVO, // Hardcodeado
-      //sucursal: state.sucursal,
-      detallesPedido: detallesPedido,
+      sucursal: {
+        id: 1, //Ultra hardcodeado
+      },
+      detallePedidos: detallesPedido,
     };
 
     try {
