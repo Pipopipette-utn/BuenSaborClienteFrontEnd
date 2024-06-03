@@ -22,26 +22,20 @@ export const CardArticulo: React.FC<CardArticuloProps> = ({ articulo }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const obtenerImagenPrincipal = (articulo: IArticulo): IImagen | undefined => {
-    return articulo.imagenes!.length > 0 ? articulo.imagenes![0] : undefined;
+  const obtenerImagenPrincipal = (imageUrls) => {
+    return imageUrls.length > 0 ? imageUrls[0] : undefined;
   };
-
+  const imagenPrincipal = obtenerImagenPrincipal(imageUrls);
   return (
     <>
       <Card sx={{ maxWidth: 345 }}>
-        <Grid container spacing={2}>
-          {imageUrls.map((url, index) => (
-            //<Grid item xs={6} md={4} key={index}>
-            <CardMedia
-              component="img"
-              //sx={{ height: 140 }} //tamaño
-              image={url}
-              alt={`${articulo.denominacion} ${index + 1}`}
-            />
-            //</Grid>
-          ))}
-        </Grid>
         <CardContent>
+          <CardMedia
+            component="img"
+            sx={{ height: 240, borderRadius: 3 }}
+            image={imagenPrincipal}
+            alt={`${articulo.denominacion} - Imagen principal`}
+          />
           <Typography gutterBottom variant="h5" component="div">
             {articulo.denominacion}
           </Typography>
@@ -49,9 +43,11 @@ export const CardArticulo: React.FC<CardArticuloProps> = ({ articulo }) => {
             ${articulo.precioVenta}
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small" onClick={handleOpen}>
-            Detalle
+        <CardActions sx={{ justifyContent: "center" }}>
+          <Button variant="outlined" size="small" onClick={handleOpen}>
+            {" "}
+            {/* con contained tambien queda lindo */}
+            Ver mas
           </Button>
         </CardActions>
       </Card>
