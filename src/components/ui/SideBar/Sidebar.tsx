@@ -1,4 +1,4 @@
-/*import * as React from "react";
+import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import CategoryButton from "../CategoryButton/CategoryButton";
@@ -24,25 +24,25 @@ const StyledSidebar = styled(Box)(({ theme }) => ({
   justifyContent: "flex-start", //  con center + absolute en display el boton ocupa todo el ancho
 }));
 
-const Sidebar = () => {
+export const Sidebar = () => {
+  const { data: categorias } = useFetch<ICategoria[]>(
+    "http://localhost:8080/categorias/parents"
+  );
+  /*
   const { data: categories } = useFetch<ICategoria[]>(
     `http://localhost:8080/sucursales/1/categorias` //cambiar mas adelante por "http://localhost:8080/sucursales/${id}/categorias" y que switchee
   );
-
+*/
   return (
     <StyledSidebar>
       <Paper>
         <List>
-          {categories
-            ?.filter(
-              (categoria) => categoria.categoriaPadreId == null || undefined
-            )
-            .map((filteredCategoria) => (
-              <CategoryButton
-                key={filteredCategoria.denominacion}
-                label={filteredCategoria.denominacion}
-              />
-            ))}
+          {categorias?.map((filteredCategoria) => (
+            <CategoryButton
+              key={filteredCategoria.denominacion}
+              label={filteredCategoria.denominacion}
+            />
+          ))}
         </List>
       </Paper>
     </StyledSidebar>
@@ -50,8 +50,8 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-*/
 
+/*
 import React from 'react';
 import { List, ListItem, ListItemText } from '@mui/material';
 
@@ -74,3 +74,4 @@ export const Sidebar: React.FC<SidebarProps> = ({ categorias, onSelectCategoria 
     </List>
   );
 };
+*/

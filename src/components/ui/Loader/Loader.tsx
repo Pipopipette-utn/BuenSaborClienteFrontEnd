@@ -1,5 +1,5 @@
-import React from 'react';
-import './PizzaLoader.css';
+import React from "react";
+import "./Loader.css";
 
 const PizzaLoader: React.FC = () => {
   return (

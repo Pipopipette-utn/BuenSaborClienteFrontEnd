@@ -1,16 +1,20 @@
-import React from "react";
-import { IArticulo } from "../../../types/empresa";
+import React, { Suspense } from "react";
+import { IArticulo, ICategoria } from "../../../types/empresa";
 import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
 import { useFetch } from "../../../hooks/UseFetch";
 import { Grid } from "@mui/material";
-import {Sidebar} from "../../ui/SideBar/Sidebar";
+//import { Sidebar } from "../../ui/SideBar/Sidebar";
 import { Carrito } from "../../ui/Carrito/Carrito";
 import { Buscador } from "./Buscador";
 import { useEffect, useState } from "react";
+import Sidebar from "../../ui/SideBar/Sidebar";
+import PizzaLoader from "../../ui/Loader/Loader";
 
 export const PantallaMenu: React.FC = () => {
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
-  const [terminoBusqueda, setTerminoBusqueda] = useState<string>('');
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<
+    number | null
+  >(null);
+  const [terminoBusqueda, setTerminoBusqueda] = useState<string>("");
 
   const {
     data: articulos,
@@ -22,8 +26,8 @@ export const PantallaMenu: React.FC = () => {
     data: categorias,
     loading: loadingCategorias,
     error: errorCategorias,
-  } = useFetch<[]>( "http://localhost:8080/categorias");
-  
+  } = useFetch<ICategoria[]>("http://localhost:8080/categorias/parents");
+
   // Renderizar "Cargando..." si loading es verdadero
   if (loadingArticulos || loadingCategorias) {
     return <div>Cargando...</div>;
@@ -35,17 +39,24 @@ export const PantallaMenu: React.FC = () => {
   }
 
   // Filtrar los artículos por categoría seleccionada
-  const articulosFiltrados = articulos?.filter(articulo => 
-    (!categoriaSeleccionada || articulo.categoriaId === categoriaSeleccionada) &&
-    (articulo.denominacion.toLowerCase().includes(terminoBusqueda.toLowerCase()))
+  const articulosFiltrados = articulos?.filter(
+    (articulo) =>
+      (!categoriaSeleccionada ||
+        articulo.categoriaId === categoriaSeleccionada) &&
+      articulo.denominacion
+        .toLowerCase()
+        .includes(terminoBusqueda.toLowerCase())
   );
 
   return (
     <>
-      <Buscador onSearch={setTerminoBusqueda} categoriaSeleccionada={categoriaSeleccionada} />
+      <Buscador
+        onSearch={setTerminoBusqueda}
+        categoriaSeleccionada={categoriaSeleccionada}
+      />
       <Grid container spacing={0}>
         {/* Barra lateral */}
-        <Sidebar categorias={categorias} onSelectCategoria={setCategoriaSeleccionada} />
+        <Sidebar />
 
         {/* Mapeo de artículos */}
         <Grid item xs={6}>
