@@ -18,7 +18,7 @@ export interface IArticuloManufacturadoTableDTO extends BaseEntityDTO{
 }
 
 export interface ISucursalDTO extends BaseEntityDTO{
-	nombre: string;
+	nombre?: string;
 }
 
 export interface IArticuloPedidoDTO extends BaseEntityDTO{}
@@ -28,7 +28,7 @@ export interface IPedidoDTO extends BaseEntityDTO {
 	tipoEnvio: TipoEnvio;
 	formaPago: FormaPago;
 	domicilio?: IDomicilio;
-	sucursal?: ISucursal;		//Sacar "?" cuando ande bien bien
+	sucursal?: ISucursalDTO;		//Sacar "?" cuando ande bien bien
 	detallesPedido?: IDetallePedidoPostDTO[];
 }
 
