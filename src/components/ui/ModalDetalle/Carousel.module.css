@@ -1,0 +1,40 @@
+.carousel {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+  }
+  
+  .carouselInner {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+  
+  .carouselImage {
+    flex: 0 0 100%;
+    max-width: 100%;
+    max-height: 20rem;
+    border-radius: 20px;
+  }
+  
+  .carouselButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1;
+  }
+  
+  .carouselButton.prev {
+    left: 10px;
+  }
+  
+  .carouselButton.next {
+    right: 10px;
+  }
+  

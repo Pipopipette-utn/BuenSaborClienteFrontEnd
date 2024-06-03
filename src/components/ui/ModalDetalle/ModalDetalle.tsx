@@ -4,22 +4,19 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { IArticulo } from "../../../types/empresa";
 import useCloudinary from "../../../hooks/useCloudinary";
-import { Box, CardMedia, Grid, IconButton } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { useAppDispatch } from "../../../redux/HookReducer";
 import { addItems } from "../../../redux/slices/CartSlice";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/Store";
 import styles from "./ModalDetalle.module.css";
-import CarouselModal from "./CarouselModal";
+import Carousel from "./CarouselModal";
 
 interface ModalDetalleProps {
   open: boolean;
   handleClose: () => void;
   articulo: IArticulo;
-  addToCart: (articulo: IArticulo, cantidad: number) => void;
 }
 
 export const ModalDetalle: React.FC<ModalDetalleProps> = ({
@@ -29,7 +26,6 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
 }) => {
   const imageUrls = useCloudinary(articulo.imagenes || []);
   const [cantidad, setCantidad] = useState<number>(1);
-  //const items = useSelector((state: RootState) => state.cart.items);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -56,16 +52,14 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
   return (
     <Modal open={open} onClose={handleClose}>
       <Box className={styles.modalBox}>
-        <Grid container spacing={2}>
-        <Grid item xs={12}>
-            <CarouselModal imageUrls={imageUrls} />
-          </Grid>
-        </Grid>
+        <Carousel images={imageUrls} />
+
         <Typography variant="h3" component="h2">
           {articulo.denominacion}
         </Typography>
         <Typography variant="h6" sx={{ mt: 2 }}>
           {articulo.descripcion}
+          {/* aca debo de usar el atributo descripcion de articuloManufacturado */}
         </Typography>
         <Typography variant="h6" sx={{ mt: 2 }}>
           Precio: ${articulo.precioVenta}
