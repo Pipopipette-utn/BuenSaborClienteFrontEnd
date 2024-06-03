@@ -1,0 +1,89 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f7f7;
+    margin: 0;
+  }
+  
+  .pizza-loader {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, #ffd700 50%, #ff4500 51%);
+    animation: rotate 2s linear infinite;
+  }
+  
+  .slice {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 50px solid #ff4500;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    top: 25px;
+    left: 12.5px;
+    transform: rotate(45deg);
+  }
+  
+  .cheese {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 42px solid #ffd700;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+  }
+  
+  .pepperoni {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #c00;
+    border-radius: 50%;
+  }
+  
+  .pepperoni1 {
+    top: 10px;
+    left: 18px;
+  }
+  
+  .pepperoni2 {
+    top: 5px;
+    left: 32px;
+  }
+  
+  .pepperoni3 {
+    top: 20px;
+    left: 24px;
+  }
+  
+  .pepperoni4 {
+    top: 30px;
+    left: 15px;
+  }
+  
+  .bite {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: #f7f7f7;
+    border-radius: 50%;
+    top: 5px;
+    left: 65px;
+    z-index: 1;
+  }
+  
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
