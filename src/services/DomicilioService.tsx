@@ -1,11 +1,10 @@
 // Importamos el tipo de dato IDomicilio y la clase BackendClient
 import { IDomicilio } from "../types/ubicacion";
-import { BackendClient } from "./BakendClient";
+import { BackendClient } from "./BackendClient";
 
 // Clase DomicilioService que extiende BackendClient para interactuar con la API de domiilios
 export class DomicilioService extends BackendClient<IDomicilio> {
-
-	/*
+  /*
 	async getAllMapped(localidades: ILocalidad[]):Promise<IDomicilio[]> {
 		try {
 			const domicilios = await this.getAll();
@@ -22,5 +21,4 @@ export class DomicilioService extends BackendClient<IDomicilio> {
 			return Promise.reject(error); // Rechaza la promesa con el error
 		}
 	}*/
-
 }
