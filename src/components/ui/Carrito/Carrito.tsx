@@ -9,6 +9,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/Store";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
+import { PedidoService } from "../../../services/PedidoService";
+import { IDetallePedidoPostDTO, IPedidoDTO } from "../../../types/dto";
+import { FormaPago, TipoEnvio } from "../../../types/enums";
 
 export function Carrito() {
   const items = useSelector((state: RootState) => state.cart.items);
@@ -24,8 +27,30 @@ export function Carrito() {
   const calculateTotal = () => {
     return calculateSubtotal();
   };
-  const handleGuardarCarrito = () => {
-    console.log("Guardar carrito");
+  const handleGuardarCarrito = async () => {
+    const pedidoService = new PedidoService("/pedidos");
+    const detallesPedido: IDetallePedidoPostDTO[] = items.map((item) => ({
+      cantidad: item.cantidad,
+      subtotal: item.cantidad * item.articulo.precioVenta,
+      articulo: {
+        id: item.articulo.id,
+      },
+    }));
+
+    const newPedido: IPedidoDTO = {
+      total: calculateTotal(),
+      tipoEnvio: TipoEnvio.TAKE_AWAY, // Hardcodeado hasta que profe diga algo
+      formaPago: FormaPago.EFECTIVO, // Hardcodeado
+      //sucursal: state.sucursal,
+      detallesPedido: detallesPedido,
+    };
+
+    try {
+      const response = await pedidoService.create(newPedido);
+      console.log("Pedido guardado con éxito", response);
+    } catch (error) {
+      console.error("Error al guardar el pedido", error);
+    }
   };
   return (
     <>
