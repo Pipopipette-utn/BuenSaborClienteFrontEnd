@@ -114,15 +114,14 @@ export function Carrito() {
               <Divider />
             </React.Fragment>
           ))}
-          {envio === TipoEnvio.DELIVERY ? (
+          {envio === TipoEnvio.DELIVERY && (
             <ListItem>
               <ListItemText primary={`Subtotal: $${calculateSubtotal()}`} />
             </ListItem>
-          ) : (
-            <ListItem>
-              <ListItemText primary={`Total: $${calculateTotal()}`} />
-            </ListItem>
           )}
+          <ListItem>
+            <ListItemText primary={`Total: $${calculateTotal()}`} />
+          </ListItem>
 
           <ListItem>
             <Button
