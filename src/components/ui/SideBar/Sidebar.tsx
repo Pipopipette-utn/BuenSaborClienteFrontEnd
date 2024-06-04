@@ -5,6 +5,10 @@ import CategoryButton from "../CategoryButton/CategoryButton";
 import { List, Paper, Typography } from "@mui/material";
 import { ICategoria } from "../../../types/empresa";
 import { useFetch } from "../../../hooks/UseFetch";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../../../redux/HookReducer";
+import { RootState } from "../../../redux/Store";
+import { setSelectedCategoriaId } from "../../../redux/slices/SelectedData";
 
 const StyledSidebar = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -28,19 +32,42 @@ export const Sidebar = () => {
   const { data: categorias } = useFetch<ICategoria[]>(
     "http://localhost:8080/categorias/parents"
   );
+  const selectedCategoriaId = useSelector(
+    (state: RootState) => state.categoria.selectedCategoriaId
+  );
+  const dispatch = useAppDispatch();
+  const articulos = useSelector((state: RootState) => state.selectedData.items);
+
   /*
   const { data: categories } = useFetch<ICategoria[]>(
     `http://localhost:8080/sucursales/1/categorias` //cambiar mas adelante por "http://localhost:8080/sucursales/${id}/categorias" y que switchee
   );
 */
+
+  const handleCategoriaClick = (categoriaId: number | null) => {
+    dispatch(setSelectedCategoriaId(categoriaId)); // Despacha la acción para establecer la categoría seleccionada
+    console.log("Hiciste click en : ", categoriaId);
+  };
+
+  const filteredArticulos = selectedCategoriaId
+    ? articulos.filter(
+        (articulo) => articulo.categoriaId === selectedCategoriaId
+      )
+    : articulos;
   return (
     <StyledSidebar>
       <Paper>
         <List>
+          <CategoryButton
+            key="all"
+            label="Todas las categorías"
+            onClick={() => handleCategoriaClick(null)}
+          />
           {categorias?.map((filteredCategoria) => (
             <CategoryButton
               key={filteredCategoria.denominacion}
               label={filteredCategoria.denominacion}
+              onClick={() => handleCategoriaClick(filteredCategoria.id ?? null)}
             />
           ))}
         </List>
