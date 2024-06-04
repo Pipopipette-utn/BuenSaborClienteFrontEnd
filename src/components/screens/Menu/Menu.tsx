@@ -70,7 +70,7 @@ export const PantallaMenu: React.FC = () => {
         </Grid>
 
         {/* Carrito */}
-        <Grid item xs={3}>
+        <Grid item xs>
           <Carrito />
         </Grid>
       </Grid>

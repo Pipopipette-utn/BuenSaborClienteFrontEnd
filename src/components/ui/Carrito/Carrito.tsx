@@ -1,21 +1,36 @@
+import React from "react";
 import { useAppDispatch } from "../../../redux/HookReducer";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/Store";
 import {
   reduceItem,
   addItem,
   clearItems,
+  removeItem,
 } from "../../../redux/slices/CartSlice";
-import { Button, IconButton } from "@mui/material";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/Store";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
+import {
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { PedidoService } from "../../../services/PedidoService";
 import { IDetallePedidoPostDTO, IPedidoDTO } from "../../../types/dto";
 import { FormaPago, TipoEnvio } from "../../../types/enums";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export function Carrito() {
   const items = useSelector((state: RootState) => state.cart.items);
   const dispatch = useAppDispatch();
+  const envio = TipoEnvio.DELIVERY;
 
   const calculateSubtotal = () => {
     return items.reduce(
@@ -31,7 +46,7 @@ export function Carrito() {
     const pedidoService = new PedidoService("/pedidos");
     const detallesPedido: IDetallePedidoPostDTO[] = items.map((item) => ({
       cantidad: item.cantidad,
-      subtotal: item.cantidad * item.articulo.precioVenta,
+      subTotal: item.cantidad * item.articulo.precioVenta,
       articulo: {
         id: item.articulo.id,
       },
@@ -55,46 +70,79 @@ export function Carrito() {
     }
   };
   return (
-    <>
-      <div className="cart">
-        <h2>Carrito de Compras</h2>
-        {items.length === 0 ? (
-          <p>El carrito está vacío</p>
-        ) : (
-          <div>
-            <ul>
-              {items.map((item) => (
-                <li key={item.id}>
-                  {item.articulo.denominacion}
+    <Box className="cart" p={2} component={Paper} elevation={3}>
+      <Typography variant="h6" gutterBottom>
+        Carrito de Compras
+      </Typography>
+      {items.length === 0 ? (
+        <Typography variant="body1">El carrito está vacío</Typography>
+      ) : (
+        <List>
+          {items.map((item) => (
+            <React.Fragment key={item.id}>
+              <ListItem>
+                <ListItemText
+                  primary={item.articulo.denominacion}
+                  secondary={`Cantidad: ${item.cantidad} - Precio: $${
+                    item.articulo.precioVenta * item.cantidad
+                  }`}
+                />
+                <ListItemSecondaryAction>
                   <IconButton
+                    edge="end"
+                    aria-label="reduce"
                     onClick={() => dispatch(reduceItem(item.articulo))}
-                    style={{ fontSize: "0.5em", marginRight: "4px" }}
                   >
                     <RemoveIcon />
                   </IconButton>
-                  x{item.cantidad}
                   <IconButton
+                    edge="end"
+                    aria-label="add"
                     onClick={() => dispatch(addItem(item.articulo))}
-                    style={{ fontSize: "0.5em", marginLeft: "4px" }}
                   >
                     <AddIcon />
                   </IconButton>
-                  - ${item.articulo.precioVenta * item.cantidad}
-                </li>
-              ))}
-            </ul>
-            <div>Subtotal: ${calculateSubtotal()}</div>
-            <div>Total: ${calculateTotal()}</div>
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() => dispatch(removeItem(item.articulo))}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+              <Divider />
+            </React.Fragment>
+          ))}
+          {envio === TipoEnvio.DELIVERY ? (
+            <ListItem>
+              <ListItemText primary={`Subtotal: $${calculateSubtotal()}`} />
+            </ListItem>
+          ) : (
+            <ListItem>
+              <ListItemText primary={`Total: $${calculateTotal()}`} />
+            </ListItem>
+          )}
+
+          <ListItem>
             <Button
+              variant="contained"
+              color="secondary"
               onClick={() => dispatch(clearItems())}
-              style={{ marginRight: "5rem" }}
+              style={{ marginRight: "1rem" }}
             >
               Cancelar
             </Button>
-            <Button onClick={handleGuardarCarrito}>Guardar Carrito</Button>
-          </div>
-        )}
-      </div>
-    </>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleGuardarCarrito}
+            >
+              Guardar Carrito
+            </Button>
+          </ListItem>
+        </List>
+      )}
+    </Box>
   );
 }
