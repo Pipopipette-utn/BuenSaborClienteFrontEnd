@@ -1,19 +1,16 @@
 import React from "react";
-import "./Loader.css";
+import "./Loader.module.css";
 
-const PizzaLoader: React.FC = () => {
+const Loader: React.FC = () => {
   return (
-    <div className="pizza-loader">
-      <div className="slice">
-        <div className="cheese"></div>
-        <div className="pepperoni pepperoni1"></div>
-        <div className="pepperoni pepperoni2"></div>
-        <div className="pepperoni pepperoni3"></div>
-        <div className="pepperoni pepperoni4"></div>
+    <div className="loader">
+      <div className="hamburger">
+        <span className="hamburger-line"></span>
+        <span className="hamburger-line"></span>
+        <span className="hamburger-line"></span>
       </div>
-      <div className="bite"></div>
     </div>
   );
 };
 
-export default PizzaLoader;
+export default Loader;

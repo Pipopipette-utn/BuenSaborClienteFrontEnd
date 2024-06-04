@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAppDispatch } from "../../../redux/HookReducer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/Store";
@@ -30,7 +30,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 export function Carrito() {
   const items = useSelector((state: RootState) => state.cart.items);
   const dispatch = useAppDispatch();
-  const envio = TipoEnvio.DELIVERY;
+  const [envio, setEnvio] = useState<TipoEnvio>(TipoEnvio.DELIVERY);
+  // Hardcodeado hasta implementar combobox
 
   const calculateSubtotal = () => {
     return items.reduce(
@@ -51,17 +52,17 @@ export function Carrito() {
         id: item.articulo.id,
       },
     }));
-
+    console.log("Detalles: ", detallesPedido);
     const newPedido: IPedidoDTO = {
       total: calculateTotal(),
-      tipoEnvio: TipoEnvio.TAKE_AWAY, // Hardcodeado hasta que profe diga algo
+      tipoEnvio: envio,
       formaPago: FormaPago.EFECTIVO, // Hardcodeado
       sucursal: {
         id: 1, //Ultra hardcodeado
       },
       detallePedidos: detallesPedido,
     };
-
+    console.log("Pedido: ", newPedido);
     try {
       const response = await pedidoService.create(newPedido);
       console.log("Pedido guardado con éxito", response);
