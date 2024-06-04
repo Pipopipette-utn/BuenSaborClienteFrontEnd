@@ -47,6 +47,7 @@ export const PantallaMenu: React.FC = () => {
 
   return (
     <>
+      {/* Renderiza el loader hasta que carguen todos los componentes */}
       <Suspense fallback={<Loader />}>
         <Buscador
           onSearch={setTerminoBusqueda}
