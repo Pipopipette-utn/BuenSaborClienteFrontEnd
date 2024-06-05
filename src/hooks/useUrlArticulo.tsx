@@ -8,7 +8,7 @@ const useURL = (
   const generarURL = useMemo(() => {
     console.log("Id dentro de generarUrl: ", selectedCategoriaId);
     const params = new URLSearchParams({
-      //categoriaId: categoriaSeleccionada?.toString(),     //explota con esto
+      //categoriaId: selectedCategoriaId?.toString(),     //explota con esto
       nombre: terminoBusqueda,
       page: (page - 1).toString(),
       size: "6",

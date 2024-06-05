@@ -1,9 +1,7 @@
 import React, { ChangeEvent, Suspense } from "react";
-import { IArticulo, ICategoria } from "../../../types/empresa";
+import { IArticulo } from "../../../types/empresa";
 import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
-import { useFetch } from "../../../hooks/UseFetch";
 import { Grid, Pagination, Stack } from "@mui/material";
-//import { Sidebar } from "../../ui/SideBar/Sidebar";
 import { Carrito } from "../../ui/Carrito/Carrito";
 import { Buscador } from "./Buscador";
 import { useEffect, useState } from "react";
@@ -39,13 +37,18 @@ export const PantallaMenu: React.FC = () => {
 
   // Filtrar los artículos por categoría seleccionada
 
-  const articulosFiltrados = articulos?.filter(
-    (articulo) =>
-      (!selectedCategoriaId || articulo.categoriaId === selectedCategoriaId) &&
-      articulo.denominacion
-        .toLowerCase()
-        .includes(terminoBusqueda.toLowerCase())
-  );
+  useEffect(() => {
+    const articulosFiltrados = articulos?.filter(
+      (articulo) =>
+        (!selectedCategoriaId ||
+          articulo.categoriaId === selectedCategoriaId) &&
+        articulo.denominacion
+          .toLowerCase()
+          .includes(terminoBusqueda.toLowerCase())
+    );
+
+    setArticulos(articulosFiltrados);
+  }, [selectedCategoriaId, terminoBusqueda]);
 
   return (
     <>
@@ -62,11 +65,14 @@ export const PantallaMenu: React.FC = () => {
           {/* Mapeo de artículos */}
           <Grid item xs={6}>
             <Grid container spacing={2}>
-              {articulosFiltrados?.map((articulo) => (
-                <Grid item xs={6} key={articulo.id}>
-                  <CardArticulo articulo={articulo} />
-                </Grid>
-              ))}
+              {articulos?.map((articulo) => {
+                console.log(articulo.denominacion);
+                return (
+                  <Grid item xs={6} key={articulo.id}>
+                    <CardArticulo articulo={articulo} />
+                  </Grid>
+                );
+              })}
             </Grid>
 
             <Stack direction="row" justifyContent="center">
