@@ -9,7 +9,6 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import "./button.css";
 import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
 import { useThemeToggle } from "../components/Utils/ThemeUtil";
-import Sidebar from "../components/ui/SideBar/Sidebar";
 
 export const AppRouter = () => {
   const { currentTheme, toggleTheme } = useThemeToggle();
@@ -18,26 +17,18 @@ export const AppRouter = () => {
       <>
         <ResponsiveAppBar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/menu"
-            element={
-              <>
-                <PantallaMenu />
-                {/*                <Sidebar />
-                 */}
-              </>
-            }
+          <Route 
+            path="/" element={<Home />}
           />
           <Route
-            path="/pedido"
-            element={
-              <>
-                <Pedido />
-              </>
-            }
+            path="/menu" element={<PantallaMenu />}
           />
-          <Route path="/cuenta" element={<Cuenta />} />
+          <Route
+            path="/pedido" element={<Pedido />}
+          />
+          <Route 
+          path="/cuenta" element={<Cuenta />}
+          />
           {
             //        <Route path="/categorias/:category" element={<Categorias />} />
           }

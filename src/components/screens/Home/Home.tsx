@@ -45,7 +45,6 @@ export const Home = () => {
   //FIN HARDCODEO
   return (
     <>
-      <h1>Hola</h1>
       <Carrousel />
       {/* Pasar los datos a SliderGenerico */}
       <SliderGenerico items={categorias} />

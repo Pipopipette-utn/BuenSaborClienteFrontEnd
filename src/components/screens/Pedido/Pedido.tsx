@@ -12,9 +12,6 @@ export const Pedido = () => {
   return (
     <>
       <h1>{empresa?.nombre}</h1>
-      <div>slider</div>
-      <Slider></Slider>
-      <div>Carrito</div>
       <Carrito />
     </>
   );
