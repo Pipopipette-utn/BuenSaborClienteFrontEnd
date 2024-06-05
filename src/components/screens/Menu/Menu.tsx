@@ -1,11 +1,95 @@
-import { MenuCategoria } from "../../ui/MenuCategorias/MenuCategorias";
+import React, { ChangeEvent, Suspense } from "react";
+import { IArticulo } from "../../../types/empresa";
+import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
+import { Grid, Pagination, Stack } from "@mui/material";
+import { Carrito } from "../../ui/Carrito/Carrito";
+import { Buscador } from "./Buscador";
+import { useEffect, useState } from "react";
+import Sidebar from "../../ui/SideBar/Sidebar";
+import Loader from "../../ui/Loader/Loader";
+import { RootState } from "../../../redux/Store";
+import { useSelector } from "react-redux";
+import useFetchArticulos from "../../../hooks/useFetchArticulos";
+import useURL from "../../../hooks/useUrlArticulo";
 
-export const Menu = () => {
+export const PantallaMenu: React.FC = () => {
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<
+    number | null
+  >(null);
+  const [page, setPage] = React.useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [terminoBusqueda, setTerminoBusqueda] = useState<string>("");
+  const [articulos, setArticulos] = useState<IArticulo[]>([]);
+  const fetchArticulos = useFetchArticulos();
+  const selectedCategoriaId = useSelector(
+    (state: RootState) => state.selectedData.selectedCategoriaId
+  );
+  const url = useURL(selectedCategoriaId, terminoBusqueda, page); //url dinamica que filtra categorias por sucursal
+  console.log(url);
+  //Carga los articulos
+  useEffect(() => {
+    fetchArticulos(url, setArticulos, setTotalPages);
+  }, [fetchArticulos, url]);
+
+  const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
+  // Filtrar los artículos por categoría seleccionada
+
+  useEffect(() => {
+    const articulosFiltrados = articulos?.filter(
+      (articulo) =>
+        (!selectedCategoriaId ||
+          articulo.categoriaId === selectedCategoriaId) &&
+        articulo.denominacion
+          .toLowerCase()
+          .includes(terminoBusqueda.toLowerCase())
+    );
+
+    setArticulos(articulosFiltrados);
+  }, [selectedCategoriaId, terminoBusqueda]);
+
   return (
-    <div>
-      Menu lateral con las categorias
-      <MenuCategoria categorias={[]} />
-      map de las card de los productos
-    </div>
+    <>
+      {/* Renderiza el loader hasta que carguen todos los componentes */}
+      <Suspense fallback={<Loader />}>
+        <Buscador
+          onSearch={setTerminoBusqueda}
+          categoriaSeleccionada={categoriaSeleccionada}
+        />
+        <Grid container spacing={0}>
+          {/* Barra lateral */}
+          <Sidebar />
+
+          {/* Mapeo de artículos */}
+          <Grid item xs={6}>
+            <Grid container spacing={2}>
+              {articulos?.map((articulo) => {
+                console.log(articulo.denominacion);
+                return (
+                  <Grid item xs={6} key={articulo.id}>
+                    <CardArticulo articulo={articulo} />
+                  </Grid>
+                );
+              })}
+            </Grid>
+
+            <Stack direction="row" justifyContent="center">
+              <Pagination
+                count={totalPages}
+                page={page}
+                onChange={handlePageChange}
+              />
+            </Stack>
+          </Grid>
+
+          {/* Carrito */}
+          <Grid item xs>
+            <Carrito />
+          </Grid>
+        </Grid>
+      </Suspense>
+    </>
   );
 };
