@@ -24,7 +24,7 @@ export const PantallaMenu: React.FC = () => {
   const [articulos, setArticulos] = useState<IArticulo[]>([]);
   const fetchArticulos = useFetchArticulos();
   const selectedCategoriaId = useSelector(
-    (state: RootState) => state.categoria.selectedCategoriaId
+    (state: RootState) => state.selectedData.selectedCategoriaId
   );
   const url = useURL(selectedCategoriaId, terminoBusqueda, page); //url dinamica que filtra categorias por sucursal
   console.log(url);

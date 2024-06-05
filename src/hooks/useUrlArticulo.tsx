@@ -1,11 +1,12 @@
 import { useMemo } from "react";
 
 const useURL = (
-  categoriaSeleccionada: number | null,
+  selectedCategoriaId: number | null,
   terminoBusqueda: string,
   page: number
 ) => {
   const generarURL = useMemo(() => {
+    console.log("Id dentro de generarUrl: ", selectedCategoriaId);
     const params = new URLSearchParams({
       //categoriaId: categoriaSeleccionada?.toString(),     //explota con esto
       nombre: terminoBusqueda,
@@ -13,12 +14,12 @@ const useURL = (
       size: "6",
     });
 
-    if (categoriaSeleccionada) {
-      params.append("categoriaId", categoriaSeleccionada.toString());
+    if (selectedCategoriaId) {
+      params.append("categoriaId", selectedCategoriaId.toString());
     }
 
     return `http://localhost:8080/articulosManufacturados/filtrar/${2}?${params}`; //el numero es de la sucursal
-  }, [categoriaSeleccionada, terminoBusqueda, page]);
+  }, [selectedCategoriaId, terminoBusqueda, page]);
 
   return generarURL;
 };
