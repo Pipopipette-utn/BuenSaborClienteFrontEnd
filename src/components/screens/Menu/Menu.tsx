@@ -35,17 +35,16 @@ export const PantallaMenu: React.FC = () => {
   const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
+
   // Filtrar los artículos por categoría seleccionada
-  /*
+
   const articulosFiltrados = articulos?.filter(
     (articulo) =>
-      (!categoriaSeleccionada ||
-        articulo.categoriaId === categoriaSeleccionada) &&
+      (!selectedCategoriaId || articulo.categoriaId === selectedCategoriaId) &&
       articulo.denominacion
         .toLowerCase()
         .includes(terminoBusqueda.toLowerCase())
   );
-*/
 
   return (
     <>
@@ -62,7 +61,7 @@ export const PantallaMenu: React.FC = () => {
           {/* Mapeo de artículos */}
           <Grid item xs={6}>
             <Grid container spacing={2}>
-              {articulos?.map((articulo) => (
+              {articulosFiltrados?.map((articulo) => (
                 <Grid item xs={6} key={articulo.id}>
                   <CardArticulo articulo={articulo} />
                 </Grid>
