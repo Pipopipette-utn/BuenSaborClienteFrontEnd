@@ -7,6 +7,7 @@ const useURL = (
 ) => {
   const generarURL = useMemo(() => {
     const params = new URLSearchParams({
+      //categoriaId: categoriaSeleccionada?.toString(),     //explota con esto
       nombre: terminoBusqueda,
       page: (page - 1).toString(),
       size: "6",
@@ -16,7 +17,7 @@ const useURL = (
       params.append("categoriaId", categoriaSeleccionada.toString());
     }
 
-    return `http://localhost:8080/articulosManufacturados/filtrar/${1}?${params}`;
+    return `http://localhost:8080/articulosManufacturados/filtrar/${2}?${params}`; //el numero es de la sucursal
   }, [categoriaSeleccionada, terminoBusqueda, page]);
 
   return generarURL;
