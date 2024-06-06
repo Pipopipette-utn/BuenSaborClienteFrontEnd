@@ -2,13 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IDetallePedido } from '../../types/pedido';
 import { IArticulo } from '../../types/empresa';
 
-// Define el estado inicial del carrito
+// Define el estado del carrito y su contenido
 interface CartState {
   items: IDetallePedido[];
 }
-
+// Define el estado inicial del carrito
+const savedCart = localStorage.getItem('cart');
 const initialState: CartState = {
-  items: [],
+  items: savedCart ? JSON.parse(savedCart) : [],
 };
 
 // Crea un slice para el carrito
@@ -29,6 +30,8 @@ const cartSlice = createSlice({
             cantidad: 1,
         });
       }
+       //Guarda en local storage
+       localStorage.setItem("cart", JSON.stringify(state.items))
     },
     //Agrega muchos, pasamos la cantidad como parametro
     addItems: (state, action: PayloadAction<{ articulo: IArticulo; cantidad: number }>) => {
@@ -45,6 +48,8 @@ const cartSlice = createSlice({
          
         });
       }
+      //Guarda en local storage
+      localStorage.setItem("cart", JSON.stringify(state.items))
     },
     reduceItem: (state, action: PayloadAction<IArticulo>) => {
       const articulo = action.payload;
@@ -57,13 +62,19 @@ const cartSlice = createSlice({
           state.items.splice(existingItemIndex, 1);
         }
       }
+      //Guarda en local storage
+      localStorage.setItem("cart", JSON.stringify(state.items))
     },
     removeItem: (state, action: PayloadAction<IArticulo>) => {
       const articulo = action.payload;
       state.items = state.items.filter(item => item.articulo.id !== articulo.id);
+      //Guarda en local storage
+      localStorage.setItem("cart", JSON.stringify(state.items))
     },
     clearItems: (state) => {
       state.items = [];
+      //limpia la localStorage
+      localStorage.removeItem("cart");
     },
   },
 });
