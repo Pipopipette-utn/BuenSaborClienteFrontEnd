@@ -21,7 +21,11 @@ export interface ISucursalDTO extends BaseEntityDTO{
 	nombre?: string;
 }
 
-export interface IArticuloPedidoDTO extends BaseEntityDTO{}
+export interface IArticuloPedidoDTO extends BaseEntityDTO{
+	//descripcion: string;
+	tiempoEstimadoMinutos: number;
+	//preparacion: string;
+}
 
 export interface IPedidoDTO extends BaseEntityDTO {
 	total: number;

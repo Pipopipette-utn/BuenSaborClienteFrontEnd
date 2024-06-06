@@ -43,7 +43,6 @@ export interface IArticulo extends BaseEntity {
 	categoriaId?: number;
 	unidadMedida?: IUnidadMedida;
 	unidadMedidaId?: number;
-	addCarrito?: ChangeEventHandler;
 	esInsumo: boolean;
 }
 
