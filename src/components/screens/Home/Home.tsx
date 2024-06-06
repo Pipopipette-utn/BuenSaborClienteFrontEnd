@@ -6,12 +6,17 @@ import { useFetch } from "../../../hooks/UseFetch";
 
 export const Home: React.FC = () => {
   //const [categorias, setCategorias] = useState<ICategoria[]>([]);
-  const [empresas, setEmpresas] = useState<IEmpresa[]>([]);
-  const [promociones, setPromociones] = useState<IPromocion[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  //const [empresas, setEmpresas] = useState<IEmpresa[]>([]);
+  //const [promociones, setPromociones] = useState<IPromocion[]>([]);
+  //const [loading, setLoading] = useState(true);
+  //const [error, setError] = useState<string | null>(null);
 
-  //const[categorias] = useFetch("")
+  const { data: categorias, loading: loadingCategorias } = useFetch<
+    ICategoria[]
+  >("/categorias/parents");
+  const { data: empresas } = useFetch("/sucursales");
+  const { data: promociones } = useFetch("/promociones");
+
   /*
   useEffect(() => {
     const fetchData = async () => {
@@ -33,8 +38,8 @@ export const Home: React.FC = () => {
     fetchData();
   }, []);
 */
-  if (loading) return <div>Cargando...</div>;
-  if (error) return <div>{error}</div>;
+  if (loadingCategorias) return <div>Cargando...</div>;
+  //if (error) return <div>{error}</div>;
 
   return (
     <>
