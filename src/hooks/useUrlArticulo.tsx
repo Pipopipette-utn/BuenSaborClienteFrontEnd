@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { baseUrl } from "../App";
 
 const useURL = (
   selectedCategoriaId: number | null,
@@ -18,7 +19,7 @@ const useURL = (
       params.append("categoriaId", selectedCategoriaId.toString());
     }
 
-    return `http://localhost:8080/articulosManufacturados/filtrar/${2}?${params}`; //el numero es de la sucursal
+    return `${baseUrl}/articulosManufacturados/filtrar/${2}?${params}`; //el numero es de la sucursal
   }, [selectedCategoriaId, terminoBusqueda, page]);
 
   return generarURL;

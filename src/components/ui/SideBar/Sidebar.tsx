@@ -1,8 +1,7 @@
-import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import CategoryButton from "../CategoryButton/CategoryButton";
-import { List, Paper, Typography } from "@mui/material";
+import { List, Paper } from "@mui/material";
 import { ICategoria } from "../../../types/empresa";
 import { useFetch } from "../../../hooks/UseFetch";
 import { useSelector } from "react-redux";
@@ -29,9 +28,7 @@ const StyledSidebar = styled(Box)(({ theme }) => ({
 }));
 
 export const Sidebar = () => {
-  const { data: categorias } = useFetch<ICategoria[]>(
-    "http://localhost:8080/categorias/parents"
-  );
+  const { data: categorias } = useFetch<ICategoria[]>("/categorias/parents");
   const selectedCategoriaId = useSelector(
     (state: RootState) => state.categoria.selectedCategoriaId
   );

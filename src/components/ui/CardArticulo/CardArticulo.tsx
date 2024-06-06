@@ -6,9 +6,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { ModalDetalle } from "../ModalDetalle/ModalDetalle";
-import { IArticulo, IImagen } from "../../../types/empresa";
+import { IArticulo } from "../../../types/empresa";
 import useCloudinary from "../../../hooks/useCloudinary";
-import { Grid } from "@mui/material";
 
 interface CardArticuloProps {
   articulo: IArticulo;

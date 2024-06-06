@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import Carrousel from '../../ui/Carrousel/Carrousel';
-import { SliderGenerico } from '../../ui/ItemSlider/ItemSlider';
-import { ICategoria, IEmpresa, IPromocion } from '../../../types/empresa';
+import React, { useEffect, useState } from "react";
+import Carrousel from "../../ui/Carrousel/Carrousel";
+import { SliderGenerico } from "../../ui/ItemSlider/ItemSlider";
+import { ICategoria, IEmpresa, IPromocion } from "../../../types/empresa";
+import { useFetch } from "../../../hooks/UseFetch";
 
 export const Home: React.FC = () => {
-  const [categorias, setCategorias] = useState<ICategoria[]>([]);
+  //const [categorias, setCategorias] = useState<ICategoria[]>([]);
   const [empresas, setEmpresas] = useState<IEmpresa[]>([]);
   const [promociones, setPromociones] = useState<IPromocion[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  //const[categorias] = useFetch("")
+  /*
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,7 +32,7 @@ export const Home: React.FC = () => {
 
     fetchData();
   }, []);
-
+*/
   if (loading) return <div>Cargando...</div>;
   if (error) return <div>{error}</div>;
 
