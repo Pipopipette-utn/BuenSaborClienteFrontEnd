@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { baseUrl } from "../App";
 
 export function useFetch<T>(url: RequestInfo | URL) {
   const [data, setData] = useState<T | null>(null); // Usa un generico
@@ -15,7 +16,7 @@ export function useFetch<T>(url: RequestInfo | URL) {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(url, { signal });
+        const response = await fetch(baseUrl + url, { signal });
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

@@ -1,4 +1,4 @@
-//https://th.bing.com/th/id/OIG3.H2Vl._rFmCd8CI.MvvZd?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn
+//https://th.bing.com/th/id/OIG3.H2Vl._rFmCd8CI.MvvZd?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn LOGO
 
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
@@ -15,9 +15,6 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
-import { Home } from "../../screens/Home/Home";
-import { Pedido } from "../../screens/Pedido/Pedido";
-import { PantallaMenu } from "../../screens/Menu/Menu";
 
 const pages = ["Menú", "Mi Pedido"];
 const settings = ["Mi Cuenta", "Cerrar Sesión"];
@@ -50,14 +47,25 @@ function ResponsiveAppBar() {
     console.log(`Se hizo clic en la página: ${page}`);
     //navigate(`/${page}`);
     switch (page) {
-      case "Home":
-        navigate(`/`);
-        break;
       case "Menú":
-        navigate(`/Menu`);
+        navigate(`/menu`);
         break;
       case "Mi Pedido":
-        navigate(`/Pedido`);
+        navigate(`/pedido`);
+        break;
+      default:
+        break;
+    }
+    handleCloseNavMenu();
+  };
+
+  const handleMenuItemSetting = (setting: string) => {
+    switch (setting) {
+      case "Mi Cuenta":
+        navigate(`cuenta`);
+        break;
+      case "Cerrar Sesión":
+        navigate(`/`);
         break;
       default:
         break;
@@ -165,7 +173,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src="https://pluspng.com/img-png/user-png-icon-download-icons-logos-emojis-users-2240.png" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -185,10 +193,13 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => handleMenuItemSetting(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
-              ))}
+
+              ))} 
+
+                
             </Menu>
           </Box>
         </Toolbar>

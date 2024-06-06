@@ -26,6 +26,7 @@ import { FormaPago, TipoEnvio } from "../../../types/enums";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { IArticuloManufacturado } from "../../../types/empresa";
 
 export function Carrito() {
   const items = useSelector((state: RootState) => state.cart.items);
@@ -50,6 +51,9 @@ export function Carrito() {
       subTotal: item.cantidad * item.articulo.precioVenta,
       articulo: {
         id: item.articulo.id,
+        tiempoEstimadoMinutos: item.articulo.esInsumo
+          ? 0
+          : (item.articulo as IArticuloManufacturado).tiempoEstimadoMinutos,
       },
     }));
     console.log("Detalles: ", detallesPedido);

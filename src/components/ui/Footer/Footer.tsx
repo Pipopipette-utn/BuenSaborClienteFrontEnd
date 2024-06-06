@@ -3,12 +3,11 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { lightTheme } from "../../Themes/LightTheme";
-
-//agregar los iconos de ig,x,face,yt
+import "./Footer.css";
 
 function Footer() {
   return (
-    <footer className="bg-dark text-white py-4">
+    <footer className="bg-dark text-white py-4 mt-auto">
       <Container>
         <Row className="justify-content-center align-items-center">
           <Col xs="auto" className="social-icon">
