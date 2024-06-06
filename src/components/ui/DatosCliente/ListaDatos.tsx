@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import Table from 'react-bootstrap/Table';
 
 export const ListaDatos = () => {
@@ -9,31 +10,30 @@ export const ListaDatos = () => {
       <tbody>
         <tr>
           <td>Nombre</td>
-          <td>Dato</td>
+          <td>Agustin</td>
         </tr>
         <tr>
           <td>Apellido</td>
-          <td>Dato</td>
+          <td>Alvarez</td>
         </tr>
         <tr>
           <td>Documento</td>
-          <td>Dato</td>
+          <td>42980761</td>
         </tr>
         <tr>
           <td>Email</td>
-          <td>Dato</td>
+          <td>agustinalvarez15@gmail.com</td>
         </tr>
         <tr>
           <td>Teléfono</td>
-          <td>Dato</td>
+          <td>2616789102</td>
         </tr>
         <tr>
           <td>Domicilio</td>
-          <td>Dato</td>
+          <td>Ayacucho 762</td>
         </tr>
         <tr>
-          <td>Cerrar Sesión</td>
-          <td>Boton para salir</td>
+          <Button>Cerrar Sesión</Button>
         </tr>
       </tbody>
     </Table>

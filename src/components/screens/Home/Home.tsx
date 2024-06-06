@@ -1,52 +1,41 @@
-import { useFetch } from "../../../hooks/UseFetch";
-import Carrousel from "../../ui/Carrousel/Carrousel";
-import { SliderGenerico } from "../../ui/ItemSlider/ItemSlider";
+import React, { useEffect, useState } from 'react';
+import Carrousel from '../../ui/Carrousel/Carrousel';
+import { SliderGenerico } from '../../ui/ItemSlider/ItemSlider';
+import { ICategoria, IEmpresa, IPromocion } from '../../../types/empresa';
 
-export const Home = () => {
-  /*
-  const {
-    data: categorias,
-    loading: loadingCategorias,
-    error: errorCategorias,
-  } = useFetch<[]>("http://localhost:8080/categorias");
-  */
-  //HARDCODEOOO
+export const Home: React.FC = () => {
+  const [categorias, setCategorias] = useState<ICategoria[]>([]);
+  const [empresas, setEmpresas] = useState<IEmpresa[]>([]);
+  const [promociones, setPromociones] = useState<IPromocion[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const categorias = [
-    { id: 1, nombre: "Electrónica", imagen: "ruta-a-imagen1.jpg" },
-    { id: 2, nombre: "Moda", imagen: "ruta-a-imagen2.jpg" },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categoriasData = await getCategorias();
+        const empresasData = await getEmpresas();
+        const promocionesData = await getPromociones();
 
-  const empresas = [
-    {
-      id: 101,
-      nombre: "Empresa A",
-      imagen: "ruta-a-imagen-empresa1.jpg",
-    },
-    {
-      id: 102,
-      nombre: "Empresa B",
-      imagen: "ruta-a-imagen-empresa2.jpg",
-    },
-  ];
+        setCategorias(categoriasData);
+        setEmpresas(empresasData);
+        setPromociones(promocionesData);
+      } catch (error) {
+        setError('Error al cargar los datos');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const promociones = [
-    {
-      id: 201,
-      nombre: "Promo 1",
-      imagen: "ruta-a-imagen-promo1.jpg",
-    },
-    {
-      id: 202,
-      nombre: "Promo 2",
-      imagen: "ruta-a-imagen-promo2.jpg",
-    },
-  ];
-  //FIN HARDCODEO
+    fetchData();
+  }, []);
+
+  if (loading) return <div>Cargando...</div>;
+  if (error) return <div>{error}</div>;
+
   return (
     <>
       <Carrousel />
-      {/* Pasar los datos a SliderGenerico */}
       <SliderGenerico items={categorias} />
       <SliderGenerico items={empresas} />
       <SliderGenerico items={promociones} />

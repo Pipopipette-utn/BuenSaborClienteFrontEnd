@@ -4,24 +4,22 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "@emotion/styled";
 
-// Define el estilo del componente Slider
 const StyledSlide = styled.div`
   text-align: center;
 `;
-// Interfaz para definir la estructura de los elementos en el slider
 interface SlideItem {
   id: number;
+  logo: string;
   imagen: string;
   nombre: string;
+  denominacion: string;
 }
 
-// Props para el componente Slider
 interface SliderProps {
   items: SlideItem[];
 }
 
 export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
-  // Configuración del slider
   const settings = {
     dots: true,
     infinite: true,
@@ -34,8 +32,8 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
     <Slider {...settings}>
       {items.map((item) => (
         <StyledSlide key={item.id}>
-          <img src={item.imagen} alt={item.nombre} />
-          <h3>{item.nombre}</h3>
+          <img src={item.imagen || item.logo} alt={item.nombre} />
+          <h3>{item.nombre || item.denominacion}</h3>
         </StyledSlide>
       ))}
     </Slider>

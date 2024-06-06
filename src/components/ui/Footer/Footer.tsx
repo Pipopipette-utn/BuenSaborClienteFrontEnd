@@ -4,7 +4,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { lightTheme } from "../../Themes/LightTheme";
 import "./Footer.css";
-//agregar los iconos de ig,x,face,yt
 
 function Footer() {
   return (
