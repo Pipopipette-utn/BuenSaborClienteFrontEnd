@@ -12,7 +12,7 @@ const useFetchArticulos = () => {
 
         const data = await response.json();
 
-        setArticulos(data.content);
+        setArticulos(data.content); // Reemplaza artículos existentes
         setTotalPages(data.totalPages);
       } catch (error) {
         console.error("Error trayendo artículos:", error);

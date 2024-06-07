@@ -20,7 +20,7 @@ export const lightTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Nunito Sans",
+    fontFamily: "Roboto, sans-serif",
     fontSize: 14,
     fontWeightMedium: 500,
     body1: {

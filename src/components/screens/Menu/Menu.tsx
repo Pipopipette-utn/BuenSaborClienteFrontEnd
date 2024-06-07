@@ -1,95 +1,73 @@
-import React, { ChangeEvent, Suspense } from "react";
-import { IArticulo } from "../../../types/empresa";
-import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
-import { Grid, Pagination, Stack } from "@mui/material";
+import React, { useState, useEffect, Suspense } from "react";
+import { LinearProgress, Stack } from "@mui/material";
 import { Carrito } from "../../ui/Carrito/Carrito";
-import { Buscador } from "./Buscador";
-import { useEffect, useState } from "react";
 import Sidebar from "../../ui/SideBar/Sidebar";
 import Loader from "../../ui/Loader/Loader";
 import { RootState } from "../../../redux/Store";
-import { useSelector } from "react-redux";
-import useFetchArticulos from "../../../hooks/useFetchArticulos";
-import useURL from "../../../hooks/useUrlArticulo";
+import { Catalogo } from "./Catalogo";
+import { ICategoria } from "../../../types/empresa";
+import { CategoriaService } from "../../../services/CategoriaService";
+import { useAppDispatch, useAppSelector } from "../../../redux/HookReducer";
+import {
+	setCategoriasSucursal,
+	setSelectedCategoriaId,
+} from "../../../redux/slices/SelectedData";
+import { SucursalService } from "../../../services/SucursalService";
 
 export const PantallaMenu: React.FC = () => {
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<
-    number | null
-  >(null);
-  const [page, setPage] = React.useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [terminoBusqueda, setTerminoBusqueda] = useState<string>("");
-  const [articulos, setArticulos] = useState<IArticulo[]>([]);
-  const fetchArticulos = useFetchArticulos();
-  const selectedCategoriaId = useSelector(
-    (state: RootState) => state.selectedData.selectedCategoriaId
-  );
-  const url = useURL(selectedCategoriaId, terminoBusqueda, page); //url dinamica que filtra categorias por sucursal
-  console.log(url);
-  //Carga los articulos
-  useEffect(() => {
-    fetchArticulos(url, setArticulos, setTotalPages);
-  }, [fetchArticulos, url]);
+	const dispatch = useAppDispatch();
+	const [selectedCategoria, setSelectedCategoria] = useState<ICategoria | null>(
+		null
+	);
+	const sucursal = useAppSelector(
+		(state: RootState) => state.selectedData.sucursal
+	);
+	const selectedCategoriaId = useAppSelector(
+		(state: RootState) => state.selectedData.selectedCategoriaId
+	);
+	const categoriasSucursal = useAppSelector(
+		(state: RootState) => state.selectedData.categoriasSucursal
+	);
 
-  const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
+	useEffect(() => {
+		const traerCategorias = async () => {
+			const sucursalService = new SucursalService("/sucursales");
+			const categorias = await sucursalService.getCategorias(2);
+			const filteredCategorias = categorias.filter((c) => c.esParaVender);
+			dispatch(setCategoriasSucursal(filteredCategorias));
+			dispatch(setSelectedCategoriaId(filteredCategorias[0].id!));
+		};
+		traerCategorias();
+	}, [sucursal]);
 
-  // Filtrar los artículos por categoría seleccionada
+	useEffect(() => {
+		const traerCategoria = async () => {
+			const categoriaService = new CategoriaService("/categorias");
+			if (selectedCategoriaId) {
+				const categoriaEncontrada = await categoriaService.getById(
+					selectedCategoriaId
+				);
+				if (categoriaEncontrada) setSelectedCategoria(categoriaEncontrada);
+			}
+		};
+		traerCategoria();
+	}, [selectedCategoriaId]);
 
-  useEffect(() => {
-    const articulosFiltrados = articulos?.filter(
-      (articulo) =>
-        (!selectedCategoriaId ||
-          articulo.categoriaId === selectedCategoriaId) &&
-        articulo.denominacion
-          .toLowerCase()
-          .includes(terminoBusqueda.toLowerCase())
-    );
-
-    setArticulos(articulosFiltrados);
-  }, [selectedCategoriaId, terminoBusqueda]);
-
-  return (
-    <>
-      {/* Renderiza el loader hasta que carguen todos los componentes */}
-      <Suspense fallback={<Loader />}>
-        <Buscador
-          onSearch={setTerminoBusqueda}
-          categoriaSeleccionada={categoriaSeleccionada}
-        />
-        <Grid container spacing={0}>
-          {/* Barra lateral */}
-          <Sidebar />
-
-          {/* Mapeo de artículos */}
-          <Grid item xs={6}>
-            <Grid container spacing={2}>
-              {articulos?.map((articulo) => {
-                console.log(articulo.denominacion);
-                return (
-                  <Grid item xs={6} key={articulo.id}>
-                    <CardArticulo articulo={articulo} />
-                  </Grid>
-                );
-              })}
-            </Grid>
-
-            <Stack direction="row" justifyContent="center">
-              <Pagination
-                count={totalPages}
-                page={page}
-                onChange={handlePageChange}
-              />
-            </Stack>
-          </Grid>
-
-          {/* Carrito */}
-          <Grid item xs>
-            <Carrito />
-          </Grid>
-        </Grid>
-      </Suspense>
-    </>
-  );
+	return (
+		<Suspense fallback={<Loader />}>
+			<Stack direction="row" width="100vw" spacing={4} sx={{ padding: 5 }}>
+				{categoriasSucursal ? (
+					<>
+						<Sidebar />
+						{selectedCategoria && <Catalogo categoria={selectedCategoria} />}
+						<Carrito />
+					</>
+				) : (
+					<LinearProgress sx={{ width: "100%" }} />
+				)}
+			</Stack>
+		</Suspense>
+	);
 };
+
+export default PantallaMenu;
