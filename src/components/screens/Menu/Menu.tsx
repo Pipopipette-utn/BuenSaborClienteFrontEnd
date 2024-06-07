@@ -11,6 +11,8 @@ import { RootState } from "../../../redux/Store";
 import { useSelector } from "react-redux";
 import useFetchArticulos from "../../../hooks/useFetchArticulos";
 import useURL from "../../../hooks/useUrlArticulo";
+import { useFetch } from "../../../hooks/UseFetch";
+import useFetchArticulosInsumo from "../../../hooks/useFetchInsumo";
 
 export const PantallaMenu: React.FC = () => {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<
@@ -20,35 +22,49 @@ export const PantallaMenu: React.FC = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [terminoBusqueda, setTerminoBusqueda] = useState<string>("");
   const [articulos, setArticulos] = useState<IArticulo[]>([]);
+  const [articulosInsumos, setArticulosInsumos] = useState<IArticulo[]>([]);
+
+  //  const { data: articulosInsumo } = useFetch<IArticulo[]>(  "/articulosInsumos/paged/insumosDirectos");
+  //const articulosInsumo = useFetchArticulosInsumo();
   const fetchArticulos = useFetchArticulos();
+  const fetchArticulosInsumo = useFetchArticulosInsumo();
   const selectedCategoriaId = useSelector(
     (state: RootState) => state.selectedData.selectedCategoriaId
   );
-  const url = useURL(selectedCategoriaId, terminoBusqueda, page); //url dinamica que filtra categorias por sucursal
-  console.log(url);
-  //Carga los articulos
+
+  const urlInsumos = useURL(
+    selectedCategoriaId,
+    terminoBusqueda,
+    page,
+    "insumosDirectos"
+  );
+  const urlManufacturados = useURL(
+    selectedCategoriaId,
+    terminoBusqueda,
+    page,
+    "manufacturados"
+  );
+  // Carga los artículos manufacturados
   useEffect(() => {
-    fetchArticulos(url, setArticulos, setTotalPages);
-  }, [fetchArticulos, url]);
+    fetchArticulos(urlManufacturados, setArticulos, setTotalPages);
+  }, [fetchArticulos, urlManufacturados]);
+
+  // Carga los artículos de insumos directos
+  useEffect(() => {
+    fetchArticulosInsumo(urlInsumos).then((data) => {
+      if (data) {
+        // Actualizar el estado de los artículos de insumo
+        setArticulosInsumos(data.content);
+        setTotalPages(data.totalPages);
+      }
+    });
+  }, [urlInsumos]);
+
+  const allArticulos = [...articulos, ...articulosInsumos];
 
   const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
-
-  // Filtrar los artículos por categoría seleccionada
-
-  useEffect(() => {
-    const articulosFiltrados = articulos?.filter(
-      (articulo) =>
-        (!selectedCategoriaId ||
-          articulo.categoriaId === selectedCategoriaId) &&
-        articulo.denominacion
-          .toLowerCase()
-          .includes(terminoBusqueda.toLowerCase())
-    );
-
-    setArticulos(articulosFiltrados);
-  }, [selectedCategoriaId, terminoBusqueda]);
 
   return (
     <>
@@ -65,7 +81,7 @@ export const PantallaMenu: React.FC = () => {
           {/* Mapeo de artículos */}
           <Grid item xs={6}>
             <Grid container spacing={2}>
-              {articulos?.map((articulo) => {
+              {allArticulos?.map((articulo) => {
                 console.log(articulo.denominacion);
                 return (
                   <Grid item xs={6} key={articulo.id}>

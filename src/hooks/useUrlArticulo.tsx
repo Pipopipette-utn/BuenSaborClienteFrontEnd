@@ -4,23 +4,39 @@ import { baseUrl } from "../App";
 const useURL = (
   selectedCategoriaId: number | null,
   terminoBusqueda: string,
-  page: number
+  page: number,
+  endpointType: string // Nuevo parámetro para indicar el tipo de endpoint
 ) => {
   const generarURL = useMemo(() => {
     console.log("Id dentro de generarUrl: ", selectedCategoriaId);
     const params = new URLSearchParams({
-      //categoriaId: selectedCategoriaId?.toString(),     //explota con esto
       nombre: terminoBusqueda,
       page: (page - 1).toString(),
-      size: "6",
+      size: "3",
     });
 
     if (selectedCategoriaId) {
       params.append("categoriaId", selectedCategoriaId.toString());
     }
 
-    return `${baseUrl}/articulosManufacturados/filtrar/${2}?${params}`; //el numero es de la sucursal
-  }, [selectedCategoriaId, terminoBusqueda, page]);
+    let endpoint = "";
+
+    // Construye la parte específica de la URL según el tipo de endpoint
+    switch (endpointType) {
+      case "manufacturados":
+        endpoint = "articulosManufacturados/filtrar/1";
+        break;
+      case "insumosDirectos":
+        endpoint = "articulosInsumos/paged/insumosDirectos";
+        break;
+
+      default:
+        // Endpoint por defecto
+        endpoint = "articulosManufacturados/filtrar/1";
+    }
+
+    return `${baseUrl}/${endpoint}?${params}`;
+  }, [selectedCategoriaId, terminoBusqueda, page, endpointType]);
 
   return generarURL;
 };
