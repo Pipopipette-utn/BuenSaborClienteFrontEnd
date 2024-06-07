@@ -1,24 +1,24 @@
-import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/HookReducer";
 import { RootState } from "../../../redux/Store";
-import { setSelectedCategoriaId } from "../../../redux/slices/SelectedData";
+import { setSelectedCategoria } from "../../../redux/slices/SelectedData";
 import { Accordion, AccordionDetails, AccordionSummary, List, Stack, Typography } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CategoryButton from "../CategoryButton/CategoryButton";
+import { ICategoria } from "../../../types/empresa";
 
 const Sidebar = () => {
 	const dispatch = useAppDispatch();
 
-	const selectedCategoriaId = useAppSelector(
-		(state: RootState) => state.selectedData.selectedCategoriaId
+	const selectedCategoria = useAppSelector(
+		(state: RootState) => state.selectedData.selectedCategoria
 	);
 	const categoriasSucursal = useAppSelector(
 		(state: RootState) => state.selectedData.categoriasSucursal
 	);
 
-	const handleCategoriaClick = (categoriaId: number | null) => {
-		dispatch(setSelectedCategoriaId(categoriaId));
-		console.log("Hiciste click en : ", categoriaId);
+	const handleCategoriaClick = (categoria: ICategoria | null) => {
+		dispatch(setSelectedCategoria(categoria));
+		console.log("Hiciste click en : ", categoria);
 	};
 
 	return (
@@ -41,17 +41,17 @@ const Sidebar = () => {
 										{categoria.subCategorias.map((subCategoria) => (
 											<CategoryButton
 												key={subCategoria.id}
-												selected={selectedCategoriaId === subCategoria.id}
+												selected={selectedCategoria === subCategoria}
 												label={subCategoria.denominacion}
-												onClick={() => handleCategoriaClick(subCategoria.id ?? null)}
+												onClick={() => handleCategoriaClick(subCategoria ?? null)}
 											/>
 										))}
 									</List>
 								) : (
 									<CategoryButton
-										selected={selectedCategoriaId === categoria.id}
+										selected={selectedCategoria === categoria}
 										label={categoria.denominacion}
-										onClick={() => handleCategoriaClick(categoria.id ?? null)}
+										onClick={() => handleCategoriaClick(categoria ?? null)}
 									/>
 								)}
 							</AccordionDetails>

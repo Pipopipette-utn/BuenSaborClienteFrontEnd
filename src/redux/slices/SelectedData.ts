@@ -7,7 +7,7 @@ interface IInitialState {
 	sucursal: ISucursal | null;
 	categoriasSucursal: ICategoria[] | null;
 	items: IArticulo[];
-	selectedCategoriaId: number | null;
+	selectedCategoria: ICategoria | null;
 }
 
 const initialState: IInitialState = {
@@ -16,7 +16,7 @@ const initialState: IInitialState = {
 	sucursal: null,
 	categoriasSucursal: null,
 	items: [],
-	selectedCategoriaId: null
+	selectedCategoria: null
 };
 
 //acá definimos el estado global
@@ -39,8 +39,8 @@ const SelectedDataSlice = createSlice({
 		setArticulos: (state, action: PayloadAction<IArticulo[]>) => {
 			state.items = action.payload;
 		},
-		setSelectedCategoriaId: (state, action: PayloadAction<number | null>) => {
-			state.selectedCategoriaId = action.payload;
+		setSelectedCategoria: (state, action: PayloadAction<ICategoria | null>) => {
+			state.selectedCategoria = action.payload;
 		},
 	},
 });
@@ -51,6 +51,6 @@ export const {
 	setSucursal,
 	setCategoriasSucursal,
 	setArticulos,
-	setSelectedCategoriaId
+	setSelectedCategoria
 } = SelectedDataSlice.actions;
 export default SelectedDataSlice.reducer;

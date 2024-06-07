@@ -9,7 +9,7 @@ const useURL = (
 ) => {
 	const generarURL = useMemo(() => {
 		const params = new URLSearchParams({
-			//categoriaId: selectedCategoriaId?.toString(),     //explota con esto
+			//categoriaId: selectedCategoria?.toString(),     //explota con esto
 			nombre: terminoBusqueda,
 			page: (page - 1).toString(),
 			size: "6",
@@ -37,7 +37,7 @@ export const generarURL = (
 	page: number
 ) => {
 	const params = new URLSearchParams({
-		//categoriaId: selectedCategoriaId?.toString(),     //explota con esto
+		//categoriaId: selectedCategoria?.toString(),     //explota con esto
 		nombre: terminoBusqueda,
 		page: (page - 1).toString(),
 		size: "6",
