@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Carrousel from "../../ui/Carrousel/Carrousel";
 import { SliderGenerico } from "../../ui/ItemSlider/ItemSlider";
 import {
-	ICategoria,
 	IEmpresa,
 	IPromocion,
 	ISucursal,
@@ -17,9 +16,6 @@ export const Home: React.FC = () => {
 	//const [loading, setLoading] = useState(true);
 	//const [error, setError] = useState<string | null>(null);
 
-	const { data: categorias, loading: loadingCategorias } = useFetch<
-		ICategoria[]
-	>("/categorias/parents");
 	const { data: sucursales } = useFetch<ISucursal[]>("/sucursales");
 	const { data: promociones } = useFetch<IPromocion[]>("/promociones");
 
@@ -44,14 +40,12 @@ export const Home: React.FC = () => {
     fetchData();
   }, []);
 */
-	if (loadingCategorias) return <div>Cargando...</div>;
 	//if (error) return <div>{error}</div>;
 
 	return (
 		<>
 			<Carrousel />
 			<Stack spacing={8} paddingTop={8}>
-				<SliderGenerico items={categorias} />
 				<SliderGenerico items={sucursales} />
 				<SliderGenerico items={promociones} />
 			</Stack>
