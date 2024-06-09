@@ -1,5 +1,5 @@
-import React, { useEffect, Suspense } from "react";
-import { LinearProgress, Stack } from "@mui/material";
+import React, { useEffect, useState, Suspense } from "react";
+import { LinearProgress, Stack, Typography } from "@mui/material";
 import { Carrito } from "../../ui/Carrito/Carrito";
 import Sidebar from "../../ui/SideBar/Sidebar";
 import Loader from "../../ui/Loader/Loader";
@@ -24,16 +24,33 @@ export const PantallaMenu: React.FC = () => {
 		(state: RootState) => state.selectedData.categoriasSucursal
 	);
 
+	const [isOpen, setIsOpen] = useState<boolean>(true);
+
 	useEffect(() => {
-		const traerCategorias = async () => {
+		const traerCategoriasYHorario = async () => {
 			const sucursalService = new SucursalService("/sucursales");
 			const categorias = await sucursalService.getCategorias(2);
 			const filteredCategorias = categorias.filter((c) => c.esParaVender);
 			dispatch(setCategoriasSucursal(filteredCategorias));
 			dispatch(setSelectedCategoria(filteredCategorias[0]));
+
+			const sucursalData = await sucursalService.getSucursal(2);
+			const { horarioApertura, horarioCierre } = sucursalData;
+
+			const now = new Date();
+			const apertura = new Date();
+			const cierre = new Date();
+			const [horaApertura, minutoApertura] = horarioApertura.split(":").map(Number);
+			const [horaCierre, minutoCierre] = horarioCierre.split(":").map(Number);
+
+			apertura.setHours(horaApertura, minutoApertura, 0);
+			cierre.setHours(horaCierre, minutoCierre, 0);
+
+			setIsOpen(now >= apertura && now <= cierre);
 		};
-		traerCategorias();
-	}, [sucursal]);
+
+		traerCategoriasYHorario();
+	}, [sucursal, dispatch]);
 
 	return (
 		<Suspense fallback={<Loader />}>
@@ -42,7 +59,13 @@ export const PantallaMenu: React.FC = () => {
 					<>
 						<Sidebar />
 						{selectedCategoria && <Catalogo categoria={selectedCategoria} />}
-						<Carrito />
+						{isOpen ? (
+							<Carrito />
+						) : (
+							<Typography variant="h6" color="error">
+								Pedidos no disponibles en este horario.
+							</Typography>
+						)}
 					</>
 				) : (
 					<LinearProgress sx={{ width: "100%" }} />
