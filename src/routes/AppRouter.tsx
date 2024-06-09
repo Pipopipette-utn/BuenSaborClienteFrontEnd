@@ -9,6 +9,7 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import "./button.css";
 //import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
 import { useThemeToggle } from "../components/Utils/ThemeUtil";
+import { HistorialPedidos } from "../components/screens/HistorialPedidos/HistorialPedidos";
 
 export const AppRouter = () => {
 	const { currentTheme, toggleTheme } = useThemeToggle();
@@ -21,6 +22,7 @@ export const AppRouter = () => {
 					<Route path="/menu" element={<PantallaMenu />} />
 					<Route path="/pedido" element={<Pedido />} />
 					<Route path="/cuenta" element={<Cuenta />} />
+					<Route path="/historial" element={<HistorialPedidos />} />
 					{
 						//        <Route path="/categorias/:category" element={<Categorias />} />
 					}
