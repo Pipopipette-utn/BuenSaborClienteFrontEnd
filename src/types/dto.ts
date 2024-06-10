@@ -1,5 +1,6 @@
 import { IArticuloManufacturadoDetalle, ISucursal } from "./empresa";
 import { FormaPago, TipoEnvio } from "./enums";
+import { ICliente } from "./persona";
 import { IDomicilio } from "./ubicacion";
 
 interface BaseEntityDTO {
@@ -32,6 +33,7 @@ export interface IPedidoDTO extends BaseEntityDTO {
 	tipoEnvio: TipoEnvio;
 	formaPago: FormaPago;
 	domicilio?: IDomicilio;
+	cliente?: IClienteDTO;
 	sucursal?: ISucursalDTO;		//Sacar "?" cuando ande bien bien
 	detallePedidos?: IDetallePedidoPostDTO[];
 }
@@ -41,3 +43,5 @@ export interface IDetallePedidoPostDTO {
 	subTotal?: number;
 	articulo: IArticuloPedidoDTO;
 }
+
+export interface IClienteDTO extends BaseEntityDTO{}

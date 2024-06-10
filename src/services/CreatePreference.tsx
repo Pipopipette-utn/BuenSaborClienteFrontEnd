@@ -1,23 +1,15 @@
-import PreferenceMP from "../types/PreferenceMP";
+import { baseUrl } from "../App";
+import { PreferenceMp } from "../types/PreferenceMP";
+import { IPedidoDTO } from "../types/dto";
 import { IPedido } from "../types/pedido";
 
-export async function createPreferenceMP(pedido: IPedido): Promise<PreferenceMP> {
-    const { id, fechaPedido, total } = pedido;
-    
-    const { data, error, status } = await 
-      .from('pedidos')
-      .insert([
-        { id, fechaPedido: fechaPedido.toISOString(), total }
-      ]);
-  
-    if (error) {
-      throw new Error(`Failed to insert pedido: ${error.message}`);
-    }
-  
-    const preferenceMP: PreferenceMP = {
-      id: data[0].id,
-      statusCode: status
-    };
-  
-    return preferenceMP;
-  }
+export async function createPreferenceMp(pedido: IPedidoDTO) {
+  const response = await fetch(baseUrl + "/mercadoPago/preference_mp", {
+    method: "POST",
+    body: JSON.stringify(pedido),
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+  return (await response.json()) as PreferenceMp;
+}

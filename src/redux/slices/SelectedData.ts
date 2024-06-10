@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IArticulo, ICategoria, IEmpresa, ISucursal } from "../../types/empresa";
+import { IPedidoDTO } from "../../types/dto";
 
 interface IInitialState {
 	empresa: IEmpresa | null;
@@ -8,6 +9,7 @@ interface IInitialState {
 	categoriasSucursal: ICategoria[] | null;
 	items: IArticulo[];
 	selectedCategoria: ICategoria | null;
+	pedido: IPedidoDTO | null;
 }
 
 const initialState: IInitialState = {
@@ -16,7 +18,8 @@ const initialState: IInitialState = {
 	sucursal: null,
 	categoriasSucursal: null,
 	items: [],
-	selectedCategoria: null
+	selectedCategoria: null,
+	pedido: null,
 };
 
 //acá definimos el estado global
@@ -42,6 +45,9 @@ const SelectedDataSlice = createSlice({
 		setSelectedCategoria: (state, action: PayloadAction<ICategoria | null>) => {
 			state.selectedCategoria = action.payload;
 		},
+		setNewPedido: (state, action: PayloadAction<IPedidoDTO | null>) => {
+			state.pedido = action.payload;
+		},
 	},
 });
 
@@ -51,6 +57,7 @@ export const {
 	setSucursal,
 	setCategoriasSucursal,
 	setArticulos,
-	setSelectedCategoria
+	setSelectedCategoria,
+	setNewPedido
 } = SelectedDataSlice.actions;
 export default SelectedDataSlice.reducer;
