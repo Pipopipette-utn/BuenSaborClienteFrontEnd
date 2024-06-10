@@ -61,8 +61,11 @@ export const emptyPedidoDto: IPedidoDTO = {
 		total: 0,
 		tipoEnvio: TipoEnvio.DELIVERY,
 		formaPago: FormaPago.EFECTIVO,
+		cliente: {
+			id: 0,
+		},
 		sucursal: {
-		  id: 0,
+			id: 0,
 		},
 		detallePedidos: [],
 }
