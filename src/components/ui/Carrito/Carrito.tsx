@@ -46,7 +46,6 @@ export function Carrito() {
   const dispatch = useAppDispatch();
   const [envio, setEnvio] = useState<TipoEnvio>(TipoEnvio.DELIVERY);
   const [pedido, setPedido] = useState<IPedidoDTO>(emptyPedidoDto);
-  const [showAddressModal, setShowAddressModal] = useState(false);
 
   const [showMercadoPagoButton, setShowMercadoPagoButton] = useState(false);
 
@@ -60,7 +59,11 @@ export function Carrito() {
   };
 
   const calculateTotal = () => {
-    return calculateSubtotal();
+    let total = calculateSubtotal();
+    if (envio === TipoEnvio.TAKE_AWAY) {
+      total *= 0.9; // aplica el 10% de descuento
+    }
+    return total;
   };
 
   const mercadoPagoButton = useMemo(() => {
@@ -108,8 +111,6 @@ export function Carrito() {
       //setShowMercadoPagoButton(true);                     //Descomentar cuando funcione
       console.log("Pedido guardado con éxito", response);
       handleShowSuccess("Pedido guardado con éxito!");
-      //Aqui quiero que se muestre el modal
-      setShowAddressModal(true);
     } catch (error: any) {
       handleShowError("Error al crear el pedido: " + error);
       console.error("Error al guardar el pedido", error);
