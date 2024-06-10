@@ -32,11 +32,23 @@ import { IArticuloManufacturado } from "../../../types/empresa";
 import { useAppDispatch, useAppSelector } from "../../../redux/HookReducer";
 import { SuccessMessage } from "../commons/SuccessMessage";
 import { ErrorMessage } from "../commons/ErrorMessage";
+import { AddressModal } from "./AddressModal";
+import { emptyPedidoDto } from "../../../types/emptyEntities";
+import { setNewPedido } from "../../../redux/slices/SelectedData";
+
+// Función que retorna las direcciones guardadas del cliente [IMPLEMENTAR FILTRANDO SOLO LAS UBICACIONES? EN SERVICE]
+const getSavedAddresses = () => {
+  return ["Dirección 1", "Dirección 2", "Dirección 3"]; // HARDCODEOOO
+};
 
 export function Carrito() {
   const items = useAppSelector((state: RootState) => state.cart.items);
   const dispatch = useAppDispatch();
   const [envio, setEnvio] = useState<TipoEnvio>(TipoEnvio.DELIVERY);
+  const [pedido, setPedido] = useState<IPedidoDTO>(emptyPedidoDto);
+  const [showAddressModal, setShowAddressModal] = useState(false);
+
+  const [selectedAddress, setSelectedAddress] = useState("");
 
   const calculateSubtotal = () => {
     return items.reduce(
@@ -74,9 +86,13 @@ export function Carrito() {
       };
 
       console.log(newPedido);
+      //setPedido(newPedido); //Local, borrar posiblemente
+      dispatch(setNewPedido(newPedido)); //con Redux
       const response = await pedidoService.create(newPedido);
       console.log("Pedido guardado con éxito", response);
       handleShowSuccess("Pedido guardado con éxito!");
+      //Aqui quiero que se muestre el modal
+      setShowAddressModal(true);
     } catch (error: any) {
       handleShowError("Error al crear el pedido: " + error);
       console.error("Error al guardar el pedido", error);
@@ -112,7 +128,9 @@ export function Carrito() {
               <ListItem>
                 <ListItemText
                   primary={item.articulo.denominacion}
-                  secondary={`Cantidad: ${item.cantidad} - Precio: $${item.articulo.precioVenta * item.cantidad}`}
+                  secondary={`Cantidad: ${item.cantidad} - Precio: $${
+                    item.articulo.precioVenta * item.cantidad
+                  }`}
                 />
                 <ListItemSecondaryAction>
                   <IconButton
@@ -149,7 +167,7 @@ export function Carrito() {
           <ListItem>
             <ListItemText primary={`Total: $${calculateTotal()}`} />
           </ListItem>
-
+          {/* Botones de tipo de envio y metodo de pago, pueden ir en un componente */}
           <ListItem>
             <FormControl fullWidth>
               <InputLabel id="tipo-envio-label">Tipo de Envío</InputLabel>
@@ -160,12 +178,62 @@ export function Carrito() {
                 label="Tipo de Envío"
                 onChange={(e) => setEnvio(e.target.value as TipoEnvio)}
               >
-                <MenuItem value={TipoEnvio.DELIVERY}>Envío a domicilio</MenuItem>
-                <MenuItem value={TipoEnvio.TAKE_AWAY}>Retiro en sucursal</MenuItem>
+                <MenuItem value={TipoEnvio.DELIVERY}>
+                  Envío a domicilio
+                </MenuItem>
+                <MenuItem value={TipoEnvio.TAKE_AWAY}>
+                  Retiro en sucursal
+                </MenuItem>
               </Select>
             </FormControl>
           </ListItem>
+          <ListItem>
+            <FormControl fullWidth>
+              <InputLabel id="forma-pago-label">Forma de Pago</InputLabel>
+              <Select
+                labelId="forma-pago-label"
+                id="forma-pago-select"
+                value={pedido.formaPago}
+                label="Forma de Pago"
+                onChange={(e) =>
+                  setPedido({
+                    ...pedido,
+                    formaPago: e.target.value as FormaPago,
+                  })
+                }
+                disabled={envio === TipoEnvio.DELIVERY} // Deshabilita el select si el tipo de envío es retiro
+              >
+                <MenuItem value={FormaPago.MERCADO_PAGO}>Mercado Pago</MenuItem>
 
+                {envio !== TipoEnvio.DELIVERY && (
+                  <MenuItem value={FormaPago.EFECTIVO}>Efectivo</MenuItem>
+                )}
+              </Select>
+            </FormControl>
+          </ListItem>
+          {/** Aca se elige domicilio*/}
+          {envio === TipoEnvio.DELIVERY && (
+            <ListItem>
+              <FormControl fullWidth>
+                <InputLabel id="domicilio-cliente-label">
+                  Domicilio del Cliente
+                </InputLabel>
+                <Select
+                  labelId="domicilio-cliente-label"
+                  id="domicilio-cliente-select"
+                  value={selectedAddress}
+                  label="Seleccione el domicilio a enviar"
+                  onChange={(e) => setSelectedAddress(e.target.value as string)}
+                >
+                  {getSavedAddresses().map((address) => (
+                    <MenuItem key={address} value={address}>
+                      {address}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </ListItem>
+          )}
           <ListItem>
             <Button
               variant="contained"
@@ -175,13 +243,26 @@ export function Carrito() {
             >
               Cancelar
             </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleGuardarCarrito}
-            >
-              Guardar Carrito
-            </Button>
+            {envio === TipoEnvio.DELIVERY ||
+            pedido.formaPago === FormaPago.MERCADO_PAGO ? (
+              //En caso de envio
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleGuardarCarrito}
+              >
+                Guardar Carrito
+              </Button>
+            ) : (
+              //En caso de retiro
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleGuardarCarrito}
+              >
+                Pagar
+              </Button>
+            )}
           </ListItem>
         </List>
       )}
@@ -194,6 +275,10 @@ export function Carrito() {
         open={!!showError}
         onClose={handleCloseError}
         message={showError}
+      />
+      <AddressModal
+        open={showAddressModal}
+        onClose={() => setShowAddressModal(false)}
       />
     </Stack>
   );
