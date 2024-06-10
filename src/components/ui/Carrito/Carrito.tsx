@@ -96,7 +96,10 @@ export function Carrito() {
         },
         detallePedidos: detallesPedido,
       };
-      setShowMercadoPagoButton(true);
+      newPedido.formaPago === FormaPago.MERCADO_PAGO
+        ? setShowMercadoPagoButton(true)
+        : null;
+
       console.log("El pedido de redux: ", pedido);
       console.log("Pedido creado: ", newPedido);
       //setPedido(newPedido); //Local, borrar posiblemente
