@@ -32,7 +32,6 @@ import { IArticuloManufacturado } from "../../../types/empresa";
 import { useAppDispatch, useAppSelector } from "../../../redux/HookReducer";
 import { SuccessMessage } from "../commons/SuccessMessage";
 import { ErrorMessage } from "../commons/ErrorMessage";
-import { AddressModal } from "./AddressModal";
 import { emptyPedidoDto } from "../../../types/emptyEntities";
 import { setNewPedido } from "../../../redux/slices/SelectedData";
 import { CheckoutMp } from "../../MP/CheckoutMP";
@@ -88,7 +87,7 @@ export function Carrito() {
       const newPedido: IPedidoDTO = {
         total: calculateTotal(),
         tipoEnvio: envio,
-        formaPago: FormaPago.EFECTIVO,
+        formaPago: pedido.formaPago,
         cliente: {
           id: 6, //reemplazar con un id que guardare en un slice
         },
@@ -98,7 +97,8 @@ export function Carrito() {
         detallePedidos: detallesPedido,
       };
       setShowMercadoPagoButton(true);
-      console.log(newPedido);
+      console.log("El pedido de redux: ", pedido);
+      console.log("Pedido creado: ", newPedido);
       //setPedido(newPedido); //Local, borrar posiblemente
       dispatch(setNewPedido(newPedido)); //con Redux
       const response = await pedidoService.create(newPedido);
@@ -292,10 +292,6 @@ export function Carrito() {
         open={!!showError}
         onClose={handleCloseError}
         message={showError}
-      />
-      <AddressModal
-        open={showAddressModal}
-        onClose={() => setShowAddressModal(false)}
       />
     </Stack>
   );
