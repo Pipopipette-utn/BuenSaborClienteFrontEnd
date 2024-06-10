@@ -89,8 +89,11 @@ export function Carrito() {
         total: calculateTotal(),
         tipoEnvio: envio,
         formaPago: FormaPago.EFECTIVO,
+        cliente: {
+          id: 6, //reemplazar con un id que guardare en un slice
+        },
         sucursal: {
-          id: 2,
+          id: 2, //reemplazar con un id que guardo en un slice
         },
         detallePedidos: detallesPedido,
       };
