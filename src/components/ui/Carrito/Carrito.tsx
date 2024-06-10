@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { RootState } from "../../../redux/Store";
 import {
   reduceItem,
@@ -35,6 +35,7 @@ import { ErrorMessage } from "../commons/ErrorMessage";
 import { AddressModal } from "./AddressModal";
 import { emptyPedidoDto } from "../../../types/emptyEntities";
 import { setNewPedido } from "../../../redux/slices/SelectedData";
+import { CheckoutMp } from "../../MP/CheckoutMP";
 
 // Función que retorna las direcciones guardadas del cliente [IMPLEMENTAR FILTRANDO SOLO LAS UBICACIONES? EN SERVICE]
 const getSavedAddresses = () => {
@@ -48,6 +49,8 @@ export function Carrito() {
   const [pedido, setPedido] = useState<IPedidoDTO>(emptyPedidoDto);
   const [showAddressModal, setShowAddressModal] = useState(false);
 
+  const [showMercadoPagoButton, setShowMercadoPagoButton] = useState(false);
+
   const [selectedAddress, setSelectedAddress] = useState("");
 
   const calculateSubtotal = () => {
@@ -60,6 +63,13 @@ export function Carrito() {
   const calculateTotal = () => {
     return calculateSubtotal();
   };
+
+  const mercadoPagoButton = useMemo(() => {
+    if (showMercadoPagoButton) {
+      return <CheckoutMp />;
+    }
+    return null;
+  }, [showMercadoPagoButton]);
 
   const handleGuardarCarrito = async () => {
     try {
@@ -84,11 +94,12 @@ export function Carrito() {
         },
         detallePedidos: detallesPedido,
       };
-
+      setShowMercadoPagoButton(true);
       console.log(newPedido);
       //setPedido(newPedido); //Local, borrar posiblemente
       dispatch(setNewPedido(newPedido)); //con Redux
       const response = await pedidoService.create(newPedido);
+      //setShowMercadoPagoButton(true);                     //Descomentar cuando funcione
       console.log("Pedido guardado con éxito", response);
       handleShowSuccess("Pedido guardado con éxito!");
       //Aqui quiero que se muestre el modal
@@ -234,36 +245,39 @@ export function Carrito() {
               </FormControl>
             </ListItem>
           )}
-          <ListItem>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => dispatch(clearItems())}
-              style={{ marginRight: "1rem" }}
-            >
-              Cancelar
-            </Button>
-            {envio === TipoEnvio.DELIVERY ||
-            pedido.formaPago === FormaPago.MERCADO_PAGO ? (
-              //En caso de envio
+          {mercadoPagoButton || (
+            <ListItem>
               <Button
                 variant="contained"
-                color="primary"
-                onClick={handleGuardarCarrito}
+                color="secondary"
+                onClick={() => dispatch(clearItems())}
+                style={{ marginRight: "1rem" }}
               >
-                Guardar Carrito
+                Cancelar
               </Button>
-            ) : (
-              //En caso de retiro
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleGuardarCarrito}
-              >
-                Pagar
-              </Button>
-            )}
-          </ListItem>
+
+              {envio === TipoEnvio.DELIVERY ||
+              pedido.formaPago === FormaPago.MERCADO_PAGO ? (
+                //En caso de envio
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleGuardarCarrito}
+                >
+                  Guardar Carrito
+                </Button>
+              ) : (
+                //En caso de retiro
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleGuardarCarrito}
+                >
+                  Pagar
+                </Button>
+              )}
+            </ListItem>
+          )}
         </List>
       )}
       <SuccessMessage
