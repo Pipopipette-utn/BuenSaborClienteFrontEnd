@@ -32,7 +32,7 @@ export interface IPedidoDTO extends BaseEntityDTO {
 	total: number;
 	tipoEnvio: TipoEnvio;
 	formaPago: FormaPago;
-	domicilio?: IDomicilio;
+	domicilio?: IDomicilioDTO;
 	cliente?: IClienteDTO;
 	sucursal?: ISucursalDTO;		//Sacar "?" cuando ande bien bien
 	detallePedidos?: IDetallePedidoPostDTO[];
@@ -45,3 +45,5 @@ export interface IDetallePedidoPostDTO {
 }
 
 export interface IClienteDTO extends BaseEntityDTO{}
+
+export interface IDomicilioDTO extends BaseEntityDTO{}
