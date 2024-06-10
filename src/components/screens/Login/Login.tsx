@@ -1,211 +1,85 @@
-import { Formik } from "formik";
+import Button from "react-bootstrap/esm/Button";
+import Form from "react-bootstrap/esm/Form";
+import styles from "./Login.module.css";
+import { FormEvent, useState } from "react";
+import { useAppDispatch } from "../../../redux/HookReducer";
 import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { setLogin } from "../../../redux/slices/Auth";
-import MuiTextField from "@mui/material/TextField";
-import {
-	Box,
-	InputAdornment,
-	Link,
-	Stack,
-	Typography,
-	styled,
-} from "@mui/material";
-import { theme } from "../../../styles/theme";
-import StoreIcon from "@mui/icons-material/Store";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import HttpsOutlinedIcon from "@mui/icons-material/HttpsOutlined";
-import GoogleIcon from "@mui/icons-material/Google";
-import MuiButton from "@mui/material/Button";
-import { useState } from "react";
-
-const TextFieldStyled = styled(MuiTextField)(({ theme }) => ({
-	borderRadius: "50px",
-	backgroundColor: "transparent",
-	border: `1px solid ${theme.palette.bg.light}`,
-	"& input": {
-		color: theme.palette.bg.light,
-		backgroundColor: "transparent",
-		borderRadius: "50px",
-	},
-	"& input:-webkit-autofill": {
-		backgroundColor: "transparent",
-		borderRadius: "50px",
-		color: "red",
-	},
-}));
-
-const Button = styled(MuiButton)(({ theme }) => ({
-	borderRadius: "50px",
-	padding: "16.5px 14px",
-	backgroundColor: theme.palette.bg.light,
-	textTransform: "uppercase",
-	color: theme.palette.info.main,
-	"&:hover": {
-		backgroundColor: theme.palette.bg.dark,
-	},
-}));
-
-const OutlinedButton = styled(MuiButton)(({ theme }) => ({
-	borderRadius: "50px",
-	border: "1px solid white",
-	padding: "16.5px 14px",
-	textTransform: "uppercase",
-	color: theme.palette.bg.light,
-	"&:hover": {
-		borderColor: theme.palette.primary.dark,
-	},
-}));
-
-interface LoginValues {
-	username: string;
-	password: string;
-}
+import { useForm } from "../../../hooks/useForm";
 
 export const Login = () => {
-	const usuarios = useAppSelector((state) => state.business.usuarios);
+  const [showPass, setShowPass] = useState(false);
+  const { values, handleChange } = useForm({
+    email: "",
+    password: "",
+  });
+  const { email, password } = values;
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-	const [error, setError] = useState("");
-	const initialValues = {
-		username: "",
-		password: "",
-	};
+  const handleSubmitForm = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:8080/clientes/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, clave: password }),
+      });
 
-	let loginSchema = Yup.object().shape({
-		username: Yup.string().trim().required("Este campo es requerido."),
-		password: Yup.string().required("Este campo es requerido."),
-	});
+      if (!response.ok) {
+        throw new Error("Usuario y/o Clave incorrectos, vuelva a intentar");
+      }
 
-	const navigate = useNavigate();
-	// Obtención del despachador de acciones de Redux
-	const dispatch = useAppDispatch();
+      const data = await response.json();
+      dispatch(setLogin({ user: data.usuario, rol: data.rol }));
+      navigate("/");
+    } catch (err) {
+      alert((err as Error).message);
+    }
+  };
 
-	const handleSubmitForm = async (values: LoginValues) => {
-		try {
-			const userFound = usuarios!.find(
-				(u: LoginValues) =>
-					u.username === values.username && u.password === values.password
-			);
-			if (userFound) {
-				setError("");
-				dispatch(setLogin(userFound));
-				navigate("/");
-			} else {
-				setError("Usuario o contraseña no encontrados.");
-			}
-		} catch (ex) {
-			alert(ex);
-		}
-	};
-
-	return (
-		<Box
-			className="box"
-			sx={{
-				width: "100%",
-				backgroundColor: theme.palette.primary.main,
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-			}}
-		>
-			<Stack
-				direction="column"
-				spacing={2}
-				sx={{
-					width: { mobile: "80%", xs: "60%", sm: "50%", md: "40%", xl: "30%" },
-					alignItems: "center",
-					pb: "3%",
-				}}
-			>
-				<StoreIcon
-					sx={{
-						width: "160px",
-						height: "160px",
-						color: theme.palette.bg.light,
-					}}
-				/>
-				<Formik
-					initialValues={initialValues}
-					validationSchema={loginSchema}
-					onSubmit={async (values) => await handleSubmitForm(values)}
-				>
-					{({
-						values,
-						errors,
-						touched,
-						handleChange,
-						handleBlur,
-						handleSubmit,
-						isSubmitting,
-						/* and other goodies */
-					}) => (
-						<>
-							<TextFieldStyled
-								fullWidth
-								placeholder="NOMBRE DE USUARIO"
-								name="username"
-								onChange={handleChange}
-								onBlur={handleBlur}
-								value={values.username}
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position="start">
-											<PersonOutlineOutlinedIcon
-												sx={{ color: theme.palette.bg.light }}
-											/>
-										</InputAdornment>
-									),
-								}}
-							/>
-							{errors.username && touched.username && errors.username}
-							<TextFieldStyled
-								fullWidth
-								placeholder="CONTRASEÑA"
-								type="password"
-								name="password"
-								onChange={handleChange}
-								onBlur={handleBlur}
-								value={values.password}
-								InputProps={{
-									startAdornment: (
-										<InputAdornment position="start">
-											<HttpsOutlinedIcon
-												sx={{ color: theme.palette.bg.light }}
-											/>
-										</InputAdornment>
-									),
-								}}
-							/>
-							{errors.password && touched.password && errors.password}
-							{error && (
-								<Typography variant="body1" color={theme.palette.bg.light}>
-									{error}
-								</Typography>
-							)}
-							<Button
-								fullWidth
-								type="submit"
-								disabled={isSubmitting}
-								onClick={(event) => {
-									event.preventDefault();
-									handleSubmit();
-								}}
-							>
-								Acceder
-							</Button>
-						</>
-					)}
-				</Formik>
-				<OutlinedButton fullWidth startIcon={<GoogleIcon />}>
-					Iniciar sesión con Google
-				</OutlinedButton>
-				<Stack sx={{ width: "100%", alignItems: "flex-end" }}>
-					<Link>¿Olvidaste tu contraseña?</Link>
-					<Link>Registrarse</Link>
-				</Stack>
-			</Stack>
-		</Box>
-	);
+  return (
+    <div className={styles.containerLogin}>
+      <div className={styles.containerForm}>
+        <span style={{ fontSize: "10vh" }} className="material-symbols-outlined">
+          account_circle
+        </span>
+        <Form onSubmit={handleSubmitForm}>
+          <Form.Group className="mb-3">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              onChange={handleChange}
+              value={email}
+              name="email"
+              type="email"
+              placeholder="Email"
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Contraseña</Form.Label>
+            <Form.Control
+              onChange={handleChange}
+              value={password}
+              name="password"
+              type={showPass ? "text" : "password"}
+              placeholder="Contraseña"
+            />
+          </Form.Group>
+          <Form.Check
+            type="switch"
+            onChange={() => setShowPass(!showPass)}
+            id="custom-switch"
+            label="Mostrar contraseña"
+          />
+          <div className="d-flex justify-content-center align-items-center mt-2">
+            <Button type="submit" variant="primary">
+              Ingresar
+            </Button>
+          </div>
+        </Form>
+      </div>
+    </div>
+  );
 };
