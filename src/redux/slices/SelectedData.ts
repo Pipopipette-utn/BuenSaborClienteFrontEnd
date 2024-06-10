@@ -47,6 +47,7 @@ const SelectedDataSlice = createSlice({
 		},
 		setNewPedido: (state, action: PayloadAction<IPedidoDTO | null>) => {
 			state.pedido = action.payload;
+			localStorage.setItem("SelectedDataSlice", JSON.stringify(state.pedido))
 		},
 	},
 });
