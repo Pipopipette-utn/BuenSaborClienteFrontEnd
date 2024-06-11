@@ -1,4 +1,6 @@
+import { IPedidoDTO } from "./dto"
 import { IArticulo, IArticuloManufacturado, IArticuloManufacturadoDetalle, ICategoria, IEmpresa, IImagen, ISucursal, IUnidadMedida } from "./empresa"
+import { FormaPago, TipoEnvio } from "./enums"
 import { ICarrito, IDetallePedido } from "./pedido"
 import { IDomicilio, ILocalidad, IProvincia } from "./ubicacion"
 
@@ -55,7 +57,21 @@ export const emptyArticulo: IArticulo = {
 	unidadMedidaId: 0,
 	esInsumo: false
 }
-
+export const emptyPedidoDto: IPedidoDTO = {
+		total: 0,
+		tipoEnvio: TipoEnvio.DELIVERY,
+		formaPago: FormaPago.MERCADO_PAGO,
+		domicilio: {
+			id: 0,
+		},
+		cliente: {
+			id: 0,
+		},
+		sucursal: {
+			id: 0,
+		},
+		detallePedidos: [],
+}
 export const emptyDetallePedido: IDetallePedido= {
 	baja: false,
 	cantidad: 0,

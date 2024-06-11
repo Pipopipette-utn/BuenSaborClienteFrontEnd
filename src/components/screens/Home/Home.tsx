@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
 import Carrousel from "../../ui/Carrousel/Carrousel";
 import { SliderGenerico } from "../../ui/ItemSlider/ItemSlider";
-import { ICategoria, IEmpresa, IPromocion } from "../../../types/empresa";
+import {
+	IEmpresa,
+	IPromocion,
+	ISucursal,
+} from "../../../types/empresa";
 import { useFetch } from "../../../hooks/UseFetch";
+import { Stack } from "@mui/material";
 
 export const Home: React.FC = () => {
-  //const [categorias, setCategorias] = useState<ICategoria[]>([]);
-  //const [empresas, setEmpresas] = useState<IEmpresa[]>([]);
-  //const [promociones, setPromociones] = useState<IPromocion[]>([]);
-  //const [loading, setLoading] = useState(true);
-  //const [error, setError] = useState<string | null>(null);
+	//const [categorias, setCategorias] = useState<ICategoria[]>([]);
+	//const [empresas, setEmpresas] = useState<IEmpresa[]>([]);
+	//const [promociones, setPromociones] = useState<IPromocion[]>([]);
+	//const [loading, setLoading] = useState(true);
+	//const [error, setError] = useState<string | null>(null);
 
-  const { data: categorias, loading: loadingCategorias } = useFetch<
-    ICategoria[]
-  >("/categorias/parents");
-  const { data: empresas } = useFetch("/sucursales");
-  const { data: promociones } = useFetch("/promociones");
+	const { data: sucursales } = useFetch<ISucursal[]>("/sucursales");
+	const { data: promociones } = useFetch<IPromocion[]>("/promociones");
 
-  /*
+	/*
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,15 +40,15 @@ export const Home: React.FC = () => {
     fetchData();
   }, []);
 */
-  if (loadingCategorias) return <div>Cargando...</div>;
-  //if (error) return <div>{error}</div>;
+	//if (error) return <div>{error}</div>;
 
-  return (
-    <>
-      <Carrousel />
-      <SliderGenerico items={categorias} />
-      <SliderGenerico items={empresas} />
-      <SliderGenerico items={promociones} />
-    </>
-  );
+	return (
+		<>
+			<Carrousel />
+			<Stack spacing={8} paddingTop={8}>
+				<SliderGenerico items={sucursales} />
+				<SliderGenerico items={promociones} />
+			</Stack>
+		</>
+	);
 };

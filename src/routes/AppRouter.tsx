@@ -7,36 +7,29 @@ import { Cuenta } from "../components/screens/Cuenta/Cuenta";
 import Footer from "../components/ui/Footer/Footer";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import "./button.css";
-import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
+//import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
 import { useThemeToggle } from "../components/Utils/ThemeUtil";
 
 export const AppRouter = () => {
-  const { currentTheme, toggleTheme } = useThemeToggle();
-  return (
-    <ThemeProvider theme={currentTheme}>
-      <>
-        <ResponsiveAppBar />
-        <Routes>
-          <Route 
-            path="/" element={<Home />}
-          />
-          <Route
-            path="/menu" element={<PantallaMenu />}
-          />
-          <Route
-            path="/pedido" element={<Pedido />}
-          />
-          <Route 
-          path="/cuenta" element={<Cuenta />}
-          />
-          {
-            //        <Route path="/categorias/:category" element={<Categorias />} />
-          }
-        </Routes>
-        <Footer />
-        <ThemeSwitch currentTheme={currentTheme} toggleTheme={toggleTheme} />
-      </>
-    </ThemeProvider>
-  );
+	const { currentTheme, toggleTheme } = useThemeToggle();
+	return (
+		<ThemeProvider theme={currentTheme}>
+			<>
+				<ResponsiveAppBar />
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/menu" element={<PantallaMenu />} />
+					<Route path="/pedido" element={<Pedido />} />
+					<Route path="/cuenta" element={<Cuenta />} />
+					{
+						//        <Route path="/categorias/:category" element={<Categorias />} />
+					}
+				</Routes>
+				<Footer />
+				{/*
+        <ThemeSwitch currentTheme={currentTheme} toggleTheme={toggleTheme} /> */}
+			</>
+		</ThemeProvider>
+	);
 };
 //import styles from "../components/Themes/ThemeSwitch/ThemeSwitch.module.css";

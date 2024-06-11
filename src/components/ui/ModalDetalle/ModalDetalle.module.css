@@ -1,35 +1,62 @@
 .modalBox {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  min-height: 90%;
+  max-height: 95%;
+  background-color: #fff; /* Ajustar para background.paper */
+  border: 2px solid #000;
+  border-radius: 20px;
+  box-shadow: 24px;
+  padding: 16px; /* Ajustar para p: 4 (4 * 4 = 16px) */
+  display: flex;
+  flex-direction: column; /* Asegura que los hijos se alineen verticalmente */
+  justify-content: space-between; /* Asegura que haya espacio entre los hijos */
+  box-sizing: border-box;
+}
+
+/* Dispositivos pequeños (sm) */
+@media (min-width: 600px) {
+  .modalBox {
+    width: 80%;
+  }
+}
+
+/* Dispositivos medianos (md) */
+@media (min-width: 960px) {
+  .modalBox {
+    width: 60%;
+  }
+}
+
+/* Dispositivos grandes (lg) */
+@media (min-width: 1280px) {
+  .modalBox {
     width: 45%;
-    min-height: 90%;
-    max-height: 95%;
-    background-color: #fff; /* Ajustar para background.paper */
-    border: 2px solid #000;
-    border-radius: 20px;
-    box-shadow: 24px;
-    padding: 16px; /* Ajustar para p: 4 (4 * 4 = 16px) */
   }
-  
-  .modalBoxMedia {
-    height: 240px;
-    border-radius: 20px;
-  }
-  
-  .incrementDecrementButton {
-    background-color: var(--primary-color); /* Ajustar para lightTheme.palette.primary.main */
-    border-radius: 1px;
-    margin-right: 10px;
-    margin-left: 10px;
-  }
-  
-  .addToCartButton {
-    margin-top: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-  
+}
+
+.modalBoxMedia {
+  height: 240px;
+  border-radius: 20px;
+  flex-shrink: 0; /* Asegura que la media no se reduzca */
+}
+
+.incrementDecrementButton {
+  background-color: var(--primary-color); /* Ajustar para lightTheme.palette.primary.main */
+  border-radius: 1px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.addToCartButton {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-shrink: 0; /* Asegura que el botón no se reduzca */
+  box-sizing: border-box;
+}

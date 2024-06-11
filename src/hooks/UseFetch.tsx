@@ -9,14 +9,15 @@ export function useFetch<T>(url: RequestInfo | URL) {
 
   useEffect(() => {
     const abortController = new AbortController(); //Evita que se haga la request al sv en caso de cerrar la pagina
-    setController(abortController);
-    const signal = abortController.signal;
+    //setController(abortController);
+    //const signal = abortController.signal;
 
     const fetchData = async () => {
       setLoading(true);
       setError(null);
+      console.log("fetching data")
       try {
-        const response = await fetch(baseUrl + url, { signal });
+        const response = await fetch(baseUrl + url);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

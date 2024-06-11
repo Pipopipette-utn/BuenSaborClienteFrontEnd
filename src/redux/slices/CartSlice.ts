@@ -45,7 +45,6 @@ const cartSlice = createSlice({
         state.items.push({
           articulo: articulo,
           cantidad: cantidad,
-         
         });
       }
       //Guarda en local storage

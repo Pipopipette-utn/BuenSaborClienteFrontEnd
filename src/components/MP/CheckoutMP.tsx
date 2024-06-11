@@ -1,39 +1,44 @@
-import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
-import { createPreferenceMP } from '../servicios/FuncionesApi';
-import { useState } from 'react';
-import PreferenceMP from '../../types/PreferenceMP';
+import React, { useEffect, useState, useMemo } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/Store";
+import { PreferenceMp } from "../../types/PreferenceMP";
+import { createPreferenceMp } from "../../services/CreatePreference";
+import { Wallet, initMercadoPago } from "@mercadopago/sdk-react";
 
+export const CheckoutMp: React.FC = () => {
+  const pedido = useSelector((state: RootState) => state.selectedData.pedido);
+  const items = useSelector((state: RootState) => state.cart.items);
+  const [idPreference, setIdPreference] = useState<string>("");
 
-function CheckoutMP ({montoCarrito = 0}) {
-
-    const [idPreference, setIdPreference] = useState<string>('');
-    
+  initMercadoPago("TEST-bd8b9416-db7c-459e-8f5f-bb08cf78c8e0", {
+    locale: "es-AR",
+  }); // Credencial de prueba
+  useEffect(() => {
     const getPreferenceMP = async () => {
-        if(montoCarrito > 0){
-            const response:PreferenceMP = await createPreferenceMP({id: 0, titulo:'Pedido Musical Hendrix', montoTotal: montoCarrito});
-            console.log("Preference id: " + response.id);
-            if(response)
-                setIdPreference(response.id);
-        }else{
-            alert("Agregue al menos un instrumento al carrito");
+      if (items.length > 0 && pedido) {
+        try {
+          const response: PreferenceMp = await createPreferenceMp(pedido);
+          console.log("Response: ", response);
+          console.log("Response id: ", response.id);
+          console.log(pedido);
+          if (response && response.id) {
+            setIdPreference(response.id);
+          }
+        } catch (error) {
+          console.error("Error creating preference: ", error);
         }
-      
-    }
+      } else {
+        alert("Agregue al menos un articulo al carrito");
+      }
+    };
 
-   
-    //es la Public Key se utiliza generalmente en el frontend.
-    initMercadoPago('TEST-f08f2d01-1222-43e9-a16c-5404897b393a', { locale: 'es-AR' });
-    
-    //redirectMode es optativo y puede ser self, blank o modal
-    return (
-        <div>
-            <button onClick={getPreferenceMP} className='btMercadoPago'>COMPRAR con <br></br> Mercado Pago</button>
-            <div className={idPreference ? 'divVisible' : 'divInvisible'}>
-            <Wallet initialization={{ preferenceId: idPreference, redirectMode:"blank" }} customization={{  texts:{ valueProp: 'smart_option'}}} />
-            </div>
-        </div>
-    );
+    getPreferenceMP();
+  }, [pedido]);
 
-}
-
-export default CheckoutMP
+  return idPreference ? (
+    <Wallet
+      initialization={{ preferenceId: idPreference }}
+      customization={{ texts: { valueProp: "smart_option" } }}
+    />
+  ) : null;
+};
