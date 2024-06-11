@@ -10,11 +10,10 @@ export const CheckoutMp: React.FC = () => {
   const items = useSelector((state: RootState) => state.cart.items);
   const [idPreference, setIdPreference] = useState<string>("");
 
+  initMercadoPago("TEST-bd8b9416-db7c-459e-8f5f-bb08cf78c8e0", {
+    locale: "es-AR",
+  }); // Credencial de prueba
   useEffect(() => {
-    initMercadoPago("TEST-bd8b9416-db7c-459e-8f5f-bb08cf78c8e0", {
-      locale: "es-AR",
-    }); // Credencial de prueba
-
     const getPreferenceMP = async () => {
       if (items.length > 0 && pedido) {
         try {
@@ -29,12 +28,12 @@ export const CheckoutMp: React.FC = () => {
           console.error("Error creating preference: ", error);
         }
       } else {
-        alert("Agregue al menos un instrumento al carrito");
+        alert("Agregue al menos un articulo al carrito");
       }
     };
 
     getPreferenceMP();
-  }, [items, pedido]);
+  }, [pedido]);
 
   return idPreference ? (
     <Wallet

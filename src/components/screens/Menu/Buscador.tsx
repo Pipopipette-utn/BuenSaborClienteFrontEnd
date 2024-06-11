@@ -50,7 +50,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export const Buscador: React.FC<BuscadorProps> = ({ onSearch, palabra }) => {
   const [filtro, setFiltro] = useState(palabra);
-
+  console.log("estoy en buscador");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFiltro(event.target.value);
   };

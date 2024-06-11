@@ -49,7 +49,9 @@ export function Carrito() {
 
   const [showMercadoPagoButton, setShowMercadoPagoButton] = useState(false);
 
-  const [selectedAddress, setSelectedAddress] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState(
+    getSavedAddresses()[0]
+  );
   //const [selectedAddress, setSelectedAddress] = useState<number>(0);
 
   const calculateSubtotal = () => {
@@ -92,9 +94,9 @@ export function Carrito() {
         total: calculateTotal(),
         tipoEnvio: envio,
         formaPago: pedido.formaPago,
-        domicilio: {
+        /* domicilio: {
           id: 10, // hardcodeado usar cliente.domicilio o un selectedDomicilio (total se listan los domicilios de ese cliente)
-        },
+        }, */
         cliente: {
           id: 6, //reemplazar con un id que guardare en un slice
         },
@@ -111,8 +113,7 @@ export function Carrito() {
         newPedido.domicilio?.id = selectedAddress;
       }
         */
-      console.log("El pedido de redux: ", pedido);
-      console.log("Pedido creado: ", newPedido);
+
       //setPedido(newPedido); //Local, borrar posiblemente
       dispatch(setNewPedido(newPedido)); //con Redux
       const response = await pedidoService.create(newPedido);
@@ -251,6 +252,9 @@ export function Carrito() {
                   label="Seleccione el domicilio a enviar"
                   onChange={(e) => setSelectedAddress(e.target.value as string)} //CAMBIAR CUANDO TENGA GET DOMICILIO
                 >
+                  {/*          <MenuItem value={getSavedAddresses()[0]}>
+                    {getSavedAddresses()[0]}
+                  </MenuItem> */}
                   {getSavedAddresses().map((address) => (
                     <MenuItem key={address} value={address}>
                       {address}

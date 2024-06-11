@@ -60,7 +60,7 @@ export const emptyArticulo: IArticulo = {
 export const emptyPedidoDto: IPedidoDTO = {
 		total: 0,
 		tipoEnvio: TipoEnvio.DELIVERY,
-		formaPago: FormaPago.EFECTIVO,
+		formaPago: FormaPago.MERCADO_PAGO,
 		domicilio: {
 			id: 0,
 		},
