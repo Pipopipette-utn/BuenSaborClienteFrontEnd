@@ -47,7 +47,6 @@ const cartSlice = createSlice({
           cantidad: cantidad,
         });
       }
-      //Guarda en local storage
       localStorage.setItem("cart", JSON.stringify(state.items))
     },
     reduceItem: (state, action: PayloadAction<IArticulo>) => {
@@ -61,13 +60,11 @@ const cartSlice = createSlice({
           state.items.splice(existingItemIndex, 1);
         }
       }
-      //Guarda en local storage
       localStorage.setItem("cart", JSON.stringify(state.items))
     },
     removeItem: (state, action: PayloadAction<IArticulo>) => {
       const articulo = action.payload;
       state.items = state.items.filter(item => item.articulo.id !== articulo.id);
-      //Guarda en local storage
       localStorage.setItem("cart", JSON.stringify(state.items))
     },
     clearItems: (state) => {

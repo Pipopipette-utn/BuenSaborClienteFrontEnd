@@ -19,10 +19,12 @@ const AuthUser = createSlice({
 		setLogin: (state, action: PayloadAction<IUsuario>) => {
 			state.user = action.payload;
 			state.isLogged = true;
+			localStorage.setItem("AuthUser", JSON.stringify(state));
 		},
 		setLogout: (state) => {
 			state.user = null;
 			state.isLogged = false;
+			localStorage.setItem("AuthUser", JSON.stringify(state));
 		},
 	},
 });

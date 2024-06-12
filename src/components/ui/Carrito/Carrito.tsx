@@ -134,6 +134,8 @@ export function Carrito() {
   const handleShowError = (message: string) => setShowError(message);
   const handleCloseError = () => setShowError("");
 
+  console.log("Render de carrito");
+
   return (
     <Stack
       className="cart"

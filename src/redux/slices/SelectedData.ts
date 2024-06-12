@@ -35,6 +35,7 @@ const SelectedDataSlice = createSlice({
 		},
 		setSucursal: (state, action: PayloadAction<ISucursal | null>) => {
 			state.sucursal = action.payload;
+			localStorage.setItem("SelectedDataSlice", JSON.stringify(state.sucursal))
 		},
 		setCategoriasSucursal: (state, action: PayloadAction<ICategoria[] | null>) => {
 			state.categoriasSucursal = action.payload;
