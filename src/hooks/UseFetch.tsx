@@ -15,7 +15,7 @@ export function useFetch<T>(url: RequestInfo | URL) {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
-      console.log("fetching data")
+      console.log("Estoy en useFetch");
       try {
         const response = await fetch(baseUrl + url);
         if (!response.ok) {

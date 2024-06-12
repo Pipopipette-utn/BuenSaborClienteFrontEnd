@@ -43,6 +43,9 @@ const getSavedAddresses = () => {
 
 export function Carrito() {
   const items = useAppSelector((state: RootState) => state.cart.items);
+  const sucursalId = useAppSelector(
+    (state: RootState) => state.selectedData.sucursal?.id
+  );
   const dispatch = useAppDispatch();
   const [envio, setEnvio] = useState<TipoEnvio>(TipoEnvio.DELIVERY);
   const [pedido, setPedido] = useState<IPedidoDTO>(emptyPedidoDto);
@@ -52,7 +55,6 @@ export function Carrito() {
   const [selectedAddress, setSelectedAddress] = useState(
     getSavedAddresses()[0]
   );
-  //const [selectedAddress, setSelectedAddress] = useState<number>(0);
 
   const calculateSubtotal = () => {
     return items.reduce(
@@ -101,24 +103,23 @@ export function Carrito() {
           id: 6, //reemplazar con un id que guardare en un slice
         },
         sucursal: {
-          id: 2, //reemplazar con un id que guardo en un slice
+          id: sucursalId,
         },
         detallePedidos: detallesPedido,
       };
-      newPedido.formaPago === FormaPago.MERCADO_PAGO
-        ? setShowMercadoPagoButton(true)
-        : null;
+
       /* //Descomentar cuando tenga un get domicilios
       if (newPedido.tipoEnvio === TipoEnvio.DELIVERY) {
         newPedido.domicilio?.id = selectedAddress;
       }
         */
 
-      //setPedido(newPedido); //Local, borrar posiblemente
-      dispatch(setNewPedido(newPedido)); //con Redux
+      dispatch(setNewPedido(newPedido));
       const response = await pedidoService.create(newPedido);
-      //setShowMercadoPagoButton(true);                     //Descomentar cuando funcione
       console.log("Pedido guardado con éxito", response);
+      newPedido.formaPago === FormaPago.MERCADO_PAGO
+        ? setShowMercadoPagoButton(true)
+        : null;
       handleShowSuccess("Pedido guardado con éxito!");
     } catch (error: any) {
       handleShowError("Error al crear el pedido: " + error);
