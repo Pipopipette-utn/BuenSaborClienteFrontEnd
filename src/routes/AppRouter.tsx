@@ -11,31 +11,38 @@ import "./button.css";
 import { useThemeToggle } from "../components/Utils/ThemeUtil";
 import { RutaPrivada } from "../controlAcceso/RutaPrivada";
 import { Rol } from "../types/enums";
+import RolUsuario from "../controlAcceso/RolUsuario";
+import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
+import { CssBaseline } from "@mui/material";
 
 export const AppRouter = () => {
-	const { currentTheme, toggleTheme } = useThemeToggle();
-	return (
-		<ThemeProvider theme={currentTheme}>
-			<>
-				<ResponsiveAppBar />
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/menu" element={<PantallaMenu />} />
-					<Route element={<Rol rol={Rol.USUARIO} />}></Route>
-					<Route path="/pedido" element= <RutaPrivada>{<Pedido />}<RutaPrivada/>/>
+  const { currentTheme, toggleTheme } = useThemeToggle();
+  return (
+    <ThemeProvider theme={currentTheme}>
+      <CssBaseline />
+      <>
+        <ResponsiveAppBar />
+        <ThemeSwitch currentTheme={currentTheme} toggleTheme={toggleTheme} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/menu" element={<PantallaMenu />} />
+          <Route element={<RolUsuario rol={Rol.CLIENTE} />}>
+            <Route path="/pedido" element={<Pedido />} />
+            <Route path="/cuenta" element={<Cuenta />} />
+          </Route>
+          {/* 
+					<Route element={<Rol rol={Rol.CLIENTE} />}>
+					<Route path="/pedido" element= <RutaPrivada>{<Pedido />}<RutaPrivada/>
 					</Route>
-					<Route element={<Rol rol={Rol.USUARIO} />}></Route>
-					<Route path="/cuenta" element= <RutaPrivada>{<Cuenta />}<RutaPrivada/>/>
 					</Route>
-					{
-						//        <Route path="/categorias/:category" element={<Categorias />} />
-					}
-				</Routes>
-				<Footer />
-				{/*
-        <ThemeSwitch currentTheme={currentTheme} toggleTheme={toggleTheme} /> */}
-			</>
-		</ThemeProvider>
-	);
+					<Route element={<Rol rol={Rol.CLIENTE} />}></Route>
+					<Route path="/cuenta" element= <RutaPrivada>{<Cuenta />}<RutaPrivada/>
+					</Route>
+
+ */}{" "}
+        </Routes>
+        <Footer />
+      </>
+    </ThemeProvider>
+  );
 };
-//import styles from "../components/Themes/ThemeSwitch/ThemeSwitch.module.css";
