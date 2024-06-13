@@ -71,7 +71,7 @@ export interface IImagen {
 
 export interface IUsuario extends BaseEntity {
 	username: string;
-	password: string;
+	email: string;
 }
 
 
