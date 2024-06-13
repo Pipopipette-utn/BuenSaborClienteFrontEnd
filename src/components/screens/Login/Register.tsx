@@ -6,6 +6,7 @@ import { useAppDispatch } from "../../../redux/HookReducer";
 import { useNavigate } from "react-router-dom";
 import { setLogin } from "../../../redux/slices/Auth";
 import { useForm } from "../../../hooks/useForm";
+import PersonIcon from "@mui/icons-material/Person";
 
 export const Register = () => {
   const [showPass, setShowPass] = useState(false);
@@ -15,7 +16,7 @@ export const Register = () => {
     nombre: "",
     apellido: "",
     direccion: "",
-    telefono: ""
+    telefono: "",
   });
   const { email, password, nombre, apellido, direccion, telefono } = values;
   const dispatch = useAppDispatch();
@@ -35,7 +36,7 @@ export const Register = () => {
           nombre,
           apellido,
           direccion,
-          telefono
+          telefono,
         }),
       });
 
@@ -54,8 +55,9 @@ export const Register = () => {
   return (
     <div className={styles.containerLogin}>
       <div className={styles.containerForm}>
-        <span style={{ fontSize: "10vh" }} className="material-symbols-outlined">
-          account_circle
+        <span style={{ fontSize: "10vh" }}>
+          <PersonIcon fontSize="inherit" />{" "}
+          {/* si no usar style={{fontSize: "90px"}} */}
         </span>
         <Form onSubmit={handleSubmitForm}>
           <Form.Group className="mb-3">

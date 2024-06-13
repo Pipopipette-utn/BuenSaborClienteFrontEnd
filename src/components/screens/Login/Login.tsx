@@ -6,6 +6,7 @@ import { useAppDispatch } from "../../../redux/HookReducer";
 import { useNavigate } from "react-router-dom";
 import { setLogin } from "../../../redux/slices/Auth";
 import { useForm } from "../../../hooks/useForm";
+import PersonIcon from "@mui/icons-material/Person";
 
 export const Login = () => {
   const [showPass, setShowPass] = useState(false);
@@ -43,9 +44,11 @@ export const Login = () => {
   return (
     <div className={styles.containerLogin}>
       <div className={styles.containerForm}>
-        <span style={{ fontSize: "10vh" }} className="material-symbols-outlined">
-          account_circle
+        <span style={{ fontSize: "10vh" }}>
+          <PersonIcon fontSize="inherit" />{" "}
+          {/* si no usar style={{fontSize: "90px"}} */}
         </span>
+
         <Form onSubmit={handleSubmitForm}>
           <Form.Group className="mb-3">
             <Form.Label>Email</Form.Label>
