@@ -1,6 +1,7 @@
 import { IArticulo, IArticuloManufacturado, IArticuloManufacturadoDetalle, ICategoria, IEmpresa, IImagen, ISucursal, IUnidadMedida } from "./empresa"
 import { ICarrito, IDetallePedido } from "./pedido"
 import { IDomicilio, ILocalidad, IProvincia } from "./ubicacion"
+import { ICliente, IUsuario } from "./usuario"
 
 
 export const emptyEmpresa: IEmpresa = {
@@ -91,5 +92,17 @@ export const emptyDomicilio: IDomicilio = {
 	calle: ""
 }
 
+export const emptyUsuario: IUsuario ={
+	username: "",
+	email: "",
+}
 
-
+export const emptyCliente: ICliente ={
+	clave: "",
+	domicilios: [],
+	pedidos: [],
+	nombre: "",
+	apellido: "",
+	telefono: "",
+	usuario: emptyUsuario,
+}

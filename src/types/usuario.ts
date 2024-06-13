@@ -11,10 +11,10 @@ export interface IImagenPersona extends BaseEntity {
 export interface IPersona extends BaseEntity {
 	nombre: string;
 	apellido: string;
-	telefono: string;
-	fechaNacimiento: Date;
+	telefono?: string;
+	fechaNacimiento?: Date;
 	usuario: IUsuario;
-	imagenPersona: IImagenPersona;
+	imagenPersona?: IImagenPersona;
 }
 
 export interface ICliente extends IPersona {
@@ -32,7 +32,7 @@ const enum Rol{
 export interface IUsuario extends BaseEntity {
 	username: string;
 	email: string;
-    rol: Rol;
+    rol?: Rol;
 }
 
 

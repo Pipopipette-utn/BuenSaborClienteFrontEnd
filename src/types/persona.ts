@@ -1,6 +1,7 @@
-import { IImagen, ISucursal, IUsuario } from "./empresa";
+import { IImagen, ISucursal } from "./empresa";
 import { IPedido } from "./pedido";
 import { IDomicilio } from "./ubicacion";
+import { IUsuario } from "./usuario";
 
 export interface IPersona extends BaseEntity {
 	nombre: string;
@@ -8,13 +9,13 @@ export interface IPersona extends BaseEntity {
     telefono: string
     fechaNacimiento: Date
     usuario: IUsuario
-    imagenPersoan: IImagen
+    imagenPersona: IImagen
 }
 
-export interface ICliente  extends IPersona {
+/* export interface ICliente  extends IPersona {
 	domicilio: IDomicilio[];
     pedidos: IPedido[];
-}
+} */
 
 export interface IEmpleado extends IPersona {
 	pedidos: IPedido[];
