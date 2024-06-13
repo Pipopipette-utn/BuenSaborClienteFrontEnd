@@ -24,14 +24,29 @@ export const AppRouter = () => {
       <CssBaseline />
       <>
         <ResponsiveAppBar />
-        <ThemeSwitch currentTheme={currentTheme} toggleTheme={toggleTheme} />
+        {/* <ThemeSwitch currentTheme={currentTheme} toggleTheme={toggleTheme} /> */}
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<PantallaMenu />} />
-          <RutaPrivada>
-            <Route path="/pedido" element={<Pedido />} />
-            <Route path="/cuenta" element={<Cuenta />} />
-          </RutaPrivada>
+
+          <Route
+            path="/pedido"
+            element={
+              <RutaPrivada>
+                <Pedido />
+              </RutaPrivada>
+            }
+          />
+          <Route
+            path="/cuenta"
+            element={
+              <RutaPrivada>
+                <Cuenta />
+              </RutaPrivada>
+            }
+          />
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
