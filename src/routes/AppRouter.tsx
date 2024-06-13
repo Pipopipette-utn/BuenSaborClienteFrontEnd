@@ -15,6 +15,7 @@ import RolUsuario from "../controlAcceso/RolUsuario";
 import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
 import { CssBaseline } from "@mui/material";
 import { Login } from "../components/screens/Login/Login";
+import { Register } from "../components/screens/Login/Register";
 
 export const AppRouter = () => {
   const { currentTheme, toggleTheme } = useThemeToggle();
@@ -27,21 +28,12 @@ export const AppRouter = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<PantallaMenu />} />
-          <Route element={<RolUsuario rol={Rol.CLIENTE} />}>
+          <RutaPrivada>
             <Route path="/pedido" element={<Pedido />} />
             <Route path="/cuenta" element={<Cuenta />} />
-          </Route>
+          </RutaPrivada>
           <Route path="/login" element={<Login />} />
-          {/* 
-					<Route element={<Rol rol={Rol.CLIENTE} />}>
-					<Route path="/pedido" element= <RutaPrivada>{<Pedido />}<RutaPrivada/>
-					</Route>
-					</Route>
-					<Route element={<Rol rol={Rol.CLIENTE} />}></Route>
-					<Route path="/cuenta" element= <RutaPrivada>{<Cuenta />}<RutaPrivada/>
-					</Route>
-
- */}{" "}
+          <Route path="/register" element={<Register />} />
         </Routes>
         <Footer />
       </>
