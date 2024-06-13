@@ -14,6 +14,7 @@ import { Rol } from "../types/enums";
 import RolUsuario from "../controlAcceso/RolUsuario";
 import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
 import { CssBaseline } from "@mui/material";
+import { Login } from "../components/screens/Login/Login";
 
 export const AppRouter = () => {
   const { currentTheme, toggleTheme } = useThemeToggle();
@@ -30,6 +31,7 @@ export const AppRouter = () => {
             <Route path="/pedido" element={<Pedido />} />
             <Route path="/cuenta" element={<Cuenta />} />
           </Route>
+          <Route path="/login" element={<Login />} />
           {/* 
 					<Route element={<Rol rol={Rol.CLIENTE} />}>
 					<Route path="/pedido" element= <RutaPrivada>{<Pedido />}<RutaPrivada/>
