@@ -36,11 +36,6 @@ import { emptyPedidoDto } from "../../../types/emptyEntities";
 import { setNewPedido } from "../../../redux/slices/SelectedData";
 import { CheckoutMp } from "../../MP/CheckoutMP";
 
-// Función que retorna las direcciones guardadas del cliente [IMPLEMENTAR FILTRANDO SOLO LAS UBICACIONES? EN SERVICE]
-const getSavedAddresses = () => {
-  return ["Dirección 1", "Dirección 2", "Dirección 3"]; // HARDCODEOOO
-};
-
 export function Carrito() {
   const items = useAppSelector((state: RootState) => state.cart.items);
   const usuario = useAppSelector((state: RootState) => state.user.user);
@@ -95,9 +90,7 @@ export function Carrito() {
         total: calculateTotal(),
         tipoEnvio: envio,
         formaPago: pedido.formaPago,
-        domicilio: {
-          id: selectedAddress, // hardcodeado usar cliente.domicilio o un selectedDomicilio (total se listan los domicilios de ese cliente)
-        },
+        /* domicilio: usuario?.domicilios.find(address => address.id === selectedAddress), */
         cliente: {
           id: usuario?.id,
         },
@@ -106,12 +99,9 @@ export function Carrito() {
         },
         detallePedidos: detallesPedido,
       };
-
-      /* //Descomentar cuando tenga un get domicilios
-      if (newPedido.tipoEnvio === TipoEnvio.DELIVERY) {
-        newPedido.domicilio?.id = selectedAddress;
+      if (newPedido.tipoEnvio === TipoEnvio.DELIVERY && selectedAddress) {
+        newPedido.domicilio = { id: selectedAddress };
       }
-        */
 
       dispatch(setNewPedido(newPedido));
       const response = await pedidoService.create(newPedido);
@@ -254,9 +244,6 @@ export function Carrito() {
                   label="Seleccione el domicilio a enviar"
                   onChange={(e) => setSelectedAddress(e.target.value as number)}
                 >
-                  {/*          <MenuItem value={getSavedAddresses()[0]}>
-                    {getSavedAddresses()[0]}
-                  </MenuItem> */}
                   {usuario?.domicilios &&
                     usuario.domicilios.map((address) => (
                       <MenuItem key={address.id} value={address.id}>

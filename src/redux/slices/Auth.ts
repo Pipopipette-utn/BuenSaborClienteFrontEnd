@@ -19,7 +19,7 @@ const AuthUser = createSlice({
 		setLogin: (state, action: PayloadAction<ICliente>) => {
 			state.user = action.payload;
 			state.isLogged = true;
-			localStorage.setItem("AuthUser", JSON.stringify(state));
+			localStorage.setItem("AuthUser", JSON.stringify(state.user));
 		},
 		setLogout: (state) => {
 			state.user = null;
