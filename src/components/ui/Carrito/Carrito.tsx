@@ -260,7 +260,7 @@ export function Carrito() {
                   {usuario?.domicilios &&
                     usuario.domicilios.map((address) => (
                       <MenuItem key={address.id} value={address.id}>
-                        {address.localidad}
+                        {address.localidad?.nombre}
                       </MenuItem>
                     ))}
                 </Select>

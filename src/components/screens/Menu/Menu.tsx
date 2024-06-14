@@ -58,6 +58,7 @@ export const PantallaMenu: React.FC = () => {
 
   console.log("Id de sucursal: ", sucursal?.id);
   console.log("Render de menu");
+  console.log("Categoria: ", selectedCategoria);
   return (
     <Suspense fallback={<Loader />}>
       <Stack direction="row" width="100vw" spacing={4} sx={{ padding: 5 }}>

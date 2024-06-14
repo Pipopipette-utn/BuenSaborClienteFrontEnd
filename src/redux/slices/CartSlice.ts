@@ -9,7 +9,7 @@ interface CartState {
 // Define el estado inicial del carrito
 const savedCart = localStorage.getItem('cart');
 const initialState: CartState = {
-  items: savedCart ? JSON.parse(savedCart) : [],
+  items:  [],
 };
 
 // Crea un slice para el carrito

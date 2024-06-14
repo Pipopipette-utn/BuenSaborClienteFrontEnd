@@ -44,7 +44,7 @@ export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
         variant="h4"
         sx={{ alignSelf: "center", fontWeight: "bold", fontSize: "24px" }}
       >
-        Categoría {selectedCategoria?.denominacion}{" "}
+        Categoría {selectedCategoria!.denominacion}
       </Typography>
       <Stack direction="row" spacing={2} justifyContent="center">
         {articulos ? (
