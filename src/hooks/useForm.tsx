@@ -9,6 +9,9 @@ export const useForm = <T extends FormValues>(initialValues: T) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
+    console.log("valor: ", value);
+    console.log("name: ", name);
+
     setValues({ ...values, [`${name}`]: value });
   };
 

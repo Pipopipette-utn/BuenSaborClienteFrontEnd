@@ -24,8 +24,8 @@ export const AppRouter = () => {
       <CssBaseline />
       <>
         <ResponsiveAppBar />
-        {/* <ThemeSwitch currentTheme={currentTheme} toggleTheme={toggleTheme} /> */}
-
+        {/*         <ThemeSwitch currentTheme={currentTheme} toggleTheme={toggleTheme} />
+         */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<PantallaMenu />} />

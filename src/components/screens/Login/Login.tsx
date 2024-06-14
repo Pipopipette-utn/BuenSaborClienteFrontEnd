@@ -34,7 +34,9 @@ export const Login = () => {
       }
 
       const data = await response.json();
-      dispatch(setLogin({ user: data.usuario, rol: data.rol }));
+      dispatch(setLogin(data.usuario));
+      console.log("Usuario: ", data.usuario);
+      console.log("Data: ", data);
       navigate("/");
     } catch (err) {
       alert((err as Error).message);

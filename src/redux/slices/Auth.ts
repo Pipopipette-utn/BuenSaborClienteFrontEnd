@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUsuario } from "../../types/empresa";
+import { IUsuario } from "../../types/usuario";
 
 interface IInitialState {
 	user: IUsuario | null;
@@ -23,6 +23,7 @@ const AuthUser = createSlice({
 		setLogout: (state) => {
 			state.user = null;
 			state.isLogged = false;
+			localStorage.removeItem("AuthUser")
 		},
 	},
 });

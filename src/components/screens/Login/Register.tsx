@@ -130,14 +130,11 @@ export const Register = () => {
             piso: parseInt(values.piso),
             nroDpto: parseInt(values.nroDpto),
             localidad: {
-              id: parseInt(values.localidadId),
-              nombre: selectedLocalidad?.nombre,
+              id: selectedLocalidad?.id,
               provincia: {
-                id: parseInt(values.provinciaId),
-                nombre: selectedProvincia?.nombre,
+                id: selectedProvincia,
                 pais: {
-                  id: parseInt(values.paisId),
-                  nombre: selectedPais?.nombre,
+                  id: selectedPais,
                 },
               },
             },
@@ -159,7 +156,6 @@ export const Register = () => {
       if (!response.ok) {
         throw new Error("Error en el registro, vuelva a intentar");
       }
-      //dispatch(setLogin({ email: values.email, username: values.usuario }));
       console.log("email: ", values.email);
       console.log("usuario: ", values.usuario);
       const data = await response.json();
@@ -168,7 +164,7 @@ export const Register = () => {
       );
       console.log("data mail: ", values.email);
       console.log("data usuario: ", values.usuario);
-      //navigate("/");
+      navigate("/");
     } catch (err) {
       alert((err as Error).message);
     }
