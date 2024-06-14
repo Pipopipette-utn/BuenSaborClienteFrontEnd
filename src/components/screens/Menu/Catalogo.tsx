@@ -1,7 +1,13 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { IArticulo, ICategoria } from "../../../types/empresa";
 import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
-import { Stack, Pagination, LinearProgress, Typography, Grid } from "@mui/material";
+import {
+  Stack,
+  Pagination,
+  LinearProgress,
+  Typography,
+  Grid,
+} from "@mui/material";
 import { Buscador } from "./Buscador";
 import useFetchArticulos from "../../../hooks/useFetchArticulos";
 import { generarURL } from "../../../hooks/useUrlArticulo";
@@ -18,9 +24,12 @@ export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
 
   const fetchArticulos = useFetchArticulos();
 
-  const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
+  const handlePageChange = useCallback(
+    (event: ChangeEvent<unknown>, value: number) => {
+      setPage(value);
+    },
+    []
+  );
 
   const selectedCategoria = useAppSelector(
     (state: RootState) => state.selectedData.selectedCategoria
@@ -42,10 +51,10 @@ export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
     fetchArticulos(url, setArticulos, setTotalPages);
   }, [categoria, terminoBusqueda, page, fetchArticulos]);
 
-  const handleSearch = (term: string) => {
+  const handleSearch = useCallback((term: string) => {
     setTerminoBusqueda(term);
     setPage(1); // Resetear página a 1 cuando se realiza una nueva búsqueda
-  };
+  }, []);
 
   console.log("articulos dentro de catalogo: ", articulos);
 
@@ -83,3 +92,7 @@ export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
     </Stack>
   );
 };
+//Evita re-renderizacion si no cambian las props
+export default React.memo(Catalogo, (prevProps, nextProps) => {
+  return prevProps.categoria === nextProps.categoria;
+});
