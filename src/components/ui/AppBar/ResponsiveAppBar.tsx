@@ -31,7 +31,7 @@ function ResponsiveAppBar() {
   );
   const userLogeado = useAppSelector((state: RootState) => state.user.isLogged);
   const userName = useAppSelector(
-    (state: RootState) => state.user.user?.usuario.username
+    (state: RootState) => state.user.user?.usuario?.username
   );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
