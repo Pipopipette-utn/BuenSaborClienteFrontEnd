@@ -9,27 +9,49 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import "./button.css";
 //import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
 import { useThemeToggle } from "../components/Utils/ThemeUtil";
+import { RutaPrivada } from "../controlAcceso/RutaPrivada";
+import { Rol } from "../types/enums";
+import RolUsuario from "../controlAcceso/RolUsuario";
+import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
+import { CssBaseline } from "@mui/material";
+import { Login } from "../components/screens/Login/Login";
+import { Register } from "../components/screens/Login/Register";
 
 export const AppRouter = () => {
-	const { currentTheme, toggleTheme } = useThemeToggle();
-	return (
-		<ThemeProvider theme={currentTheme}>
-			<>
-				<ResponsiveAppBar />
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/menu" element={<PantallaMenu />} />
-					<Route path="/pedido" element={<Pedido />} />
-					<Route path="/cuenta" element={<Cuenta />} />
-					{
-						//        <Route path="/categorias/:category" element={<Categorias />} />
-					}
-				</Routes>
-				<Footer />
-				{/*
-        <ThemeSwitch currentTheme={currentTheme} toggleTheme={toggleTheme} /> */}
-			</>
-		</ThemeProvider>
-	);
+  const { currentTheme, toggleTheme } = useThemeToggle();
+  return (
+    <ThemeProvider theme={currentTheme}>
+      <CssBaseline />
+      <>
+        <ResponsiveAppBar />
+        {/*         <ThemeSwitch currentTheme={currentTheme} toggleTheme={toggleTheme} />
+         */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/menu" element={<PantallaMenu />} />
+
+          <Route
+            path="/pedido"
+            element={
+              <RutaPrivada>
+                <Pedido />
+              </RutaPrivada>
+            }
+          />
+          <Route
+            path="/cuenta"
+            element={
+              <RutaPrivada>
+                <Cuenta />
+              </RutaPrivada>
+            }
+          />
+
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+        <Footer />
+      </>
+    </ThemeProvider>
+  );
 };
-//import styles from "../components/Themes/ThemeSwitch/ThemeSwitch.module.css";

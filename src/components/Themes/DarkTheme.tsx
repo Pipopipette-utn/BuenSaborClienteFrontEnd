@@ -18,6 +18,9 @@ export const darkTheme = createTheme({
     success: {
       main: "#529654",
     },
+    background: {
+      default: "#1a1a1a",
+    },
   },
   typography: {
     fontFamily: "Nunito Sans",

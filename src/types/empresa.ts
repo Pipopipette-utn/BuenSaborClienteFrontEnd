@@ -69,10 +69,10 @@ export interface IImagen {
 	name: string;
 }
 
-export interface IUsuario extends BaseEntity {
+/* export interface IUsuario extends BaseEntity {
 	username: string;
-	password: string;
-}
+	email: string;
+} */
 
 
 export interface IPromocionDetalle extends BaseEntity {
