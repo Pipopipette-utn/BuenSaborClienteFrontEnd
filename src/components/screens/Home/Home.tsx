@@ -24,7 +24,6 @@ export const Home: React.FC = () => {
       <Carrousel />
       <Stack spacing={8} paddingTop={8}>
         {!loadingSucursal && <SliderGenerico items={sucursales} />}
-        {!loadingPromo && <SliderGenerico items={promociones} />}
       </Stack>
     </>
   );
