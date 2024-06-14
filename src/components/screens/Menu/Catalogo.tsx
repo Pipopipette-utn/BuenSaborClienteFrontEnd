@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { IArticulo, ICategoria } from "../../../types/empresa";
 import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
-import { Stack, Pagination, LinearProgress, Typography } from "@mui/material";
+import { Stack, Pagination, LinearProgress, Typography, Grid } from "@mui/material";
 import { Buscador } from "./Buscador";
 import useFetchArticulos from "../../../hooks/useFetchArticulos";
-import { generarURL, useURL } from "../../../hooks/useUrlArticulo";
+import { generarURL } from "../../../hooks/useUrlArticulo";
 import { useAppSelector } from "../../../redux/HookReducer";
 import { RootState } from "../../../redux/Store";
 
@@ -21,13 +21,16 @@ export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
   const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
+
   const selectedCategoria = useAppSelector(
     (state: RootState) => state.selectedData.selectedCategoria
   );
   const selectedSucursalId = useAppSelector(
     (state: RootState) => state.selectedData.sucursal?.id
   );
+
   console.log("Render de catalogo");
+
   useEffect(() => {
     setArticulos(null);
     const url = generarURL(
@@ -55,19 +58,21 @@ export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
       >
         Categoría {selectedCategoria!.denominacion}
       </Typography>
-      <Stack direction="row" spacing={2} justifyContent="center">
+      <Grid container spacing={2} justifyContent="center">
         {articulos ? (
           articulos.length === 0 ? (
             "Ups! No hay ningún producto en esta categoría."
           ) : (
             articulos.map((articulo) => (
-              <CardArticulo key={articulo.id} articulo={articulo} />
+              <Grid item xs={12} sm={6} key={articulo.id}>
+                <CardArticulo key={articulo.id} articulo={articulo} />
+              </Grid>
             ))
           )
         ) : (
           <LinearProgress sx={{ width: "100%" }} />
         )}
-      </Stack>
+      </Grid>
       <Stack direction="row" justifyContent="center">
         <Pagination
           count={totalPages}
