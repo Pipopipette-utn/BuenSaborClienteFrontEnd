@@ -4,8 +4,9 @@ import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
 import { Stack, Pagination, LinearProgress, Typography } from "@mui/material";
 import { Buscador } from "./Buscador";
 import useFetchArticulos from "../../../hooks/useFetchArticulos";
-import { generarURL } from "../../../hooks/useUrlArticulo";
+import { generarURL, useURL } from "../../../hooks/useUrlArticulo";
 import { useAppSelector } from "../../../redux/HookReducer";
+import { RootState } from "../../../redux/Store";
 
 export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
   categoria,
@@ -21,12 +22,20 @@ export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
     setPage(value);
   };
   const selectedCategoria = useAppSelector(
-    (state) => state.selectedData.selectedCategoria
+    (state: RootState) => state.selectedData.selectedCategoria
+  );
+  const selectedSucursalId = useAppSelector(
+    (state: RootState) => state.selectedData.sucursal?.id
   );
   console.log("Render de catalogo");
   useEffect(() => {
     setArticulos(null);
-    const url = generarURL(categoria, terminoBusqueda, page);
+    const url = generarURL(
+      categoria,
+      selectedSucursalId!,
+      terminoBusqueda,
+      page
+    );
     fetchArticulos(url, setArticulos, setTotalPages);
   }, [categoria, terminoBusqueda, page, fetchArticulos]);
 
