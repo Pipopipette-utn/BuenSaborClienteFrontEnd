@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Carrousel from "../../ui/Carrousel/Carrousel";
 import { SliderGenerico } from "../../ui/ItemSlider/ItemSlider";
-import { IEmpresa, IPromocion, ISucursal } from "../../../types/empresa";
+import { ISucursal, IPromocion } from "../../../types/empresa";
 import { useFetch } from "../../../hooks/UseFetch";
-import { Stack } from "@mui/material";
+import { LinearProgress, Stack } from "@mui/material";
 
 export const Home: React.FC = () => {
   const {
@@ -11,19 +11,18 @@ export const Home: React.FC = () => {
     loading: loadingSucursal,
     error: errorSucursal,
   } = useFetch<ISucursal[]>("/sucursales");
-  const {
-    data: promociones,
-    loading: loadingPromo,
-    error: errorPromo,
-  } = useFetch<IPromocion[]>("/promociones");
 
-  if (errorSucursal || errorPromo) return <h1>Error :c</h1>;
+  if (errorSucursal) return <h1>Error :c</h1>;
 
   return (
     <>
       <Carrousel />
       <Stack spacing={8} paddingTop={8}>
-        {!loadingSucursal && <SliderGenerico items={sucursales} />}
+        {!loadingSucursal && sucursales && sucursales.length > 0 ? (
+          <SliderGenerico items={sucursales} />
+        ) : (
+          <LinearProgress sx={{ width: "100%" }} />
+        )}
       </Stack>
     </>
   );
