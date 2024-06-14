@@ -42,6 +42,8 @@ export interface IArticulo extends BaseEntity {
 	imagenes?: IImagen[];
 	categoria?: ICategoria;
 	categoriaId?: number;
+	stockActual?: number;
+	stockMinimo?: number;
 	unidadMedida?: IUnidadMedida;
 	unidadMedidaId?: number;
 	esInsumo: boolean;

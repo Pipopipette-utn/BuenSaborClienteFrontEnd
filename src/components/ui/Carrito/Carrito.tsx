@@ -28,13 +28,14 @@ import { FormaPago, TipoEnvio } from "../../../types/enums";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { IArticuloManufacturado } from "../../../types/empresa";
+import { IArticulo, IArticuloManufacturado } from "../../../types/empresa";
 import { useAppDispatch, useAppSelector } from "../../../redux/HookReducer";
 import { SuccessMessage } from "../commons/SuccessMessage";
 import { ErrorMessage } from "../commons/ErrorMessage";
 import { emptyPedidoDto } from "../../../types/emptyEntities";
 import { setNewPedido } from "../../../redux/slices/SelectedData";
 import { CheckoutMp } from "../../MP/CheckoutMP";
+import { IDetallePedido } from "../../../types/pedido";
 
 export function Carrito() {
   const items = useAppSelector((state: RootState) => state.cart.items);
@@ -47,12 +48,11 @@ export function Carrito() {
   const [pedido, setPedido] = useState<IPedidoDTO>(emptyPedidoDto);
 
   const [showMercadoPagoButton, setShowMercadoPagoButton] = useState(false);
-
   const [selectedAddress, setSelectedAddress] = useState(0);
 
   const calculateSubtotal = () => {
     return items.reduce(
-      (acc, item) => acc + item.cantidad * item.articulo?.precioVenta,
+      (acc, item) => acc + item.cantidad * item.articulo.precioVenta,
       0
     );
   };
@@ -90,7 +90,6 @@ export function Carrito() {
         total: calculateTotal(),
         tipoEnvio: envio,
         formaPago: pedido.formaPago,
-        /* domicilio: usuario?.domicilios.find(address => address.id === selectedAddress), */
         cliente: {
           id: usuario?.id,
         },
@@ -106,14 +105,41 @@ export function Carrito() {
       dispatch(setNewPedido(newPedido));
       const response = await pedidoService.create(newPedido);
       console.log("Pedido guardado con éxito", response);
-      newPedido.formaPago === FormaPago.MERCADO_PAGO
-        ? setShowMercadoPagoButton(true)
-        : null;
+      if (newPedido.formaPago === FormaPago.MERCADO_PAGO) {
+        setShowMercadoPagoButton(true);
+      }
       handleShowSuccess("Pedido guardado con éxito!");
     } catch (error: any) {
-      handleShowError("Error al crear el pedido: " + error);
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        handleShowError(
+          "Error al crear el pedido: " + error.response.data.message
+        );
+      } else {
+        handleShowError("Error al crear el pedido: " + error.message);
+      }
       console.error("Error al guardar el pedido", error);
     }
+  };
+
+  const validateStock = (item: IDetallePedido) => {
+    const stockDisponible = item.articulo.stock;
+    const stockMinimo = item.articulo.stockMinimo;
+
+    return stockDisponible > stockMinimo;
+  };
+
+  const handleAddItem = (item: IDetallePedido) => {
+    if (!validateStock(item)) {
+      handleShowError(
+        "No se puede agregar el artículo, superaría el stock mínimo"
+      );
+      return;
+    }
+    dispatch(addItem(item.articulo));
   };
 
   const [showSuccess, setShowSuccess] = useState("");
@@ -162,7 +188,7 @@ export function Carrito() {
                   <IconButton
                     edge="end"
                     aria-label="add"
-                    onClick={() => dispatch(addItem(item.articulo))}
+                    onClick={() => handleAddItem(item)}
                   >
                     <AddIcon />
                   </IconButton>
@@ -234,71 +260,48 @@ export function Carrito() {
           {envio === TipoEnvio.DELIVERY && (
             <ListItem>
               <FormControl fullWidth>
-                <InputLabel id="domicilio-cliente-label">
-                  Domicilio del Cliente
-                </InputLabel>
+                <InputLabel id="domicilio-select-label">Domicilio</InputLabel>
                 <Select
-                  labelId="domicilio-cliente-label"
-                  id="domicilio-cliente-select"
+                  labelId="domicilio-select-label"
+                  id="domicilio-select"
                   value={selectedAddress}
-                  label="Seleccione el domicilio a enviar"
                   onChange={(e) => setSelectedAddress(e.target.value as number)}
                 >
-                  {usuario?.domicilios &&
-                    usuario.domicilios.map((address) => (
-                      <MenuItem key={address.id} value={address.id}>
-                        {address.localidad?.nombre}
-                      </MenuItem>
-                    ))}
+                  {usuario?.domicilios.map((domicilio) => (
+                    <MenuItem key={domicilio.id} value={domicilio.id}>
+                      {domicilio.calle} {domicilio.numero}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </ListItem>
           )}
-          {mercadoPagoButton || (
-            <ListItem>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => dispatch(clearItems())}
-                style={{ marginRight: "1rem" }}
-              >
-                Cancelar
-              </Button>
-
-              {envio === TipoEnvio.DELIVERY ||
-              pedido.formaPago === FormaPago.MERCADO_PAGO ? (
-                //En caso de envio
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleGuardarCarrito}
-                >
-                  Guardar Carrito
-                </Button>
-              ) : (
-                //En caso de retiro
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleGuardarCarrito}
-                >
-                  Pagar
-                </Button>
-              )}
-            </ListItem>
-          )}
+          <ListItem>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleGuardarCarrito}
+            >
+              Guardar Pedido
+            </Button>
+          </ListItem>
         </List>
       )}
-      <SuccessMessage
-        open={!!showSuccess}
-        onClose={handleCloseSuccess}
-        message={showSuccess}
-      />
-      <ErrorMessage
-        open={!!showError}
-        onClose={handleCloseError}
-        message={showError}
-      />
+      {showSuccess && (
+        <SuccessMessage
+          open={!!showSuccess}
+          message={showSuccess}
+          onClose={handleCloseSuccess}
+        />
+      )}
+      {showError && (
+        <ErrorMessage
+          open={!!showError}
+          message={showError}
+          onClose={handleCloseError}
+        />
+      )}
+      {mercadoPagoButton}
     </Stack>
   );
 }

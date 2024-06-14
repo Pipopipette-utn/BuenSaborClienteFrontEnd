@@ -1,7 +1,8 @@
 import { IArticulo, ISucursal } from "./empresa";
 import { Estado, FormaPago, TipoEnvio } from "./enums";
-import { ICliente, IEmpleado } from "./persona";
+import {  IEmpleado } from "./persona";
 import { IDomicilio } from "./ubicacion";
+import { ICliente } from "./usuario";
 
 export interface IDetallePedido extends BaseEntity {
 	cantidad: number;
