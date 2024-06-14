@@ -50,13 +50,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export const Buscador: React.FC<BuscadorProps> = ({ onSearch, palabra }) => {
   const [filtro, setFiltro] = useState(palabra);
-  console.log("Render de Buscador");
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFiltro(event.target.value);
   };
 
   const handleSearchClick = () => {
-    onSearch(filtro);
+    onSearch(filtro.toLowerCase()); // Convertir a minúsculas antes de pasar la búsqueda
   };
 
   return (
