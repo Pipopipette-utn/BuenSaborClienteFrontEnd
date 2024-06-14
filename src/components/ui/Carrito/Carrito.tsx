@@ -43,6 +43,7 @@ const getSavedAddresses = () => {
 
 export function Carrito() {
   const items = useAppSelector((state: RootState) => state.cart.items);
+  const usuario = useAppSelector((state: RootState) => state.user.user);
   const sucursalId = useAppSelector(
     (state: RootState) => state.selectedData.sucursal?.id
   );
@@ -52,13 +53,11 @@ export function Carrito() {
 
   const [showMercadoPagoButton, setShowMercadoPagoButton] = useState(false);
 
-  const [selectedAddress, setSelectedAddress] = useState(
-    getSavedAddresses()[0]
-  );
+  const [selectedAddress, setSelectedAddress] = useState(0);
 
   const calculateSubtotal = () => {
     return items.reduce(
-      (acc, item) => acc + item.cantidad * item.articulo.precioVenta,
+      (acc, item) => acc + item.cantidad * item.articulo?.precioVenta,
       0
     );
   };
@@ -96,11 +95,11 @@ export function Carrito() {
         total: calculateTotal(),
         tipoEnvio: envio,
         formaPago: pedido.formaPago,
-        /* domicilio: {
-          id: 10, // hardcodeado usar cliente.domicilio o un selectedDomicilio (total se listan los domicilios de ese cliente)
-        }, */
+        domicilio: {
+          id: selectedAddress, // hardcodeado usar cliente.domicilio o un selectedDomicilio (total se listan los domicilios de ese cliente)
+        },
         cliente: {
-          id: 6, //reemplazar con un id que guardare en un slice
+          id: usuario?.id,
         },
         sucursal: {
           id: sucursalId,
@@ -157,9 +156,9 @@ export function Carrito() {
             <React.Fragment key={item.id}>
               <ListItem>
                 <ListItemText
-                  primary={item.articulo.denominacion}
+                  primary={item.articulo?.denominacion}
                   secondary={`Cantidad: ${item.cantidad} - Precio: $${
-                    item.articulo.precioVenta * item.cantidad
+                    item.articulo?.precioVenta * item.cantidad
                   }`}
                 />
                 <ListItemSecondaryAction>
@@ -253,16 +252,17 @@ export function Carrito() {
                   id="domicilio-cliente-select"
                   value={selectedAddress}
                   label="Seleccione el domicilio a enviar"
-                  onChange={(e) => setSelectedAddress(e.target.value as string)} //CAMBIAR CUANDO TENGA GET DOMICILIO
+                  onChange={(e) => setSelectedAddress(e.target.value as number)}
                 >
                   {/*          <MenuItem value={getSavedAddresses()[0]}>
                     {getSavedAddresses()[0]}
                   </MenuItem> */}
-                  {getSavedAddresses().map((address) => (
-                    <MenuItem key={address} value={address}>
-                      {address}
-                    </MenuItem>
-                  ))}
+                  {usuario?.domicilios &&
+                    usuario.domicilios.map((address) => (
+                      <MenuItem key={address.id} value={address.id}>
+                        {address.localidad}
+                      </MenuItem>
+                    ))}
                 </Select>
               </FormControl>
             </ListItem>

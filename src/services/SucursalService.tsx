@@ -4,10 +4,6 @@ import { BackendClient } from "./BackendClient";
 
 // Clase SucursalService que extiende BackendClient para interactuar con la API de personas
 export class SucursalService extends BackendClient<ISucursal> {
-  filterByEmpresaId = (sucursales: ISucursal[], id: number): ISucursal[] => {
-    return sucursales.filter((s) => s.empresa!.id == id);
-  };
-
   async getCategorias(id: number): Promise<ICategoria[]> {
     try {
       const response = await fetch(`${this.baseUrl}/${id}/categorias`);

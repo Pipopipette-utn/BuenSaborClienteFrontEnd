@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUsuario } from "../../types/usuario";
+import { ICliente, IUsuario } from "../../types/usuario";
 
 interface IInitialState {
-	user: IUsuario | null;
+	user: ICliente | null;
 	isLogged: boolean;
 }
 
@@ -16,7 +16,7 @@ const AuthUser = createSlice({
 	name: "AuthUser",
 	initialState,
 	reducers: {
-		setLogin: (state, action: PayloadAction<IUsuario>) => {
+		setLogin: (state, action: PayloadAction<ICliente>) => {
 			state.user = action.payload;
 			state.isLogged = true;
 			localStorage.setItem("AuthUser", JSON.stringify(state));

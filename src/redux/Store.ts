@@ -4,6 +4,7 @@ import SelectedDataReducer from "./slices/SelectedData";
 import LocationReducer from "./slices/Location"
 import UbiReducer from "./slices/Ubi"
 import AuthReducer from "./slices/Auth"
+
 const store = configureStore({
     reducer:{ 
         cart: CartReducer,

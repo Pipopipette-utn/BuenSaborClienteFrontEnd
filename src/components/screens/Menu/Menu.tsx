@@ -23,6 +23,7 @@ export const PantallaMenu: React.FC = () => {
   const categoriasSucursal = useAppSelector(
     (state: RootState) => state.selectedData.categoriasSucursal
   );
+  const [isOpen, setIsOpen] = useState<boolean>(true);
 
   useEffect(() => {
     const traerCategoriasYHorario = async () => {
@@ -32,22 +33,24 @@ export const PantallaMenu: React.FC = () => {
         const filteredCategorias = categorias.filter((c) => c.esParaVender);
         dispatch(setCategoriasSucursal(filteredCategorias));
         dispatch(setSelectedCategoria(filteredCategorias[0]));
+
+        const sucursalData = await sucursalService.getById(sucursal?.id);
+        const horarioApertura = sucursalData!.horarioApertura;
+        const horarioCierre = sucursalData!.horarioCierre;
+
+        const now = new Date();
+        const apertura = new Date();
+        const cierre = new Date();
+        const [horaApertura, minutoApertura] = horarioApertura
+          .split(":")
+          .map(Number);
+        const [horaCierre, minutoCierre] = horarioCierre.split(":").map(Number);
+
+        apertura.setHours(horaApertura, minutoApertura, 0);
+        cierre.setHours(horaCierre, minutoCierre, 0);
+
+        setIsOpen(now >= apertura && now <= cierre);
       }
-      const sucursalData = await sucursalService.getSucursal(2);
-      const { horarioApertura, horarioCierre } = sucursalData;
-
-      const now = new Date();
-      const apertura = new Date();
-      const cierre = new Date();
-      const [horaApertura, minutoApertura] = horarioApertura
-        .split(":")
-        .map(Number);
-      const [horaCierre, minutoCierre] = horarioCierre.split(":").map(Number);
-
-      apertura.setHours(horaApertura, minutoApertura, 0);
-      cierre.setHours(horaCierre, minutoCierre, 0);
-
-      setIsOpen(now >= apertura && now <= cierre);
     };
 
     traerCategoriasYHorario();
