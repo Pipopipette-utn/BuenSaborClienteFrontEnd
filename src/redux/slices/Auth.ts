@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ICliente, IUsuario } from "../../types/usuario";
+import { loadState } from "../../utils/localStorage";
+
+const savedUser = loadState("AuthUser")
 
 interface IInitialState {
 	user: ICliente | null;
@@ -7,8 +10,8 @@ interface IInitialState {
 }
 
 const initialState: IInitialState = {
-	user: null,
-	isLogged: false,
+	user: savedUser ? savedUser.user : null,
+	isLogged: savedUser ? savedUser.isLogged : false,
 };
 
 //acá definimos el estado global
