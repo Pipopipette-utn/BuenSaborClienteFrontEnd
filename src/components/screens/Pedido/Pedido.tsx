@@ -3,6 +3,7 @@ import { useFetch } from "../../../hooks/UseFetch";
 import { IEmpresa } from "../../../types/empresa";
 import { IDetallePedido } from "../../../types/pedido";
 import { RootState } from '../../../redux/Store';
+import { List, ListItem, ListItemText, Paper, Typography } from '@mui/material';
 
 export const Pedido = () => {
   const { data: empresa, loading: loadingEmpresa } = useFetch<IEmpresa>(
@@ -14,22 +15,26 @@ export const Pedido = () => {
   if (loadingEmpresa) return <h1>Cargando...</h1>;
 
   return (
-    <>
-      <h1>{empresa?.nombre}</h1>
+    <Paper elevation={3} style={{ padding: "20px" }}>
+      <Typography variant="h4" gutterBottom>
+        {empresa?.nombre}
+      </Typography>
       <div>
         {cartItems.length === 0 ? (
-          <p>No hay artículos en el carrito.</p>
+          <Typography variant="body1">No hay artículos en el carrito.</Typography>
         ) : (
-          <ul>
-            {cartItems.map((item: IDetallePedido) => (
-              <li key={item.articulo.id}>
-                <p>Artículo: {item.articulo.denominacion}</p>
-                <p>Cantidad: {item.cantidad}</p>
-              </li>
+          <List>
+            {cartItems.map((item) => (
+              <ListItem key={item.articulo.id} divider>
+                <ListItemText
+                  primary={`Artículo: ${item.articulo.denominacion}`}
+                  secondary={`Cantidad: ${item.cantidad}`}
+                />
+              </ListItem>
             ))}
-          </ul>
+          </List>
         )}
       </div>
-    </>
+    </Paper>
   );
 };
