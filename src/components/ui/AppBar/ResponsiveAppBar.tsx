@@ -77,7 +77,7 @@ function ResponsiveAppBar() {
         break;
       case "Cerrar Sesión": {
         dispatch(setLogout());
-        navigate(`/`);
+        navigate(`/login`);
         break;
       }
       default:
