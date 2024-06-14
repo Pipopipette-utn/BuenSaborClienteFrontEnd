@@ -7,7 +7,6 @@ import { Cuenta } from "../components/screens/Cuenta/Cuenta";
 import Footer from "../components/ui/Footer/Footer";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import "./button.css";
-//import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
 import { useThemeToggle } from "../components/Utils/ThemeUtil";
 import { HistorialPedidos } from "../components/screens/HistorialPedidos/HistorialPedidos";
 import { RutaPrivada } from "../controlAcceso/RutaPrivada";
