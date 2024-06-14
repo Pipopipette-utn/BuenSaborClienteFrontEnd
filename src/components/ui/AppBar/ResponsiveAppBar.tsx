@@ -31,7 +31,7 @@ function ResponsiveAppBar() {
   );
   const userLogeado = useAppSelector((state: RootState) => state.user.isLogged);
   const userName = useAppSelector(
-    (state: RootState) => state.user.user?.username
+    (state: RootState) => state.user.user?.usuario.username
   );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -72,7 +72,7 @@ function ResponsiveAppBar() {
       case "Mi Cuenta":
         navigate(`/cuenta`);
         break;
-        case "Mis Pedidos":
+      case "Mis Pedidos":
         navigate(`/historial`);
         break;
       case "Cerrar Sesión": {

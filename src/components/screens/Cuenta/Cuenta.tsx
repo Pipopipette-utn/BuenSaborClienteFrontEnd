@@ -1,16 +1,9 @@
-import { ListaDatos } from "../../ui/DatosCliente/ListaDatos"
-
+import { ListaDatos } from "../../ui/DatosCliente/ListaDatos";
 
 export const Cuenta = () => {
   return (
     <div>
-      <ListaDatos/>
+      <ListaDatos />
     </div>
-  )
-}
-
-
-
-
-
-
+  );
+};

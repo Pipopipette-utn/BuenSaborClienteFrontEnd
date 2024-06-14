@@ -34,7 +34,7 @@ export const Login = () => {
       }
 
       const data = await response.json();
-      dispatch(setLogin(data.usuario));
+      dispatch(setLogin(data));
       console.log("Usuario: ", data.usuario);
       console.log("Data: ", data);
       navigate("/");
