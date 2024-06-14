@@ -9,6 +9,7 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import "./button.css";
 //import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
 import { useThemeToggle } from "../components/Utils/ThemeUtil";
+import { HistorialPedidos } from "../components/screens/HistorialPedidos/HistorialPedidos";
 import { RutaPrivada } from "../controlAcceso/RutaPrivada";
 import { Rol } from "../types/enums";
 import RolUsuario from "../controlAcceso/RolUsuario";
@@ -46,6 +47,7 @@ export const AppRouter = () => {
               </RutaPrivada>
             }
           />
+          <Route path="/historial" element={<HistorialPedidos />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

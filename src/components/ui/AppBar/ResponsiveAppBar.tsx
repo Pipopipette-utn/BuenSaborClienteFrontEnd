@@ -20,7 +20,7 @@ import { RootState } from "../../../redux/Store";
 import { setLogout } from "../../../redux/slices/Auth";
 
 const pages = ["Menú", "Mi Pedido"];
-const settings = ["Mi Cuenta", "Cerrar Sesión"];
+const settings = ["Mi Cuenta", "Mis Pedidos", "Cerrar Sesión"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -70,7 +70,10 @@ function ResponsiveAppBar() {
   const handleMenuItemSetting = (setting: string) => {
     switch (setting) {
       case "Mi Cuenta":
-        navigate(`cuenta`);
+        navigate(`/cuenta`);
+        break;
+        case "Mis Pedidos":
+        navigate(`/historial`);
         break;
       case "Cerrar Sesión": {
         dispatch(setLogout());
