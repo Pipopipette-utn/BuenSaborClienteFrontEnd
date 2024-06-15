@@ -59,7 +59,6 @@ export const Buscador: React.FC<BuscadorProps> = ({ onSearch, palabra }) => {
     onSearch(filtro);
   }, [filtro, onSearch]);
 
-  console.log("Dentro de buscador");
   return (
     <Search>
       <SearchIconWrapper>

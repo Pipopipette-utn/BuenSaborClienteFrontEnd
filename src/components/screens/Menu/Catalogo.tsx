@@ -1,4 +1,10 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { IArticulo, ICategoria } from "../../../types/empresa";
 import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
 import {
@@ -38,26 +44,20 @@ export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
     (state: RootState) => state.selectedData.sucursal?.id
   );
 
-  console.log("Render de catalogo");
+  const url = useMemo(() => {
+    return generarURL(categoria, selectedSucursalId!, terminoBusqueda, page);
+  }, [categoria, selectedSucursalId, terminoBusqueda, page]);
 
   useEffect(() => {
     setArticulos(null);
-    const url = generarURL(
-      categoria,
-      selectedSucursalId!,
-      terminoBusqueda,
-      page
-    );
     console.log("url generada: ", url);
     fetchArticulos(url, setArticulos, setTotalPages);
-  }, [categoria, terminoBusqueda, page, fetchArticulos]);
+  }, [url, fetchArticulos]);
 
   const handleSearch = useCallback((term: string) => {
     setTerminoBusqueda(term.toLowerCase());
     setPage(1); // Resetear página a 1 cuando se realiza una nueva búsqueda
   }, []);
-
-  console.log("articulos dentro de catalogo: ", articulos);
 
   return (
     <Stack direction="column" width="50vw" spacing={4}>
