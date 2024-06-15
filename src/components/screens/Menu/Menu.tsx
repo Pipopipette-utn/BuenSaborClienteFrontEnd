@@ -1,6 +1,5 @@
 import React, { useEffect, useState, Suspense } from "react";
-import { LinearProgress, Stack, Typography } from "@mui/material";
-import { Carrito } from "../../ui/Carrito/Carrito";
+import { LinearProgress, Stack } from "@mui/material";
 import Sidebar from "../../ui/SideBar/Sidebar";
 import Loader from "../../ui/Loader/Loader";
 import { RootState } from "../../../redux/Store";
@@ -66,13 +65,6 @@ export const PantallaMenu: React.FC = () => {
           <>
             <Sidebar />
             {selectedCategoria && <Catalogo categoria={selectedCategoria} />}
-            {isOpen ? (
-              <Carrito />
-            ) : (
-              <Typography variant="h6" color="error">
-                Pedidos no disponibles en este horario.
-              </Typography>
-            )}
           </>
         ) : (
           <LinearProgress sx={{ width: "100%" }} />
