@@ -164,7 +164,6 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
           {/* VISTA PARA CELULAR */}
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
