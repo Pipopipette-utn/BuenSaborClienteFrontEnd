@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from "react";
-import { LinearProgress, Stack, Typography } from "@mui/material";
+import { LinearProgress, Stack, Typography, Box } from "@mui/material";
 import { Carrito } from "../../ui/Carrito/Carrito";
 import Sidebar from "../../ui/SideBar/Sidebar";
 import Loader from "../../ui/Loader/Loader";
@@ -11,6 +11,7 @@ import {
   setSelectedCategoria,
 } from "../../../redux/slices/SelectedData";
 import { SucursalService } from "../../../services/SucursalService";
+import { Buscador } from "./Buscador";
 
 export const PantallaMenu: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +25,7 @@ export const PantallaMenu: React.FC = () => {
     (state: RootState) => state.selectedData.categoriasSucursal
   );
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [terminoBusqueda, setTerminoBusqueda] = useState<string>("");
 
   useEffect(() => {
     const traerCategoriasYHorario = async () => {
@@ -56,27 +58,39 @@ export const PantallaMenu: React.FC = () => {
     traerCategoriasYHorario();
   }, [sucursal, dispatch]);
 
+  const handleSearch = (term: string) => {
+    setTerminoBusqueda(term);
+  };
+
   console.log("Id de sucursal: ", sucursal?.id);
   console.log("Render de menu");
   console.log("Categoria: ", selectedCategoria);
   return (
     <Suspense fallback={<Loader />}>
-      <Stack direction="row" width="100vw" spacing={4} sx={{ padding: 5 }}>
-        {categoriasSucursal ? (
-          <>
-            <Sidebar />
-            {selectedCategoria && <Catalogo categoria={selectedCategoria} />}
-            {isOpen ? (
-              <Carrito />
-            ) : (
-              <Typography variant="h6" color="error">
-                Pedidos no disponibles en este horario.
-              </Typography>
-            )}
-          </>
-        ) : (
-          <LinearProgress sx={{ width: "100%" }} />
-        )}
+      <Stack direction="column" width="100vw" spacing={4} sx={{ padding: 5 }}>
+        <Buscador onSearch={handleSearch} palabra={terminoBusqueda} />
+        <Stack direction="row" width="100%" spacing={4}>
+          {categoriasSucursal ? (
+            <>
+              <Sidebar />
+              {selectedCategoria && (
+                <Catalogo
+                  categoria={selectedCategoria}
+                  terminoBusqueda={terminoBusqueda}
+                />
+              )}
+              {isOpen ? (
+                <Carrito />
+              ) : (
+                <Typography variant="h6" color="error">
+                  Pedidos no disponibles en este horario.
+                </Typography>
+              )}
+            </>
+          ) : (
+            <LinearProgress sx={{ width: "100%" }} />
+          )}
+        </Stack>
       </Stack>
     </Suspense>
   );

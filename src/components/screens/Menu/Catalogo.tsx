@@ -14,12 +14,17 @@ import { generarURL } from "../../../hooks/useUrlArticulo";
 import { useAppSelector } from "../../../redux/HookReducer";
 import { RootState } from "../../../redux/Store";
 
-export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
+interface CatalogoProps {
+  categoria: ICategoria | null;
+  terminoBusqueda: string;
+}
+
+export const Catalogo: React.FC<CatalogoProps> = ({
   categoria,
+  terminoBusqueda,
 }) => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [terminoBusqueda, setTerminoBusqueda] = useState<string>("");
   const [articulos, setArticulos] = useState<IArticulo[] | null>([]);
 
   const fetchArticulos = useFetchArticulos();
@@ -52,16 +57,10 @@ export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
     fetchArticulos(url, setArticulos, setTotalPages);
   }, [categoria, terminoBusqueda, page, fetchArticulos]);
 
-  const handleSearch = useCallback((term: string) => {
-    setTerminoBusqueda(term.toLowerCase());
-    setPage(1); // Resetear página a 1 cuando se realiza una nueva búsqueda
-  }, []);
-
   console.log("articulos dentro de catalogo: ", articulos);
 
   return (
-    <Stack direction="column" width="50vw" spacing={4}>
-      <Buscador onSearch={handleSearch} palabra={terminoBusqueda} />
+    <Stack direction="column" width="100%" spacing={4}>
       <Typography
         variant="h4"
         sx={{ alignSelf: "center", fontWeight: "bold", fontSize: "24px" }}
@@ -93,7 +92,11 @@ export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
     </Stack>
   );
 };
-//Evita re-renderizacion si no cambian las props
+
+// Evita re-renderización si no cambian las props
 export default React.memo(Catalogo, (prevProps, nextProps) => {
-  return prevProps.categoria === nextProps.categoria;
+  return (
+    prevProps.categoria === nextProps.categoria &&
+    prevProps.terminoBusqueda === nextProps.terminoBusqueda
+  );
 });
