@@ -48,11 +48,12 @@ export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
       terminoBusqueda,
       page
     );
+    console.log("url generada: ", url);
     fetchArticulos(url, setArticulos, setTotalPages);
   }, [categoria, terminoBusqueda, page, fetchArticulos]);
 
   const handleSearch = useCallback((term: string) => {
-    setTerminoBusqueda(term);
+    setTerminoBusqueda(term.toLowerCase());
     setPage(1); // Resetear página a 1 cuando se realiza una nueva búsqueda
   }, []);
 

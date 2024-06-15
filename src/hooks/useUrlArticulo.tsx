@@ -10,7 +10,7 @@ export const generarURL = (
 ) => {
   const params = new URLSearchParams({
     //categoriaId: selectedCategoria?.toString(),     //explota con esto
-    nombre: terminoBusqueda,
+    nombre: terminoBusqueda.toLowerCase(),
     page: (page - 1).toString(),
     size: "6",
   });
