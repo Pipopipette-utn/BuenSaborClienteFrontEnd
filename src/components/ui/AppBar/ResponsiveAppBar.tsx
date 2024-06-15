@@ -58,9 +58,6 @@ function ResponsiveAppBar() {
       case "Menú":
         navigate(`/menu`);
         break;
-      case "Mi Pedido":
-        navigate(`/pedido`);
-        break;
       default:
         break;
     }
@@ -71,9 +68,6 @@ function ResponsiveAppBar() {
     switch (setting) {
       case "Mi Cuenta":
         navigate(`/cuenta`);
-        break;
-      case "Mis Pedidos":
-        navigate(`/historial`);
         break;
       case "Cerrar Sesión": {
         dispatch(setLogout());
