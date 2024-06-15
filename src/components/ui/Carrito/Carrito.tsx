@@ -126,7 +126,7 @@ export function Carrito() {
   };
 
   const validateStock = (item: IDetallePedido) => {
-    const stockDisponible = item.articulo.stock;
+    const stockDisponible = item.articulo.stockActual;
     const stockMinimo = item.articulo.stockMinimo;
 
     return stockDisponible > stockMinimo;
@@ -151,15 +151,19 @@ export function Carrito() {
   const handleCloseError = () => setShowError("");
 
   console.log("Render de carrito");
-
   return (
     <Stack
       className="cart"
       p={2}
       component={Paper}
-      elevation={3}
-      height="75vh"
-      sx={{ width: "25vw" }}
+      height="auto"
+      sx={{
+        position: "sticky",
+        top: "20px",
+        width: "25vw",
+        maxHeight: "90vh",
+        overflow: "hidden", // Oculta el desbordamiento del Stack principal
+      }}
     >
       <Typography variant="h6" gutterBottom>
         Carrito de Compras
@@ -167,43 +171,46 @@ export function Carrito() {
       {items.length === 0 ? (
         <Typography variant="body1">El carrito está vacío</Typography>
       ) : (
-        <List>
-          {items.map((item) => (
-            <React.Fragment key={item.id}>
-              <ListItem>
-                <ListItemText
-                  primary={item.articulo?.denominacion}
-                  secondary={`Cantidad: ${item.cantidad} - Precio: $${
-                    item.articulo?.precioVenta * item.cantidad
-                  }`}
-                />
-                <ListItemSecondaryAction>
-                  <IconButton
-                    edge="end"
-                    aria-label="reduce"
-                    onClick={() => dispatch(reduceItem(item.articulo))}
-                  >
-                    <RemoveIcon />
-                  </IconButton>
-                  <IconButton
-                    edge="end"
-                    aria-label="add"
-                    onClick={() => handleAddItem(item)}
-                  >
-                    <AddIcon />
-                  </IconButton>
-                  <IconButton
-                    edge="end"
-                    aria-label="delete"
-                    onClick={() => dispatch(removeItem(item.articulo))}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-              <Divider />
-            </React.Fragment>
-          ))}
+        <>
+          <List sx={{ overflowY: "auto", maxHeight: "70 vh", flexGrow: 1 }}>
+            {items.map((item) => (
+              <React.Fragment key={item.id}>
+                <ListItem>
+                  <ListItemText
+                    primary={item.articulo?.denominacion}
+                    secondary={`Cantidad: ${item.cantidad} - Precio: $${
+                      item.articulo?.precioVenta * item.cantidad
+                    }`}
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      edge="end"
+                      aria-label="reduce"
+                      onClick={() => dispatch(reduceItem(item.articulo))}
+                    >
+                      <RemoveIcon />
+                    </IconButton>
+                    <IconButton
+                      edge="end"
+                      aria-label="add"
+                      onClick={() => handleAddItem(item)}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                    <IconButton
+                      edge="end"
+                      aria-label="delete"
+                      onClick={() => dispatch(removeItem(item.articulo))}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+                <Divider />
+              </React.Fragment>
+            ))}
+          </List>
+
           {envio === TipoEnvio.DELIVERY && (
             <ListItem>
               <ListItemText primary={`Subtotal: $${calculateSubtotal()}`} />
@@ -212,7 +219,7 @@ export function Carrito() {
           <ListItem>
             <ListItemText primary={`Total: $${calculateTotal()}`} />
           </ListItem>
-          {/* Botones de tipo de envio y metodo de pago, pueden ir en un componente */}
+
           <ListItem>
             <FormControl fullWidth>
               <InputLabel id="tipo-envio-label">Tipo de Envío</InputLabel>
@@ -246,17 +253,15 @@ export function Carrito() {
                     formaPago: e.target.value as FormaPago,
                   })
                 }
-                disabled={envio === TipoEnvio.DELIVERY} // Deshabilita el select si el tipo de envío es retiro
+                disabled={envio === TipoEnvio.DELIVERY}
               >
                 <MenuItem value={FormaPago.MERCADO_PAGO}>Mercado Pago</MenuItem>
-
                 {envio !== TipoEnvio.DELIVERY && (
                   <MenuItem value={FormaPago.EFECTIVO}>Efectivo</MenuItem>
                 )}
               </Select>
             </FormControl>
           </ListItem>
-          {/** Aca se elige domicilio*/}
           {envio === TipoEnvio.DELIVERY && (
             <ListItem>
               <FormControl fullWidth>
@@ -282,10 +287,33 @@ export function Carrito() {
               color="primary"
               onClick={handleGuardarCarrito}
             >
-              Guardar Pedido
+              Cancelar
             </Button>
+
+            {pedido.formaPago === FormaPago.EFECTIVO ? (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleGuardarCarrito}
+              >
+                Pagar
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                style={{
+                  width: "100px",
+                  marginLeft: "10vh",
+                  right: "-19px",
+                }}
+                color="primary"
+                onClick={handleGuardarCarrito}
+              >
+                Guardar Pedido
+              </Button>
+            )}
           </ListItem>
-        </List>
+        </>
       )}
       {showSuccess && (
         <SuccessMessage
