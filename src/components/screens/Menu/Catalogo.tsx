@@ -20,9 +20,7 @@ import { generarURL } from "../../../hooks/useUrlArticulo";
 import { useAppSelector } from "../../../redux/HookReducer";
 import { RootState } from "../../../redux/Store";
 
-export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
-  categoria,
-}) => {
+export const Catalogo = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [terminoBusqueda, setTerminoBusqueda] = useState<string>("");
@@ -45,8 +43,13 @@ export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
   );
 
   const url = useMemo(() => {
-    return generarURL(categoria, selectedSucursalId!, terminoBusqueda, page);
-  }, [categoria, selectedSucursalId, terminoBusqueda, page]);
+    return generarURL(
+      selectedCategoria,
+      selectedSucursalId!,
+      terminoBusqueda,
+      page
+    );
+  }, [selectedCategoria, selectedSucursalId, terminoBusqueda, page]);
 
   useEffect(() => {
     setArticulos(null);
@@ -93,7 +96,3 @@ export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
     </Stack>
   );
 };
-//Evita re-renderizacion si no cambian las props
-export default React.memo(Catalogo, (prevProps, nextProps) => {
-  return prevProps.categoria === nextProps.categoria;
-});
