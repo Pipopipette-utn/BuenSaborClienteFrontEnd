@@ -1,26 +1,39 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { IArticulo, ICategoria } from "../../../types/empresa";
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { IArticulo } from "../../../types/empresa";
 import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
-import { Stack, Pagination, LinearProgress, Typography, Grid } from "@mui/material";
+import {
+  Stack,
+  Pagination,
+  LinearProgress,
+  Typography,
+  Grid,
+} from "@mui/material";
 import { Buscador } from "./Buscador";
 import useFetchArticulos from "../../../hooks/useFetchArticulos";
 import { generarURL } from "../../../hooks/useUrlArticulo";
 import { useAppSelector } from "../../../redux/HookReducer";
 import { RootState } from "../../../redux/Store";
 
-export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
-  categoria,
-}) => {
+export const Catalogo = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [terminoBusqueda, setTerminoBusqueda] = useState<string>("");
-  const [articulos, setArticulos] = useState<IArticulo[] | null>([]);
+  const [articulos, setArticulos] = useState<IArticulo[] | null>(null);
 
   const fetchArticulos = useFetchArticulos();
 
-  const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
+  const handlePageChange = useCallback(
+    (event: ChangeEvent<unknown>, value: number) => {
+      setPage(value);
+    },
+    []
+  );
 
   const selectedCategoria = useAppSelector(
     (state: RootState) => state.selectedData.selectedCategoria
@@ -29,25 +42,25 @@ export const Catalogo: React.FC<{ categoria: ICategoria | null }> = ({
     (state: RootState) => state.selectedData.sucursal?.id
   );
 
-  console.log("Render de catalogo");
-
-  useEffect(() => {
-    setArticulos(null);
-    const url = generarURL(
-      categoria,
+  const url = useMemo(() => {
+    return generarURL(
+      selectedCategoria,
       selectedSucursalId!,
       terminoBusqueda,
       page
     );
+  }, [selectedCategoria, selectedSucursalId, terminoBusqueda, page]);
+
+  useEffect(() => {
+    setArticulos(null);
+    console.log("url generada: ", url);
     fetchArticulos(url, setArticulos, setTotalPages);
-  }, [categoria, terminoBusqueda, page, fetchArticulos]);
+  }, [url, fetchArticulos]);
 
-  const handleSearch = (term: string) => {
-    setTerminoBusqueda(term);
+  const handleSearch = useCallback((term: string) => {
+    setTerminoBusqueda(term.toLowerCase());
     setPage(1); // Resetear página a 1 cuando se realiza una nueva búsqueda
-  };
-
-  console.log("articulos dentro de catalogo: ", articulos);
+  }, []);
 
   return (
     <Stack direction="column" width="50vw" spacing={4}>

@@ -159,9 +159,7 @@ export const Register = () => {
       console.log("email: ", values.email);
       console.log("usuario: ", values.usuario);
       const data = await response.json();
-      dispatch(
-        setLogin({ email: data.usuario.email, username: data.usuario.username })
-      );
+      dispatch(setLogin(data)); //Guardo usuario en localStorage post iniciar sesion
       console.log("data mail: ", values.email);
       console.log("data usuario: ", values.usuario);
       navigate("/");

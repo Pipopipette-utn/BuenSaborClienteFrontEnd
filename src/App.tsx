@@ -9,12 +9,11 @@ import "./styles/scrollbar.css";
 export const baseUrl = import.meta.env.VITE_API_URL;
 
 export const App = () => {
-	return (
-		<ThemeProvider theme={lightTheme}>
-			<Provider store={store}>
-				<AppRouter />
-			</Provider>
-		</ThemeProvider>
-	);
-	//////mi primer hola mundo
+  return (
+    <ThemeProvider theme={lightTheme}>
+      <Provider store={store}>
+        <AppRouter />
+      </Provider>
+    </ThemeProvider>
+  );
 };

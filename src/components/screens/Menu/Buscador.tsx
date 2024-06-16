@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
@@ -55,9 +55,9 @@ export const Buscador: React.FC<BuscadorProps> = ({ onSearch, palabra }) => {
     setFiltro(event.target.value);
   };
 
-  const handleSearchClick = () => {
-    onSearch(filtro.toLowerCase()); // Convertir a minúsculas antes de pasar la búsqueda
-  };
+  const handleSearchClick = useCallback(() => {
+    onSearch(filtro);
+  }, [filtro, onSearch]);
 
   return (
     <Search>
