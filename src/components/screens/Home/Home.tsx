@@ -5,10 +5,7 @@ import { ISucursal } from "../../../types/empresa";
 import { useFetch } from "../../../hooks/UseFetch";
 import { LinearProgress, Stack } from "@mui/material";
 import { useAppDispatch } from "../../../redux/HookReducer";
-import {
-  setCantidadSucursales,
-  setSucursal,
-} from "../../../redux/slices/SelectedData";
+import { setSucursal } from "../../../redux/slices/SelectedData";
 
 export const Home: React.FC = () => {
   const {

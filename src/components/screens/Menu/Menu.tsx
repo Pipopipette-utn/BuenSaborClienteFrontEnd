@@ -11,7 +11,6 @@ import {
   setSelectedCategoria,
 } from "../../../redux/slices/SelectedData";
 import { SucursalService } from "../../../services/SucursalService";
-import { setLocalidades } from "../../../redux/slices/Location";
 
 export const PantallaMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
