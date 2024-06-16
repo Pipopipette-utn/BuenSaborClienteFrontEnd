@@ -171,7 +171,7 @@ export const Register = () => {
   };
 
   return (
-    <div>
+    <div style={{marginTop: "10%", padding: "5%"}}>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>

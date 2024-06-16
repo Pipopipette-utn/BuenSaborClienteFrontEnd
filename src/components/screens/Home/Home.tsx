@@ -6,26 +6,28 @@ import { useFetch } from "../../../hooks/UseFetch";
 import { Stack } from "@mui/material";
 
 export const Home: React.FC = () => {
-  const {
-    data: sucursales,
-    loading: loadingSucursal,
-    error: errorSucursal,
-  } = useFetch<ISucursal[]>("/sucursales");
-  const {
-    data: promociones,
-    loading: loadingPromo,
-    error: errorPromo,
-  } = useFetch<IPromocion[]>("/promociones");
+	const {
+		data: sucursales,
+		loading: loadingSucursal,
+		error: errorSucursal,
+	} = useFetch<ISucursal[]>("/sucursales");
+	const {
+		data: promociones,
+		loading: loadingPromo,
+		error: errorPromo,
+	} = useFetch<IPromocion[]>("/promociones");
 
-  if (errorSucursal || errorPromo) return <h1>Error :c</h1>;
+	if (errorSucursal || errorPromo) return <h1>Error :c</h1>;
 
-  return (
-    <>
-      <Carrousel />
-      <Stack spacing={8} paddingTop={8}>
-        {!loadingSucursal && <SliderGenerico items={sucursales} />}
-        {!loadingPromo && <SliderGenerico items={promociones} />}
-      </Stack>
-    </>
-  );
+	return (
+		<>
+			<Stack maxHeight="400px">
+				<Carrousel />
+			</Stack>
+			<Stack spacing={8} paddingTop={8}>
+				{!loadingSucursal && <SliderGenerico items={sucursales} />}
+				{!loadingPromo && <SliderGenerico items={promociones} />}
+			</Stack>
+		</>
+	);
 };

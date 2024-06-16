@@ -21,11 +21,8 @@ export const lightTheme = createTheme({
   },
   typography: {
     fontFamily: "Roboto, sans-serif",
-    fontSize: 14,
+    fontSize: 16,
     fontWeightMedium: 500,
-    body1: {
-      fontFamily: "Open Sans",
-    },
     caption: {
       fontWeight: 400,
     },
