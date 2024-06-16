@@ -29,15 +29,6 @@ export const AppRouter = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<PantallaMenu />} />
-
-          <Route
-            path="/pedido"
-            element={
-              <RutaPrivada>
-                <Pedido />
-              </RutaPrivada>
-            }
-          />
           <Route
             path="/cuenta"
             element={
@@ -46,8 +37,6 @@ export const AppRouter = () => {
               </RutaPrivada>
             }
           />
-          <Route path="/historial" element={<HistorialPedidos />} />
-
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>

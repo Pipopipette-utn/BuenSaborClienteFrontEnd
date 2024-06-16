@@ -73,13 +73,6 @@ export const PantallaMenu: React.FC = () => {
           <>
             <Sidebar />
             {selectedCategoria && <Catalogo />}
-            {isOpen ? (
-              <Carrito />
-            ) : (
-              <Typography variant="h6" color="error">
-                Pedidos no disponibles en este horario.
-              </Typography>
-            )}
           </>
         ) : (
           <LinearProgress sx={{ width: "100%" }} />
