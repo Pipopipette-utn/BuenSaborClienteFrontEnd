@@ -15,5 +15,4 @@ export const App = () => {
       </Provider>
     </ThemeProvider>
   );
-  //////mi primer hola mundo
 };

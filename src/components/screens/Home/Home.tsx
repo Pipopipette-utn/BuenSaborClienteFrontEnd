@@ -1,9 +1,14 @@
 import React, { useEffect } from "react";
 import Carrousel from "../../ui/Carrousel/Carrousel";
 import { SliderGenerico } from "../../ui/ItemSlider/ItemSlider";
-import { ISucursal, IPromocion } from "../../../types/empresa";
+import { ISucursal } from "../../../types/empresa";
 import { useFetch } from "../../../hooks/UseFetch";
 import { LinearProgress, Stack } from "@mui/material";
+import { useAppDispatch } from "../../../redux/HookReducer";
+import {
+  setCantidadSucursales,
+  setSucursal,
+} from "../../../redux/slices/SelectedData";
 
 export const Home: React.FC = () => {
   const {
@@ -11,8 +16,18 @@ export const Home: React.FC = () => {
     loading: loadingSucursal,
     error: errorSucursal,
   } = useFetch<ISucursal[]>("/sucursales");
+  const dispatch = useAppDispatch();
 
   if (errorSucursal) return <h1>Error :c</h1>;
+
+  useEffect(() => {
+    if (sucursales) {
+      const randomSucursal =
+        sucursales[Math.floor(Math.random() * sucursales.length)];
+      dispatch(setSucursal(randomSucursal));
+      console.log("sucursal obtenida: ", randomSucursal);
+    }
+  }, [sucursales, dispatch]);
 
   return (
     <>
