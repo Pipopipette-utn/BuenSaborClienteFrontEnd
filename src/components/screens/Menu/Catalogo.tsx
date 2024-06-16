@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { IArticulo, ICategoria } from "../../../types/empresa";
+import { IArticulo } from "../../../types/empresa";
 import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
 import {
   Stack,
@@ -24,7 +24,7 @@ export const Catalogo = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [terminoBusqueda, setTerminoBusqueda] = useState<string>("");
-  const [articulos, setArticulos] = useState<IArticulo[] | null>([]);
+  const [articulos, setArticulos] = useState<IArticulo[] | null>(null);
 
   const fetchArticulos = useFetchArticulos();
 

@@ -72,7 +72,7 @@ export const PantallaMenu: React.FC = () => {
         {categoriasSucursal ? (
           <>
             <Sidebar />
-            {selectedCategoria && <Catalogo categoria={selectedCategoria} />}
+            {selectedCategoria && <Catalogo />}
             {isOpen ? (
               <Carrito />
             ) : (
