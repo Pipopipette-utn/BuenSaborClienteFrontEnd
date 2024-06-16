@@ -52,7 +52,7 @@ export const Catalogo = () => {
             ) : (
               articulos.map((articulo) => (
                 <Grid item xs={12} sm={6} md={4} lg={3} key={articulo.id}>
-                  <CardArticulo key={articulo.id} articulo={articulo} />
+                  <CardArticulo articulo={articulo} />
                 </Grid>
               ))
             )

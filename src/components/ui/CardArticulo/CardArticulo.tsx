@@ -35,9 +35,8 @@ export const CardArticulo: React.FC<CardArticuloProps> = ({ articulo }) => {
     <>
       <Card
         sx={{
-          maxWidth: isXs ? "100%" : isSm ? "48%" : 325,
-          minWidth: isXs ? "100%" : isSm ? "48%" : 325,
-          margin: isXs ? "0.5rem 0" : isSm ? "0.5rem" : "1rem",
+          width: "100%", // Ocupar el ancho completo del contenedor
+          margin: "0.5rem", // Margen entre cards
         }}
       >
         <CardContent>
