@@ -1,4 +1,23 @@
-.imgSlider{
-    height: 400px!important;
-    object-fit: cover; 
-}
+.imgSlider {
+    height: 400px;
+    object-fit: cover;
+  }
+  
+  .carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  @media (max-width: 768px) {
+    .imgSlider {
+      height: 300px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .imgSlider {
+      height: 200px;
+    }
+  }
+  

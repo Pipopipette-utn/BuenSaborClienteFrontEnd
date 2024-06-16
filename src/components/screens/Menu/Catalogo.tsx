@@ -1,19 +1,7 @@
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { IArticulo } from "../../../types/empresa";
 import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
-import {
-  Stack,
-  Pagination,
-  LinearProgress,
-  Typography,
-  Grid,
-} from "@mui/material";
+import { Stack, Pagination, LinearProgress, Typography, Grid, Container } from "@mui/material";
 import { Buscador } from "./Buscador";
 import useFetchArticulos from "../../../hooks/useFetchArticulos";
 import { generarURL } from "../../../hooks/useUrlArticulo";
@@ -28,27 +16,15 @@ export const Catalogo = () => {
 
   const fetchArticulos = useFetchArticulos();
 
-  const handlePageChange = useCallback(
-    (event: ChangeEvent<unknown>, value: number) => {
-      setPage(value);
-    },
-    []
-  );
+  const handlePageChange = useCallback((event: ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  }, []);
 
-  const selectedCategoria = useAppSelector(
-    (state: RootState) => state.selectedData.selectedCategoria
-  );
-  const selectedSucursalId = useAppSelector(
-    (state: RootState) => state.selectedData.sucursal?.id
-  );
+  const selectedCategoria = useAppSelector((state: RootState) => state.selectedData.selectedCategoria);
+  const selectedSucursalId = useAppSelector((state: RootState) => state.selectedData.sucursal?.id);
 
   const url = useMemo(() => {
-    return generarURL(
-      selectedCategoria,
-      selectedSucursalId!,
-      terminoBusqueda,
-      page
-    );
+    return generarURL(selectedCategoria, selectedSucursalId!, terminoBusqueda, page);
   }, [selectedCategoria, selectedSucursalId, terminoBusqueda, page]);
 
   useEffect(() => {
@@ -63,36 +39,31 @@ export const Catalogo = () => {
   }, []);
 
   return (
-    <Stack direction="column" width="50vw" spacing={4}>
-      <Buscador onSearch={handleSearch} palabra={terminoBusqueda} />
-      <Typography
-        variant="h4"
-        sx={{ alignSelf: "center", fontWeight: "bold", fontSize: "24px" }}
-      >
-        Categoría {selectedCategoria!.denominacion}
-      </Typography>
-      <Grid container spacing={2} justifyContent="center">
-        {articulos ? (
-          articulos.length === 0 ? (
-            "Ups! No hay ningún producto en esta categoría."
+    <Container maxWidth="lg">
+      <Stack direction="column" width="100%" spacing={4}>
+        <Buscador onSearch={handleSearch} palabra={terminoBusqueda} />
+        <Typography variant="h4" sx={{ alignSelf: "center", fontWeight: "bold", fontSize: "24px", textAlign: "center" }}>
+          Categoría {selectedCategoria!.denominacion}
+        </Typography>
+        <Grid container spacing={2} justifyContent="center">
+          {articulos ? (
+            articulos.length === 0 ? (
+              <Typography variant="body1" sx={{ textAlign: "center" }}>Ups! No hay ningún producto en esta categoría.</Typography>
+            ) : (
+              articulos.map((articulo) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={articulo.id}>
+                  <CardArticulo key={articulo.id} articulo={articulo} />
+                </Grid>
+              ))
+            )
           ) : (
-            articulos.map((articulo) => (
-              <Grid item xs={12} sm={6} key={articulo.id}>
-                <CardArticulo key={articulo.id} articulo={articulo} />
-              </Grid>
-            ))
-          )
-        ) : (
-          <LinearProgress sx={{ width: "100%" }} />
-        )}
-      </Grid>
-      <Stack direction="row" justifyContent="center">
-        <Pagination
-          count={totalPages}
-          page={page}
-          onChange={handlePageChange}
-        />
+            <LinearProgress sx={{ width: "100%" }} />
+          )}
+        </Grid>
+        <Stack direction="row" justifyContent="center">
+          <Pagination count={totalPages} page={page} onChange={handlePageChange} />
+        </Stack>
       </Stack>
-    </Stack>
+    </Container>
   );
 };

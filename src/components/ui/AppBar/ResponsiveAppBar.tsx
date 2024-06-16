@@ -1,5 +1,3 @@
-//https://th.bing.com/th/id/OIG3.H2Vl._rFmCd8CI.MvvZd?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn LOGO
-
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -22,22 +20,17 @@ const pages = ["Menú"];
 const settings = ["Mi Cuenta", "Cerrar Sesión"];
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const userLogeado = useAppSelector((state: RootState) => state.user.isLogged);
-  const userName = useAppSelector(
-    (state: RootState) => state.user.user?.usuario?.username
-  );
+  const userName = useAppSelector((state: RootState) => state.user.user?.usuario?.username);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -51,8 +44,6 @@ function ResponsiveAppBar() {
   };
 
   const handleMenuItemClick = (page: string) => {
-    console.log(`Se hizo clic en la página: ${page}`);
-    //navigate(`/${page}`);
     switch (page) {
       case "Menú":
         navigate(`/menu`);
@@ -78,6 +69,7 @@ function ResponsiveAppBar() {
     }
     handleCloseNavMenu();
   };
+
   const handleLoggin = (setting: string) => {
     switch (setting) {
       case "Iniciar Sesion":
@@ -94,11 +86,11 @@ function ResponsiveAppBar() {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
-        {/* VISTA PARA PC */}
         <Toolbar disableGutters>
           <Avatar
-            alt="Remy Sharp"
+            alt="Logo"
             src="https://th.bing.com/th/id/OIG3.H2Vl._rFmCd8CI.MvvZd?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn"
+            sx={{ display: { xs: "none", md: "flex" }, mr: 2 }}
           />
           <Typography
             variant="h6"
@@ -106,14 +98,12 @@ function ResponsiveAppBar() {
             component="a"
             href="/"
             sx={{
-              mr: 2,
               display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
-              marginLeft: "1rem",
             }}
           >
             ElBuenSabor
@@ -122,15 +112,14 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
+              aria-label="menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              color="inherit"
               onClick={handleOpenNavMenu}
+              color="inherit"
             >
               <MenuIcon />
             </IconButton>
-
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -156,14 +145,13 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          {/* VISTA PARA CELULAR */}
+
           <Typography
             variant="h5"
             noWrap
             component="a"
-            href="/"
+            href=""
             sx={{
-              mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
               fontFamily: "monospace",
@@ -173,7 +161,7 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
-            El Buen Sabor
+            ElBuenSabor
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
@@ -186,7 +174,7 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-          {/*-------------------------SECCION USUARIOOO----------------------------*/}
+
           {!userLogeado ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <Button
@@ -207,7 +195,7 @@ function ResponsiveAppBar() {
               </Button>
             </Box>
           ) : (
-            <Box>
+            <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Usuario loggeado">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
@@ -233,13 +221,10 @@ function ResponsiveAppBar() {
                 onClose={handleCloseUserMenu}
               >
                 <Box width={"100%"} textAlign={"center"}>
-                  hola {userName}
+                  Hola {userName}
                 </Box>
                 {settings.map((setting) => (
-                  <MenuItem
-                    key={setting}
-                    onClick={() => handleMenuItemSetting(setting)}
-                  >
+                  <MenuItem key={setting} onClick={() => handleMenuItemSetting(setting)}>
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}

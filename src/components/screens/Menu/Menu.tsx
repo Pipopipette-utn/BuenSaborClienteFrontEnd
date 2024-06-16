@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from "react";
-import { LinearProgress, Stack, Typography } from "@mui/material";
+import { LinearProgress, Stack, Typography, Box } from "@mui/material";
 import { Carrito } from "../../ui/Carrito/Carrito";
 import Sidebar from "../../ui/SideBar/Sidebar";
 import Loader from "../../ui/Loader/Loader";
@@ -68,16 +68,33 @@ export const PantallaMenu: React.FC = () => {
   console.log("Render de menu");
   return (
     <Suspense fallback={<Loader />}>
-      <Stack direction="row" width="100vw" spacing={4} sx={{ padding: 5 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          width: '100vw',
+          padding: { xs: 2, md: 5 },
+          gap: 4,
+        }}
+      >
         {categoriasSucursal ? (
           <>
-            <Sidebar />
-            {selectedCategoria && <Catalogo />}
+            <Box
+              sx={{
+                width: { xs: '100%', md: '25%' },
+                minWidth: { xs: '100%', md: '25%' },
+              }}
+            >
+              <Sidebar />
+            </Box>
+            <Box sx={{ flex: 1 }}>
+              {selectedCategoria && <Catalogo />}
+            </Box>
           </>
         ) : (
           <LinearProgress sx={{ width: "100%" }} />
         )}
-      </Stack>
+      </Box>
     </Suspense>
   );
 };

@@ -29,7 +29,15 @@ const Sidebar = () => {
   };
 
   return (
-    <Stack alignItems="center" spacing={2} sx={{ width: "15vw" }}>
+    <Stack
+      alignItems="center"
+      spacing={2}
+      sx={{
+        width: { xs: "90vw", sm: "60vw", md: "30vw", lg: "20vw" }, // Ajustes de ancho responsivos
+        margin: { xs: "0 auto", md: "0" }, // Centrado en pantallas pequeñas
+        padding: 2,
+      }}
+    >
       <Typography variant="h5" sx={{ fontSize: "18px", fontWeight: "bold" }}>
         Categorías
       </Typography>

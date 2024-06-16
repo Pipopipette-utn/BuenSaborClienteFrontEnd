@@ -8,6 +8,8 @@ import Typography from "@mui/material/Typography";
 import { ModalDetalle } from "../ModalDetalle/ModalDetalle";
 import useCloudinary from "../../../hooks/useCloudinary";
 import { IArticulo } from "../../../types/empresa";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface CardArticuloProps {
   articulo: IArticulo;
@@ -15,7 +17,6 @@ interface CardArticuloProps {
 
 export const CardArticulo: React.FC<CardArticuloProps> = ({ articulo }) => {
   const imageUrls = useCloudinary(articulo.imagenes || []);
-
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -25,13 +26,24 @@ export const CardArticulo: React.FC<CardArticuloProps> = ({ articulo }) => {
     return imageUrls.length > 0 ? imageUrls[0] : undefined;
   };
   const imagenPrincipal = obtenerImagenPrincipal(imageUrls);
+
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("xs"));
+  const isSm = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <>
-      <Card sx={{ maxWidth: 325, minWidth: 325 }}>
+      <Card
+        sx={{
+          maxWidth: isXs ? "100%" : isSm ? "48%" : 325,
+          minWidth: isXs ? "100%" : isSm ? "48%" : 325,
+          margin: isXs ? "0.5rem 0" : isSm ? "0.5rem" : "1rem",
+        }}
+      >
         <CardContent>
           <CardMedia
             component="img"
-            sx={{ height: 240, borderRadius: 3 }}
+            sx={{ height: isXs ? 180 : 240, borderRadius: 3 }}
             image={imagenPrincipal}
             alt={`${articulo.denominacion} - Imagen principal`}
           />
@@ -54,9 +66,7 @@ export const CardArticulo: React.FC<CardArticuloProps> = ({ articulo }) => {
         </CardContent>
         <CardActions sx={{ justifyContent: "center" }}>
           <Button variant="outlined" size="small" onClick={handleOpen}>
-            {" "}
-            {/* con contained tambien queda lindo */}
-            Ver mas
+            Ver más
           </Button>
         </CardActions>
       </Card>

@@ -19,6 +19,8 @@ const Search = styled("div")(({ theme }) => ({
   marginRight: theme.spacing(2),
   marginLeft: 0,
   width: "100%",
+  display: "flex",
+  alignItems: "center",
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
     width: "auto",
@@ -69,8 +71,20 @@ export const Buscador: React.FC<BuscadorProps> = ({ onSearch, palabra }) => {
         placeholder="Buscar..."
         inputProps={{ "aria-label": "search" }}
         onChange={handleChange}
+        sx={{
+          width: { xs: "60%", sm: "70%", md: "80%" },
+        }}
       />
-      <Button onClick={handleSearchClick}>Buscar</Button>
+      <Button 
+        onClick={handleSearchClick} 
+        sx={{
+          width: { xs: "40%", sm: "30%", md: "20%" },
+          padding: { xs: "0.5rem", md: "0.7rem" },
+          fontSize: { xs: "0.8rem", md: "1rem" }
+        }}
+      >
+        Buscar
+      </Button>
     </Search>
   );
 };
