@@ -36,6 +36,7 @@ import { emptyPedidoDto } from "../../../types/emptyEntities";
 import { setNewPedido } from "../../../redux/slices/SelectedData";
 import { CheckoutMp } from "../../MP/CheckoutMP";
 import { IDetallePedido } from "../../../types/pedido";
+import { useNavigate } from "react-router-dom";
 
 export function Carrito() {
   const [pedido, setPedido] = useState<IPedidoDTO>(emptyPedidoDto);
@@ -51,6 +52,7 @@ export function Carrito() {
   const sucursalId = useAppSelector(
     (state: RootState) => state.selectedData.sucursal?.id
   );
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const calculateSubtotal = () => {
@@ -76,6 +78,10 @@ export function Carrito() {
   }, [showMercadoPagoButton]);
 
   const handleGuardarCarrito = async () => {
+    /*En caso de querer que rediriga al login, manejar aca*/
+    if (!estaLogeado) {
+      return navigate("login");
+    }
     try {
       const pedidoService = new PedidoService("/pedidos");
       const detallesPedido: IDetallePedidoPostDTO[] = items.map((item) => ({
@@ -106,16 +112,9 @@ export function Carrito() {
       }
 
       console.log("Pedido: ", newPedido);
-      console.log("total : ", newPedido.total);
-      console.log("tipoEnvio : ", newPedido.tipoEnvio);
-      console.log("formaPago : ", newPedido.formaPago);
-      console.log("cliente : ", newPedido.cliente);
-      console.log("sucursal : ", newPedido.sucursal);
-      console.log("detallePedidos : ", newPedido.detallePedidos);
-      console.log(" Domicilio: ", newPedido.domicilio);
 
-      dispatch(setNewPedido(newPedido));
       const response = await pedidoService.create(newPedido);
+      dispatch(setNewPedido(newPedido));
       console.log("Pedido guardado con éxito", response);
       if (newPedido.formaPago === FormaPago.MERCADO_PAGO) {
         setShowMercadoPagoButton(true);
@@ -152,6 +151,10 @@ export function Carrito() {
       return;
     }
     dispatch(addItem(item.articulo));
+  };
+
+  const handleClearItems = () => {
+    dispatch(clearItems());
   };
 
   const handleShowSuccess = (message: string) => setShowSuccess(message);
@@ -290,7 +293,7 @@ export function Carrito() {
             <Button
               variant="contained"
               color="primary"
-              onClick={handleGuardarCarrito}
+              onClick={handleClearItems}
             >
               Cancelar
             </Button>
