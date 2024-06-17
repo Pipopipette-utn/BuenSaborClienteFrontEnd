@@ -20,7 +20,6 @@ export const generarURL = (
     params.append("categoriaId", selectedCategoria.id!.toString());
   }
 
-  console.log(selectedCategoria);
   if (selectedCategoria?.esInsumo) {
     return `${baseUrl}/articulosInsumos/filtrar/${selectedSucursalId}?${params}`; //el numero es de la sucursal
   } else {

@@ -4,6 +4,7 @@ import { ThemeProvider } from "@mui/material";
 import { lightTheme } from "./components/Themes/LightTheme";
 import { Provider } from "react-redux";
 import store from "./redux/Store";
+import "./styles/scrollbar.css";
 
 export const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -15,5 +16,4 @@ export const App = () => {
       </Provider>
     </ThemeProvider>
   );
-  //////mi primer hola mundo
 };

@@ -52,17 +52,18 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
   return (
     <Modal open={open} onClose={handleClose}>
       <Box className={styles.modalBox}>
-        {imageUrls.length > 1 ? (
-          <Carousel images={imageUrls} />
-        ) : (
-          <CardMedia
-            component="img"
-            sx={{ height: 240, borderRadius: "20px" }} //tamaño
-            image={imageUrls[0]}
-            alt={articulo.denominacion}
-          />
-        )}
-
+        <Box>
+          {imageUrls.length > 1 ? (
+            <Carousel images={imageUrls} />
+          ) : (
+            <CardMedia
+              component="img"
+              className={styles.modalBoxMedia} // Usa la clase CSS definida
+              image={imageUrls[0]}
+              alt={articulo.denominacion}
+            />
+          )}
+        </Box>
         <Typography
           variant="h3"
           component="h2"

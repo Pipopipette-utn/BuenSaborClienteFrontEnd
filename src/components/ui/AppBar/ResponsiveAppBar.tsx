@@ -13,7 +13,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/HookReducer";
 import { RootState } from "../../../redux/Store";
@@ -97,19 +96,15 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         {/* VISTA PARA PC */}
         <Toolbar disableGutters>
-          <Avatar
-            alt="Remy Sharp"
-            src="https://th.bing.com/th/id/OIG3.H2Vl._rFmCd8CI.MvvZd?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn"
-          />
           <Typography
             variant="h6"
+            fontFamily="Roboto, sans-serif"
             noWrap
             component="a"
             href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
@@ -117,7 +112,7 @@ function ResponsiveAppBar() {
               marginLeft: "1rem",
             }}
           >
-            ElBuenSabor
+            El Buen Sabor
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -158,24 +153,6 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
           {/* VISTA PARA CELULAR */}
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            El Buen Sabor
-          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button

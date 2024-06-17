@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
@@ -59,7 +59,6 @@ export const Buscador: React.FC<BuscadorProps> = ({ onSearch, palabra }) => {
     onSearch(filtro);
   }, [filtro, onSearch]);
 
-  console.log("Dentro de buscador");
   return (
     <Search>
       <SearchIconWrapper>

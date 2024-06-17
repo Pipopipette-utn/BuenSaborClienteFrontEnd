@@ -4,30 +4,30 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "@emotion/styled";
 import { ICategoria, IPromocion, ISucursal } from "../../../types/empresa";
-import style from "./ItemSlider.module.css";
 import { useAppDispatch } from "../../../redux/HookReducer";
 import { setSucursal } from "../../../redux/slices/SelectedData";
 import { useNavigate } from "react-router-dom";
+import { useWindowResize } from "../../../hooks/useWindowRezise";
+import { Stack } from "@mui/material";
 
 const StyledSlide = styled.div`
-  margin: 3%;
-  border-radius: 20px;
-  text-align: center;
-  max-width: 250px;
-  background-color: white;
-  img {
-    padding: 6%;
-    border-radius: 30px;
-    width: 100%; /* Establece el ancho al 100% del contenedor */
-    height: 200px; /* Establece la altura deseada para las imágenes */
-    object-fit: cover; /* Escala las imágenes manteniendo la relación de aspecto y recortando si es necesario */
-  }
+	width: "180px",
+	border-radius: 20px;
+	text-align: center;
+	img {
+		border-radius: 30px;
+		border-bottom-right-radius: 0px;
+		border-bottom-left-radius: 0px;
+		width: 100%; /* Establece el ancho al 100% del contenedor */
+		height: 150px; /* Establece la altura deseada para las imágenes */
+		object-fit: cover; /* Escala las imágenes manteniendo la relación de aspecto y recortando si es necesario */
+	}
 `;
 
 interface SlideItem {
   id: number;
   logo?: string | undefined;
-  imagen?: string | undefined;
+  imagenes?: { url: string }[] | undefined;
   nombre?: string | undefined;
 }
 
@@ -54,13 +54,15 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
   if (!items) return null; // Salir si items es null
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { isMobile, isSmall, isLarge } = useWindowResize();
 
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 2,
+    slidesToShow: isMobile ? 1 : isSmall ? 2 : isLarge ? 6 : 6,
     slidesToScroll: 1,
+
     centerMode: true, // Centra los elementos en el slider
   };
 
@@ -72,17 +74,38 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
   };
 
   return (
-    <Slider {...settings} className={style.slider}>
+    <Slider {...settings}>
       {slideItems.map((item) => (
         <StyledSlide
           key={item.id}
           onClick={() => handleSucursalClick(item as ISucursal)}
         >
-          {item.imagen ||
-            (item.logo && (
-              <img src={item.imagen || item.logo} alt={item.nombre} />
-            ))}
-          <h5>{item.nombre}</h5>
+          <Stack
+            sx={{
+              backgroundColor: "#DDDDDD",
+              width: "180px",
+              height: "230px",
+              borderRadius: "30px",
+            }}
+            spacing={2}
+          >
+            {(item.imagenes && item.imagenes[0] && item.imagenes[0].url) ||
+              (item.logo && (
+                <img
+                  src={item.logo || item.imagenes![0].url}
+                  alt={item.nombre}
+                />
+              ))}
+            <h5
+              style={{
+                marginBottom: "16%",
+                fontSize: "16px",
+                fontWeight: "bold",
+              }}
+            >
+              {item.nombre}
+            </h5>
+          </Stack>
         </StyledSlide>
       ))}
     </Slider>
