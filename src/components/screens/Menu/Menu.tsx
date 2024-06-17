@@ -4,7 +4,7 @@ import { Carrito } from "../../ui/Carrito/Carrito";
 import Sidebar from "../../ui/SideBar/Sidebar";
 import Loader from "../../ui/Loader/Loader";
 import { RootState } from "../../../redux/Store";
-import { Catalogo } from "./Catalogo";
+import Catalogo from "./Catalogo";
 import { useAppDispatch, useAppSelector } from "../../../redux/HookReducer";
 import {
   setCategoriasSucursal,
@@ -12,7 +12,7 @@ import {
 } from "../../../redux/slices/SelectedData";
 import { SucursalService } from "../../../services/SucursalService";
 
-export const PantallaMenu: React.FC = () => {
+const PantallaMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const sucursal = useAppSelector(
@@ -28,7 +28,7 @@ export const PantallaMenu: React.FC = () => {
   useEffect(() => {
     const traerCategoriasYHorario = async () => {
       try {
-        if (sucursal?.id) {
+        if (sucursal?.id && categoriasSucursal === null) {
           const sucursalService = new SucursalService("/sucursales");
 
           // Obtiene categorías de la sucursal
@@ -63,9 +63,10 @@ export const PantallaMenu: React.FC = () => {
     };
 
     traerCategoriasYHorario();
-  }, [sucursal, dispatch]);
+  }, [sucursal?.id, categoriasSucursal, dispatch]);
 
   console.log("Render de menu");
+
   return (
     <Suspense fallback={<Loader />}>
       <Stack direction="row" width="100vw" spacing={4} sx={{ padding: 5 }}>
@@ -89,4 +90,4 @@ export const PantallaMenu: React.FC = () => {
   );
 };
 
-export default PantallaMenu;
+export default React.memo(PantallaMenu);

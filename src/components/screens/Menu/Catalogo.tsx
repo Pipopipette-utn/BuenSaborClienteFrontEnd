@@ -1,5 +1,6 @@
 import React, {
   ChangeEvent,
+  memo,
   useCallback,
   useEffect,
   useMemo,
@@ -20,7 +21,7 @@ import { generarURL } from "../../../hooks/useUrlArticulo";
 import { useAppSelector } from "../../../redux/HookReducer";
 import { RootState } from "../../../redux/Store";
 
-export const Catalogo = () => {
+const Catalogo: React.FC = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [terminoBusqueda, setTerminoBusqueda] = useState<string>("");
@@ -52,9 +53,11 @@ export const Catalogo = () => {
   }, [selectedCategoria, selectedSucursalId, terminoBusqueda, page]);
 
   useEffect(() => {
-    setArticulos(null);
-    console.log("url generada: ", url);
-    fetchArticulos(url, setArticulos, setTotalPages);
+    if (selectedCategoria && selectedSucursalId) {
+      setArticulos(null);
+      console.log("url generada: ", url);
+      fetchArticulos(url, setArticulos, setTotalPages);
+    }
   }, [url, fetchArticulos]);
 
   const handleSearch = useCallback((term: string) => {
@@ -69,7 +72,7 @@ export const Catalogo = () => {
         variant="h4"
         sx={{ alignSelf: "center", fontWeight: "bold", fontSize: "24px" }}
       >
-        Categoría {selectedCategoria!.denominacion}
+        Categoría {selectedCategoria?.denominacion}
       </Typography>
       <Grid container spacing={2} justifyContent="center">
         {articulos ? (
@@ -96,3 +99,5 @@ export const Catalogo = () => {
     </Stack>
   );
 };
+
+export default memo(Catalogo);
