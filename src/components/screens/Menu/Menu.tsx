@@ -1,6 +1,5 @@
-import React, { useEffect, useState, Suspense } from "react";
-import { LinearProgress, Stack, Typography, Box } from "@mui/material";
-import { Carrito } from "../../ui/Carrito/Carrito";
+import React, { useEffect, Suspense } from "react";
+import { LinearProgress, Box } from "@mui/material";
 import Sidebar from "../../ui/SideBar/Sidebar";
 import Loader from "../../ui/Loader/Loader";
 import { RootState } from "../../../redux/Store";
@@ -13,7 +12,6 @@ import {
 import { SucursalService } from "../../../services/SucursalService";
 
 export const PantallaMenu: React.FC = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const sucursal = useAppSelector(
     (state: RootState) => state.selectedData.sucursal
@@ -37,25 +35,6 @@ export const PantallaMenu: React.FC = () => {
           dispatch(setCategoriasSucursal(filteredCategorias));
           dispatch(setSelectedCategoria(filteredCategorias[0]));
 
-          // Obtiene datos de la sucursal
-          const sucursalData = await sucursalService.getById(sucursal.id);
-          const horarioApertura = sucursalData!.horarioApertura;
-          const horarioCierre = sucursalData!.horarioCierre;
-
-          const now = new Date();
-          const apertura = new Date();
-          const cierre = new Date();
-          const [horaApertura, minutoApertura] = horarioApertura
-            .split(":")
-            .map(Number);
-          const [horaCierre, minutoCierre] = horarioCierre
-            .split(":")
-            .map(Number);
-
-          apertura.setHours(horaApertura, minutoApertura, 0);
-          cierre.setHours(horaCierre, minutoCierre, 0);
-
-          setIsOpen(now >= apertura && now <= cierre);
         }
       } catch (error) {
         console.error("Error al traer las categorías o el horario:", error);
