@@ -58,8 +58,8 @@ export const Catalogo: React.FC = () => {
   return (
     <Container maxWidth="lg">
       <Stack direction="column" width="100%" spacing={4}>
-        <Buscador onSearch={handleSearch} palabra={terminoBusqueda} />
-        <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+          <Buscador onSearch={handleSearch} palabra={terminoBusqueda} />
           <FormControl sx={{ minWidth: 120 }}>
             <InputLabel id="order-label">Ordenar por</InputLabel>
             <Select
