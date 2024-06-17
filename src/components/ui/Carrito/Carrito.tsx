@@ -40,6 +40,7 @@ import { IDetallePedido } from "../../../types/pedido";
 export function Carrito() {
   const [pedido, setPedido] = useState<IPedidoDTO>(emptyPedidoDto);
   const [envio, setEnvio] = useState<TipoEnvio>(TipoEnvio.DELIVERY);
+  const [pago, setPago] = useState<FormaPago>(FormaPago.MERCADO_PAGO);
   const [selectedAddress, setSelectedAddress] = useState(0);
   const [showMercadoPagoButton, setShowMercadoPagoButton] = useState(false);
   const [showSuccess, setShowSuccess] = useState("");
@@ -91,7 +92,7 @@ export function Carrito() {
       const newPedido: IPedidoDTO = {
         total: calculateTotal(),
         tipoEnvio: envio,
-        formaPago: pedido.formaPago,
+        formaPago: pago,
         cliente: {
           id: usuario?.id,
         },
@@ -103,6 +104,15 @@ export function Carrito() {
       if (newPedido.tipoEnvio === TipoEnvio.DELIVERY && selectedAddress) {
         newPedido.domicilio = { id: selectedAddress };
       }
+
+      console.log("Pedido: ", newPedido);
+      console.log("total : ", newPedido.total);
+      console.log("tipoEnvio : ", newPedido.tipoEnvio);
+      console.log("formaPago : ", newPedido.formaPago);
+      console.log("cliente : ", newPedido.cliente);
+      console.log("sucursal : ", newPedido.sucursal);
+      console.log("detallePedidos : ", newPedido.detallePedidos);
+      console.log(" Domicilio: ", newPedido.domicilio);
 
       dispatch(setNewPedido(newPedido));
       const response = await pedidoService.create(newPedido);
@@ -245,14 +255,9 @@ export function Carrito() {
               <Select
                 labelId="forma-pago-label"
                 id="forma-pago-select"
-                value={pedido.formaPago}
+                value={pago}
                 label="Forma de Pago"
-                onChange={(e) =>
-                  setPedido({
-                    ...pedido,
-                    formaPago: e.target.value as FormaPago,
-                  })
-                }
+                onChange={(e) => setPago(e.target.value as FormaPago)}
                 disabled={envio === TipoEnvio.DELIVERY}
               >
                 <MenuItem value={FormaPago.MERCADO_PAGO}>Mercado Pago</MenuItem>
