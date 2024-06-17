@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Stack, Pagination, LinearProgress, Typography, Grid, Container, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { Stack, Pagination, LinearProgress, Typography, Grid, Container, FormControl, InputLabel, Select, MenuItem, Box } from "@mui/material";
 import { Buscador } from "./Buscador";
 import useFetchArticulos from "../../../hooks/useFetchArticulos";
 import { generarURL } from "../../../hooks/useUrlArticulo";
@@ -59,18 +59,20 @@ export const Catalogo: React.FC = () => {
     <Container maxWidth="lg">
       <Stack direction="column" width="100%" spacing={4}>
         <Buscador onSearch={handleSearch} palabra={terminoBusqueda} />
-        <FormControl fullWidth sx={{ marginBottom: 2 }}>
-          <InputLabel id="order-label">Ordenar por precio</InputLabel>
-          <Select
-            labelId="order-label"
-            value={order}
-            label="Ordenar por precio"
-            onChange={handleOrderChange}
-          >
-            <MenuItem value="asc">Menor a Mayor</MenuItem>
-            <MenuItem value="desc">Mayor a Menor</MenuItem>
-          </Select>
-        </FormControl>
+        <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: 2 }}>
+          <FormControl sx={{ minWidth: 120 }}>
+            <InputLabel id="order-label">Ordenar por</InputLabel>
+            <Select
+              labelId="order-label"
+              value={order}
+              label="Ordenar por"
+              onChange={handleOrderChange}
+            >
+              <MenuItem value="asc">Menor a Mayor</MenuItem>
+              <MenuItem value="desc">Mayor a Menor</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
         <Typography variant="h4" sx={{ alignSelf: "center", fontWeight: "bold", fontSize: "24px", textAlign: "center" }}>
           Categoría {selectedCategoria!.denominacion}
         </Typography>
