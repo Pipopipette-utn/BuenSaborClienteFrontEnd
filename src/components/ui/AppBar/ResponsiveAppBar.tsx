@@ -35,36 +35,36 @@ function ResponsiveAppBar() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorElNav(event.currentTarget);
-	};
-	const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorElUser(event.currentTarget);
-	};
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
-	const handleCloseNavMenu = () => {
-		setAnchorElNav(null);
-	};
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
-	const handleCloseUserMenu = () => {
-		setAnchorElUser(null);
-	};
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
-	const handleMenuItemClick = (page: string) => {
-		console.log(`Se hizo clic en la página: ${page}`);
-		//navigate(`/${page}`);
-		switch (page) {
-			case "Menú":
-				navigate(`/menu`);
-				break;
-			case "Mi Pedido":
-				navigate(`/pedido`);
-				break;
-			default:
-				break;
-		}
-		handleCloseNavMenu();
-	};
+  const handleMenuItemClick = (page: string) => {
+    console.log(`Se hizo clic en la página: ${page}`);
+    //navigate(`/${page}`);
+    switch (page) {
+      case "Menú":
+        navigate(`/menu`);
+        break;
+      case "Mi Pedido":
+        navigate(`/pedido`);
+        break;
+      default:
+        break;
+    }
+    handleCloseNavMenu();
+  };
 
   const handleMenuItemSetting = (setting: string) => {
     switch (setting) {
@@ -97,41 +97,41 @@ function ResponsiveAppBar() {
     }
   };
 
-	return (
-		<AppBar position="static">
-			<Container maxWidth="xl">
-				{/* VISTA PARA PC */}
-				<Toolbar disableGutters>
-					<Typography
-						variant="h6"
+  return (
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        {/* VISTA PARA PC */}
+        <Toolbar disableGutters>
+          <Typography
+            variant="h6"
             fontFamily="Roboto, sans-serif"
-						noWrap
-						component="a"
-						href="/"
-						sx={{
-							mr: 2,
-							display: { xs: "none", md: "flex" },
-							fontWeight: 700,
-							letterSpacing: ".3rem",
-							color: "inherit",
-							textDecoration: "none",
-							marginLeft: "1rem",
-						}}
-					>
-						El Buen Sabor
-					</Typography>
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+              marginLeft: "1rem",
+            }}
+          >
+            El Buen Sabor
+          </Typography>
 
-					<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-						<IconButton
-							size="large"
-							aria-label="account of current user"
-							aria-controls="menu-appbar"
-							aria-haspopup="true"
-							color="inherit"
-							onClick={handleOpenNavMenu}
-						>
-							<MenuIcon />
-						</IconButton>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              color="inherit"
+              onClick={handleOpenNavMenu}
+            >
+              <MenuIcon />
+            </IconButton>
 
             <Menu
               id="menu-appbar"
@@ -159,17 +159,17 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
           {/* VISTA PARA CELULAR */}
-					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-						{pages.map((page) => (
-							<Button
-								key={page}
-								onClick={() => handleMenuItemClick(page)}
-								sx={{ my: 2, color: "white", display: "block" }}
-							>
-								{page}
-							</Button>
-						))}
-					</Box>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={() => handleMenuItemClick(page)}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
           {/*-------------------------SECCION USUARIOOO----------------------------*/}
           {!userLogeado ? (
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -217,7 +217,7 @@ function ResponsiveAppBar() {
                 onClose={handleCloseUserMenu}
               >
                 <Box width={"100%"} textAlign={"center"}>
-                  hola {userName}
+                  ¡Hola {userName}!
                 </Box>
                 {settings.map((setting) => (
                   <MenuItem
@@ -235,6 +235,5 @@ function ResponsiveAppBar() {
     </AppBar>
   );
 }
-						
 
 export default ResponsiveAppBar;

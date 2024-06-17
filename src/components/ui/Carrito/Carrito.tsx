@@ -38,17 +38,19 @@ import { CheckoutMp } from "../../MP/CheckoutMP";
 import { IDetallePedido } from "../../../types/pedido";
 
 export function Carrito() {
+  const [pedido, setPedido] = useState<IPedidoDTO>(emptyPedidoDto);
+  const [envio, setEnvio] = useState<TipoEnvio>(TipoEnvio.DELIVERY);
+  const [selectedAddress, setSelectedAddress] = useState(0);
+  const [showMercadoPagoButton, setShowMercadoPagoButton] = useState(false);
+  const [showSuccess, setShowSuccess] = useState("");
+  const [showError, setShowError] = useState("");
   const items = useAppSelector((state: RootState) => state.cart.items);
   const usuario = useAppSelector((state: RootState) => state.user.user);
+  const estaLogeado = useAppSelector((state: RootState) => state.user.isLogged);
   const sucursalId = useAppSelector(
     (state: RootState) => state.selectedData.sucursal?.id
   );
   const dispatch = useAppDispatch();
-  const [envio, setEnvio] = useState<TipoEnvio>(TipoEnvio.DELIVERY);
-  const [pedido, setPedido] = useState<IPedidoDTO>(emptyPedidoDto);
-
-  const [showMercadoPagoButton, setShowMercadoPagoButton] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState(0);
 
   const calculateSubtotal = () => {
     return items.reduce(
@@ -142,11 +144,9 @@ export function Carrito() {
     dispatch(addItem(item.articulo));
   };
 
-  const [showSuccess, setShowSuccess] = useState("");
   const handleShowSuccess = (message: string) => setShowSuccess(message);
   const handleCloseSuccess = () => setShowSuccess("");
 
-  const [showError, setShowError] = useState("");
   const handleShowError = (message: string) => setShowError(message);
   const handleCloseError = () => setShowError("");
 
@@ -219,7 +219,7 @@ export function Carrito() {
           <ListItem>
             <ListItemText primary={`Total: $${calculateTotal()}`} />
           </ListItem>
-
+          {}
           <ListItem>
             <FormControl fullWidth>
               <InputLabel id="tipo-envio-label">Tipo de Envío</InputLabel>

@@ -10,65 +10,84 @@ import {
   IconButton,
   Chip,
 } from "@mui/material";
-import { IPedido } from "../../../types/pedido";
-import { baseUrl } from "../../../App";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useAppSelector } from "../../../redux/HookReducer";
 import { RootState } from "../../../redux/Store";
+import { IPedido } from "../../../types/pedido";
+import { baseUrl } from "../../../App";
 
 export const HistorialPedidos: React.FC = () => {
   const [pedidos, setPedidos] = useState<IPedido[]>([]);
   const [filteredPedidos, setFilteredPedidos] = useState<IPedido[]>([]);
   const [filterDate, setFilterDate] = useState<string>("");
-  const usuarioId = useAppSelector((state: RootState) => state.user?.user?.id)
+  const usuarioId = useAppSelector((state: RootState) => state.user?.user?.id);
+
   useEffect(() => {
+    fetchPedidos();
+  }, []);
+
+  useEffect(() => {
+    filterAndSortPedidos();
+  }, [pedidos, filterDate]);
+
+  const fetchPedidos = () => {
     fetch(baseUrl + `/clientes/${usuarioId}/pedidos`)
       .then((response) => response.json())
       .then((data) => {
         setPedidos(data);
-        setFilteredPedidos(data);
       })
       .catch((error) => console.error("Error al obtener los pedidos:", error));
-  }, []);
+  };
+
+  const filterAndSortPedidos = () => {
+    let filtered = pedidos;
+    if (filterDate) {
+      filtered = pedidos.filter((pedido) =>
+        pedido.fechaPedido.startsWith(filterDate)
+      );
+    }
+
+    // Ordena los pedidos filtrados por fecha y por id (solo si la fecha es igual)
+    filtered.sort((a, b) => {
+      const dateA = new Date(a.fechaPedido).getTime();
+      const dateB = new Date(b.fechaPedido).getTime();
+
+      if (dateA !== dateB) {
+        return dateA - dateB;
+      } else {
+        return a.id! - b.id!;
+      }
+    });
+
+    setFilteredPedidos(filtered);
+  };
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = event.target.value;
     setFilterDate(selectedDate);
-    if (selectedDate) {
-      setFilteredPedidos(
-        pedidos.filter((pedido) => pedido.fechaPedido.startsWith(selectedDate))
-      );
-    } else {
-      setFilteredPedidos(pedidos);
-    }
   };
 
   const handleCancel = async (pedido: IPedido) => {
     const baja = {
       baja: "false",
-      estado: "2"
-    }
+      estado: "2", //Numero del estado de cancelado
+    };
     try {
-      const response = await fetch(baseUrl + `/pedidos/cambiarEstado/${pedido.id}`,
-        {method: "PUT",
-          headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(baja)
+      const response = await fetch(
+        baseUrl + `/pedidos/cambiarEstado/${pedido.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(baja),
         }
       );
-      if(response.ok){
-        fetch(baseUrl + `/clientes/${usuarioId}/pedidos`)
-        .then((response) => response.json())
-        .then((data) => {
-          setPedidos(data);
-          setFilteredPedidos(data);
-        })
-        .catch((error) => console.error("Error al obtener los pedidos:", error));
+      if (response.ok) {
+        fetchPedidos();
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error al cambiar de estado:", error);
     }
-  }
+  };
 
   const handleDownloadPdf = async (pedido: IPedido) => {
     try {
@@ -93,6 +112,7 @@ export const HistorialPedidos: React.FC = () => {
       console.error("Error al descargar la factura:", error);
     }
   };
+
   return (
     <Paper elevation={3} style={{ padding: "20px" }}>
       <Typography variant="h6" gutterBottom>
@@ -116,9 +136,18 @@ export const HistorialPedidos: React.FC = () => {
               primary={`Pedido ID: ${pedido.id}`}
               secondary={`Fecha: ${pedido.fechaPedido} - Total: $${pedido.total}`}
             />
-            <Chip label={pedido.estado} color={pedido.estado.toString() === "CANCELADO" ? "error": "default"} sx={{mr: 2}}/>
+            <Chip
+              label={pedido.estado}
+              color={
+                pedido.estado.toString() === "CANCELADO" ? "error" : "default"
+              }
+              sx={{ mr: 2 }}
+            />
             <Button
-              disabled={pedido.estado.toString() === "CANCELADO"}
+              disabled={
+                pedido.estado.toString() === "CANCELADO" ||
+                pedido.estado.toString() === "PENDIENTE"
+              }
               variant="contained"
               color="primary"
               onClick={() => handleDownloadPdf(pedido)}
@@ -126,13 +155,13 @@ export const HistorialPedidos: React.FC = () => {
               Descargar Factura
             </Button>
             <IconButton
-                  disabled={pedido.estado.toString() === "CANCELADO"}
-                    edge="end"
-                    aria-label="delete"
-                    onClick={() => handleCancel(pedido)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+              disabled={pedido.estado.toString() !== "PENDIENTE"}
+              edge="end"
+              aria-label="delete"
+              onClick={() => handleCancel(pedido)}
+            >
+              <DeleteIcon />
+            </IconButton>
           </ListItem>
         ))}
       </List>
