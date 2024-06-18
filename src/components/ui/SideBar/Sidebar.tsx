@@ -15,7 +15,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CategoryButton from "../CategoryButton/CategoryButton";
 import { ICategoria } from "../../../types/empresa";
-import MenuIcon from "@mui/icons-material/Menu";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const Sidebar = () => {
   const dispatch = useAppDispatch();
@@ -35,17 +35,18 @@ const Sidebar = () => {
   // Estado para controlar la apertura y cierre del sidebar
   const [open, setOpen] = React.useState(false);
 
-  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-    if (
-      event &&
-      event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' ||
-        (event as React.KeyboardEvent).key === 'Shift')
-    ) {
-      return;
-    }
-    setOpen(open);
-  };
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event &&
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+      setOpen(open);
+    };
 
   return (
     <>
@@ -54,15 +55,15 @@ const Sidebar = () => {
         aria-label="open drawer"
         edge="start"
         onClick={toggleDrawer(true)}
-        sx={{ mr: 2, display: { sm: 'none' } }} // Ocultar en pantallas grandes
+        sx={{ mr: 2, display: { sm: "none" } }} // Ocultar en pantallas grandes
       >
-        <MenuIcon />
+        <ArrowForwardIosIcon /> {/*Iconito del Drawer */}
       </IconButton>
       <Drawer
         anchor="left"
         open={open}
         onClose={toggleDrawer(false)}
-        sx={{ display: { xs: 'block', sm: 'none' } }} // Mostrar en pantallas pequeñas
+        sx={{ display: { xs: "block", sm: "none" } }} // Mostrar en pantallas pequeñas
       >
         <Stack
           sx={{
@@ -70,10 +71,29 @@ const Sidebar = () => {
             padding: 2,
           }}
         >
-          <Typography variant="h5" sx={{ fontSize: "18px", fontWeight: "bold" }}>
+          <Typography
+            variant="h5"
+            sx={{ fontSize: "18px", fontWeight: "bold" }}
+          >
             Categorías
           </Typography>
           <List sx={{ width: "100%" }}>
+            <Accordion disableGutters>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography sx={{ fontFamily: "Roboto, sans-serif" }}>
+                  Promociones
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <CategoryButton
+                  selected={selectedCategoria?.denominacion === "Promociones"}
+                  label="Promociones"
+                  onClick={() =>
+                    handleCategoriaClick({ id: 0, denominacion: "Promociones" })
+                  }
+                />
+              </AccordionDetails>
+            </Accordion>
             {categoriasSucursal &&
               categoriasSucursal.map((categoria) => (
                 <Accordion key={categoria.id} disableGutters>
@@ -115,7 +135,7 @@ const Sidebar = () => {
         alignItems="center"
         spacing={2}
         sx={{
-          display: { xs: 'none', sm: 'block' }, // Ocultar en pantallas pequeñas
+          display: { xs: "none", sm: "block" }, // Ocultar en pantallas pequeñas
           width: { sm: "25vw", md: "20vw", lg: "15vw" }, // Ancho responsivo
           marginY: 2,
           padding: 2,
@@ -127,6 +147,22 @@ const Sidebar = () => {
           Categorías
         </Typography>
         <List sx={{ width: "100%" }}>
+          <Accordion disableGutters>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography sx={{ fontFamily: "Roboto, sans-serif" }}>
+                Promociones
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <CategoryButton
+                selected={selectedCategoria?.denominacion === "Promociones"}
+                label="Promociones"
+                onClick={() =>
+                  handleCategoriaClick({ id: 0, denominacion: "Promociones" })
+                }
+              />
+            </AccordionDetails>
+          </Accordion>
           {categoriasSucursal &&
             categoriasSucursal.map((categoria) => (
               <Accordion key={categoria.id} disableGutters>
