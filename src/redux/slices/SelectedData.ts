@@ -40,6 +40,11 @@ const SelectedDataSlice = createSlice({
 		setCategoriasSucursal: (state, action: PayloadAction<ICategoria[] | null>) => {
 			state.categoriasSucursal = action.payload;
 		},
+		setCategoriaDefault: (state, action: PayloadAction<ICategoria>) =>{
+			if (state.categoriasSucursal && action && action.payload) {
+				state.categoriasSucursal[0] = action.payload;
+			}
+		},
 		setArticulos: (state, action: PayloadAction<IArticulo[]>) => {
 			state.items = action.payload;
 		},
@@ -60,6 +65,7 @@ export const {
 	setCategoriasSucursal,
 	setArticulos,
 	setSelectedCategoria,
-	setNewPedido
+	setNewPedido,
+	setCategoriaDefault
 } = SelectedDataSlice.actions;
 export default SelectedDataSlice.reducer;
