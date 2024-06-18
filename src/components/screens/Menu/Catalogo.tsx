@@ -29,12 +29,9 @@ const Catalogo: React.FC = () => {
 
   const fetchArticulos = useFetchArticulos();
 
-  const handlePageChange = useCallback(
-    (event: ChangeEvent<unknown>, value: number) => {
-      setPage(value);
-    },
-    []
-  );
+  const handlePageChange = (_event: ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
 
   const selectedCategoria = useAppSelector(
     (state: RootState) => state.selectedData.selectedCategoria
