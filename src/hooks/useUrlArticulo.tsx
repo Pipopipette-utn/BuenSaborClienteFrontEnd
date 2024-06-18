@@ -1,4 +1,3 @@
-import { memo, useMemo } from "react";
 import { baseUrl } from "../App";
 import { ICategoria } from "../types/empresa";
 

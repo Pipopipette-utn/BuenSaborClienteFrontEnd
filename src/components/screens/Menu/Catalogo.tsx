@@ -19,7 +19,6 @@ import { useAppSelector } from "../../../redux/HookReducer";
 import { RootState } from "../../../redux/Store";
 import { IArticulo } from "../../../types/empresa";
 import { CardArticulo } from "../../ui/CardArticulo/CardArticulo";
-import { useFetch } from "../../../hooks/UseFetch";
 
 export const Catalogo: React.FC = () => {
   const [page, setPage] = useState(1);
@@ -31,7 +30,7 @@ export const Catalogo: React.FC = () => {
   const fetchArticulos = useFetchArticulos();
 
   const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
+    _event: React.ChangeEvent<unknown>,
     value: number
   ) => {
     setPage(value);
