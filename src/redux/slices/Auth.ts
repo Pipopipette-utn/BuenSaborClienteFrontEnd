@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ICliente, IUsuario } from "../../types/usuario";
+import { ICliente } from "../../types/usuario";
 import { loadState } from "../../utils/localStorage";
 
 const savedUser = loadState("AuthUser")

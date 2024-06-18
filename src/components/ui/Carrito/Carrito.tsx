@@ -28,7 +28,7 @@ import { FormaPago, TipoEnvio } from "../../../types/enums";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { IArticulo, IArticuloManufacturado } from "../../../types/empresa";
+import { IArticuloManufacturado } from "../../../types/empresa";
 import { useAppDispatch, useAppSelector } from "../../../redux/HookReducer";
 import { SuccessMessage } from "../commons/SuccessMessage";
 import { ErrorMessage } from "../commons/ErrorMessage";
@@ -39,7 +39,7 @@ import { IDetallePedido } from "../../../types/pedido";
 import { useNavigate } from "react-router-dom";
 
 export function Carrito() {
-  const [pedido, setPedido] = useState<IPedidoDTO>(emptyPedidoDto);
+  const [pedido, _setPedido] = useState<IPedidoDTO>(emptyPedidoDto);
   const [envio, setEnvio] = useState<TipoEnvio>(TipoEnvio.DELIVERY);
   const [pago, setPago] = useState<FormaPago>(FormaPago.MERCADO_PAGO);
   const [selectedAddress, setSelectedAddress] = useState(0);
@@ -140,7 +140,7 @@ export function Carrito() {
     const stockDisponible = item.articulo.stockActual;
     const stockMinimo = item.articulo.stockMinimo;
 
-    return stockDisponible > stockMinimo;
+    return stockDisponible! > stockMinimo!;
   };
 
   const handleAddItem = (item: IDetallePedido) => {
