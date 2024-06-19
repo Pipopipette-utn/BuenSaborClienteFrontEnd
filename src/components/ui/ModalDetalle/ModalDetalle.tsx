@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
-import { IArticulo } from "../../../types/empresa";
+import { IArticulo, IArticuloManufacturado } from "../../../types/empresa";
 import useCloudinary from "../../../hooks/useCloudinary";
 import { Box, CardMedia } from "@mui/material";
 import styles from "./ModalDetalle.module.css";
@@ -42,9 +42,10 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
         >
           {articulo.denominacion}
         </Typography>
-        <Typography variant="h6" sx={{ mt: 2 }}>
-          {articulo.descripcion}
-        </Typography>
+        {articulo.esInsumo? (null):(   <Typography variant="h6" sx={{ mt: 2 }}>
+          {(articulo as IArticuloManufacturado).descripcion}
+        </Typography>)}
+     
         <Typography variant="h6" sx={{ mt: 2 }}>
           Precio: ${articulo.precioVenta}
         </Typography>

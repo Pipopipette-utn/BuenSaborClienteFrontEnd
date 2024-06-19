@@ -29,7 +29,7 @@ export const CardArticulo: React.FC<CardArticuloProps> = ({ articulo }) => {
 
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down("xs"));
-  const isSm = useMediaQuery(theme.breakpoints.down("sm"));
+  //const isSm = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <>
