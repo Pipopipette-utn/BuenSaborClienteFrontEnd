@@ -6,7 +6,7 @@ export interface IEmpresa extends BaseEntity {
 	nombre: string;
 	razonSocial: string;
 	cuil: number;
-	logo: string;
+	imagenEmpresa?: IImagen;
 	sucursales?: ISucursal[];
 }
 
@@ -14,13 +14,14 @@ export interface ISucursal extends BaseEntity {
 	nombre: string;
 	horarioApertura: string;
 	horarioCierre: string;
-	logo: string;
+	imagenSucursal?: IImagen;
 	esCasaMatriz: boolean;
 	empresa?: IEmpresa;
 	domicilio?: IDomicilio;
 	categorias?: ICategoria[];
 	articulos?: IArticulo[];
 }
+
 
 export interface ICategoria extends BaseEntity {
 	denominacion: string;
@@ -68,7 +69,7 @@ export interface IUnidadMedida extends BaseEntity {
 export interface IImagen {
 	id: string;
 	url: string;
-	name: string;
+	name: string;
 }
 
 /* export interface IUsuario extends BaseEntity {

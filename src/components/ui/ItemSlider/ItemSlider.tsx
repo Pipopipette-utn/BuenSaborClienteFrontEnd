@@ -40,7 +40,7 @@ const transformToSlideItems = (
 ): SlideItem[] => {
   return data.map((item) => ({
     id: item.id || 0,
-    logo: (item as ISucursal).logo || undefined,
+    logo: (item as ISucursal).imagenSucursal?.url || undefined,
     imagen: (item as IPromocion).imagenes?.[0]?.url || undefined,
     nombre:
       (item as ICategoria).denominacion ||
