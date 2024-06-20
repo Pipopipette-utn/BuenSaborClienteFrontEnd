@@ -1,5 +1,6 @@
 import React, {
   ChangeEvent,
+  memo,
   useCallback,
   useEffect,
   useMemo,
@@ -35,6 +36,13 @@ export const Catalogo = () => {
 
   const fetchArticulos = useFetchArticulos();
 
+  const selectedCategoria = useAppSelector(
+    (state: RootState) => state.selectedData.selectedCategoria
+  );
+  const selectedSucursalId = useAppSelector(
+    (state: RootState) => state.selectedData.sucursal?.id
+  );
+
   const handlePageChange = useCallback(
     (_event: ChangeEvent<unknown>, value: number) => {
       setPage(value);
@@ -42,12 +50,9 @@ export const Catalogo = () => {
     []
   );
 
-  const selectedCategoria = useAppSelector(
-    (state: RootState) => state.selectedData.selectedCategoria
-  );
-  const selectedSucursalId = useAppSelector(
-    (state: RootState) => state.selectedData.sucursal?.id
-  );
+  const handleOrderChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setOrder(event.target.value as string);
+  };
 
   const url = useMemo(() => {
     return generarURL(
