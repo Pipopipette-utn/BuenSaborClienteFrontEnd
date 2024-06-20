@@ -1,4 +1,4 @@
-import { FormEvent, SetStateAction, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAppDispatch } from "../../../redux/HookReducer";
 import { useNavigate } from "react-router-dom";
 import { setLogin } from "../../../redux/slices/Auth";
@@ -19,10 +19,9 @@ import {
   MenuItem,
   Select,
   FormControl,
+  SelectChangeEvent,
 } from "@mui/material";
-import { emptyLocalidad } from "../../../types/emptyEntities";
 import { useFetch } from "../../../hooks/UseFetch";
-import { setProvincias } from "../../../redux/slices/Location";
 import { ILocalidad, IPais, IProvincia } from "../../../types/ubicacion";
 import { baseUrl } from "../../../App";
 
@@ -50,7 +49,7 @@ export const Register = () => {
     fechaNacimiento: "",
     telefono: "",
   });
-  const { data: paises } = useFetch("/paises");
+  const { data: paises } = useFetch<IPais[]>("/paises");
   const [provincias, setProvincias] = useState<IProvincia[]>([]);
   const [localidades, setLocalidades] = useState<ILocalidad[]>([]);
 
@@ -94,14 +93,11 @@ export const Register = () => {
     setActiveStep((prevStep) => prevStep - 1);
   };
 
-  const handleChangePais = (event: {
-    target: { value: SetStateAction<IPais | undefined> };
-  }) => {
-    setSelectedPais(event.target.value);
+  const handleChangePais = (event: SelectChangeEvent<IPais>) => {
+    setSelectedPais(event.target.value as IPais);
   };
 
   const handleChangeLocalidad = (localidadId: number) => {
-    console.log("coso que recibo: ", localidadId);
     const selectedLocalidad = localidades.find(
       (localidad) => localidad.id === localidadId
     );
@@ -169,7 +165,7 @@ export const Register = () => {
   };
 
   return (
-    <div style={{marginTop: "10%", padding: "5%"}}>
+    <div style={{ marginTop: "10%", padding: "5%" }}>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
@@ -284,7 +280,7 @@ export const Register = () => {
                     onChange={handleChangePais}
                     fullWidth
                   >
-                    {paises.map((pais) => (
+                    {paises?.map((pais) => (
                       <MenuItem key={pais.id} value={pais.id}>
                         {pais.nombre}
                       </MenuItem>
@@ -299,21 +295,29 @@ export const Register = () => {
                     labelId="provincia-label"
                     id="provincia"
                     name="provincia"
-                    value={selectedProvincia}
+                    value={
+                      selectedProvincia ? selectedProvincia.id?.toString() : ""
+                    }
                     onChange={(e) => {
-                      const { value } = e.target;
-                      setSelectedProvincia(value);
+                      const { name, value } = e.target as HTMLSelectElement;
+                      const selected = provincias.find(
+                        (provincia) => provincia.id === parseInt(value)
+                      );
+                      setSelectedProvincia(selected as IProvincia);
                       handleChange({
                         target: {
-                          name: "provincia",
+                          name,
                           value,
                         },
-                      });
+                      } as React.ChangeEvent<HTMLInputElement>);
                     }}
                     fullWidth
                   >
                     {provincias.map((provincia) => (
-                      <MenuItem key={provincia.id} value={provincia.id}>
+                      <MenuItem
+                        key={provincia.id}
+                        value={provincia.id?.toString()}
+                      >
                         {provincia.nombre}
                       </MenuItem>
                     ))}

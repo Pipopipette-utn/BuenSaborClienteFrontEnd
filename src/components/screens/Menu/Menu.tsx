@@ -8,12 +8,11 @@ import { useAppDispatch, useAppSelector } from "../../../redux/HookReducer";
 import {
   setCategoriaDefault,
   setCategoriasSucursal,
-  setSelectedCategoria,
 } from "../../../redux/slices/SelectedData";
 import { SucursalService } from "../../../services/SucursalService";
 
 const PantallaMenu: React.FC = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [_isOpen, setIsOpen] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const sucursal = useAppSelector(
     (state: RootState) => state.selectedData.sucursal

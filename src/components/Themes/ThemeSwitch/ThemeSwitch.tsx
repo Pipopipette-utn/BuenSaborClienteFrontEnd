@@ -1,9 +1,17 @@
 import Switch from "@mui/material/Switch";
 import styles from "./ThemeSwitch.module.css";
-import { darkTheme } from "../DarkTheme"; //No borrar
+import { darkTheme } from "../DarkTheme";
 import { lightTheme } from "../LightTheme";
 
-export const ThemeSwitch = ({ currentTheme, toggleTheme }) => {
+interface ThemeSwitchProps {
+  currentTheme: any;
+  toggleTheme: () => void;
+}
+
+export const ThemeSwitch: React.FC<ThemeSwitchProps> = ({
+  currentTheme,
+  toggleTheme,
+}) => {
   return (
     <Switch
       checked={currentTheme === darkTheme}

@@ -14,7 +14,7 @@ import { Register } from "../components/screens/Login/Register";
 
 export const AppRouter = () => {
   const { currentTheme } = useThemeToggle();
-  const location = useLocation();
+  //const location = useLocation();
   return (
     <ThemeProvider theme={currentTheme}>
       <CssBaseline />

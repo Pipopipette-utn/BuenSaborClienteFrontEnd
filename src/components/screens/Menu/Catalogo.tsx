@@ -1,4 +1,4 @@
-import React, {
+import {
   ChangeEvent,
   memo,
   useCallback,
@@ -20,6 +20,7 @@ import {
   Select,
   MenuItem,
   Box,
+  SelectChangeEvent,
 } from "@mui/material";
 import { Buscador } from "./Buscador";
 import useFetchArticulos from "../../../hooks/useFetchArticulos";
@@ -50,8 +51,8 @@ export const Catalogo = () => {
     []
   );
 
-  const handleOrderChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setOrder(event.target.value as string);
+  const handleOrderChange = (event: SelectChangeEvent<string>) => {
+    setOrder(event.target.value);
   };
 
   const url = useMemo(() => {
