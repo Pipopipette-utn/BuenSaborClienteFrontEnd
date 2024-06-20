@@ -1,7 +1,5 @@
-import { IArticuloManufacturadoDetalle, ISucursal } from "./empresa";
+import { IArticuloManufacturadoDetalle } from "./empresa";
 import { FormaPago, TipoEnvio } from "./enums";
-import { ICliente } from "./persona";
-import { IDomicilio } from "./ubicacion";
 
 interface BaseEntityDTO {
 	id?: number;

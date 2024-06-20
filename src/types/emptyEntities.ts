@@ -11,7 +11,6 @@ export const emptyEmpresa: IEmpresa = {
 	nombre: "",
 	razonSocial: "",
 	cuil: 0,
-	logo: ""
 }
 
 export const emptySucursal: ISucursal = {
@@ -19,7 +18,6 @@ export const emptySucursal: ISucursal = {
 	nombre: "",
 	horarioApertura: "",
 	horarioCierre: "",
-	logo: "",
 	esCasaMatriz: false
 }
 

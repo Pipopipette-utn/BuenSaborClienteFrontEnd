@@ -1,6 +1,5 @@
 import { IImagen, ISucursal } from "./empresa";
 import { IPedido } from "./pedido";
-import { IDomicilio } from "./ubicacion";
 import { IUsuario } from "./usuario";
 
 export interface IPersona extends BaseEntity {
