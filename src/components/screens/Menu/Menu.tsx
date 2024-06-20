@@ -1,5 +1,5 @@
-import React, { useEffect, useState, Suspense } from "react";
-import { LinearProgress, Stack } from "@mui/material";
+import React, { useEffect, Suspense, useState } from "react";
+import { LinearProgress, Box } from "@mui/material";
 import Sidebar from "../../ui/SideBar/Sidebar";
 import Loader from "../../ui/Loader/Loader";
 import { RootState } from "../../../redux/Store";
@@ -30,8 +30,6 @@ const PantallaMenu: React.FC = () => {
       try {
         if (sucursal?.id && categoriasSucursal === null) {
           const sucursalService = new SucursalService("/sucursales");
-
-          // Obtiene categorías de la sucursal
           const categorias = await sucursalService.getCategorias(sucursal.id);
           const filteredCategorias = categorias.filter((c) => c.esParaVender);
           dispatch(setCategoriasSucursal(filteredCategorias));
@@ -65,20 +63,33 @@ const PantallaMenu: React.FC = () => {
     traerCategoriasYHorario();
   }, [sucursal?.id, categoriasSucursal, dispatch]);
 
-  console.log("Render de menu");
-
   return (
     <Suspense fallback={<Loader />}>
-      <Stack direction="row" width="100vw" spacing={4} sx={{ padding: 5 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          width: "100%",
+          padding: { xs: 2, md: 5 },
+          gap: 4,
+        }}
+      >
         {categoriasSucursal ? (
           <>
-            <Sidebar />
-            {selectedCategoria && <Catalogo />}
+            <Box
+              sx={{
+                width: { xs: "100%", md: "25%" },
+                minWidth: { xs: "100%", md: "25%" },
+              }}
+            >
+              <Sidebar />
+            </Box>
+            <Box sx={{ flex: 1 }}>{selectedCategoria && <Catalogo />}</Box>
           </>
         ) : (
           <LinearProgress sx={{ width: "100%" }} />
         )}
-      </Stack>
+      </Box>
     </Suspense>
   );
 };

@@ -1,5 +1,3 @@
-//https://th.bing.com/th/id/OIG3.H2Vl._rFmCd8CI.MvvZd?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn LOGO
-
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -38,6 +36,7 @@ function ResponsiveAppBar() {
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -51,26 +50,9 @@ function ResponsiveAppBar() {
   };
 
   const handleMenuItemClick = (page: string) => {
-    console.log(`Se hizo clic en la página: ${page}`);
-    //navigate(`/${page}`);
     switch (page) {
       case "Menú":
         navigate(`/menu`);
-        break;
-      default:
-        break;
-    }
-    handleCloseNavMenu();
-  };
-  const handleMenuItemClick = (page: string) => {
-    console.log(`Se hizo clic en la página: ${page}`);
-    //navigate(`/${page}`);
-    switch (page) {
-      case "Menú":
-        navigate(`/menu`);
-        break;
-      case "Mi Pedido":
-        navigate(`/pedido`);
         break;
       default:
         break;
@@ -93,6 +75,7 @@ function ResponsiveAppBar() {
     }
     handleCloseNavMenu();
   };
+
   const handleLoggin = (setting: string) => {
     switch (setting) {
       case "Iniciar Sesion":
@@ -109,8 +92,12 @@ function ResponsiveAppBar() {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
-        {/* VISTA PARA PC */}
         <Toolbar disableGutters>
+          <Avatar
+            alt="Logo"
+            src="https://th.bing.com/th/id/OIG3.H2Vl._rFmCd8CI.MvvZd?w=270&h=270&c=6&r=0&o=5&dpr=1.3&pid=ImgGn"
+            sx={{ display: { xs: "none", md: "flex" }, mr: 2 }}
+          />
           <Typography
             variant="h6"
             fontFamily="Roboto, sans-serif"
@@ -118,13 +105,11 @@ function ResponsiveAppBar() {
             component="a"
             href="/"
             sx={{
-              mr: 2,
               display: { xs: "none", md: "flex" },
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
-              marginLeft: "1rem",
             }}
           >
             El Buen Sabor
@@ -133,15 +118,14 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
+              aria-label="menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              color="inherit"
               onClick={handleOpenNavMenu}
+              color="inherit"
             >
               <MenuIcon />
             </IconButton>
-
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -168,6 +152,23 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
           {/* VISTA PARA CELULAR */}
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href=""
+            sx={{
+              display: { xs: "flex", md: "none" },
+              flexGrow: 1,
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            El Buen Sabor
+          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
@@ -200,7 +201,7 @@ function ResponsiveAppBar() {
               </Button>
             </Box>
           ) : (
-            <Box>
+            <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Usuario loggeado">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar

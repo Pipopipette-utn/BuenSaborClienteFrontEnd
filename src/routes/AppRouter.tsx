@@ -1,20 +1,19 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import ResponsiveAppBar from "../components/ui/AppBar/ResponsiveAppBar";
 import { Home } from "../components/screens/Home/Home";
+import PantallaMenu from "../components/screens/Menu/Menu";
 import { Cuenta } from "../components/screens/Cuenta/Cuenta";
 import Footer from "../components/ui/Footer/Footer";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import "./button.css";
 import { useThemeToggle } from "../components/Utils/ThemeUtil";
 import { RutaPrivada } from "../controlAcceso/RutaPrivada";
-import PantallaMenu from "../components/screens/Menu/Menu";
-import { ThemeSwitch } from "../components/Themes/ThemeSwitch/ThemeSwitch";
 import { CssBaseline } from "@mui/material";
 import { Login } from "../components/screens/Login/Login";
 import { Register } from "../components/screens/Login/Register";
 
 export const AppRouter = () => {
-  const { currentTheme, toggleTheme } = useThemeToggle();
+  const { currentTheme } = useThemeToggle();
   const location = useLocation();
   return (
     <ThemeProvider theme={currentTheme}>

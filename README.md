@@ -1,3 +1,5 @@
+SE PUEDE INGRESAR CON EL USUARIO: aguerodamian15@gmail.com Y CONTRASEÑA: damian
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
