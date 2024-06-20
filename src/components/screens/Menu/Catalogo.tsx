@@ -30,7 +30,7 @@ const Catalogo: React.FC = () => {
   const fetchArticulos = useFetchArticulos();
 
   const handlePageChange = useCallback(
-    (event: ChangeEvent<unknown>, value: number) => {
+    (_event: ChangeEvent<unknown>, value: number) => {
       setPage(value);
     },
     []

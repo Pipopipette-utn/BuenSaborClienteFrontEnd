@@ -6,6 +6,7 @@ import { RootState } from "../../../redux/Store";
 import Catalogo from "./Catalogo";
 import { useAppDispatch, useAppSelector } from "../../../redux/HookReducer";
 import {
+  setCategoriaDefault,
   setCategoriasSucursal,
   setSelectedCategoria,
 } from "../../../redux/slices/SelectedData";
@@ -34,7 +35,7 @@ const PantallaMenu: React.FC = () => {
           const categorias = await sucursalService.getCategorias(sucursal.id);
           const filteredCategorias = categorias.filter((c) => c.esParaVender);
           dispatch(setCategoriasSucursal(filteredCategorias));
-          dispatch(setSelectedCategoria(filteredCategorias[0]));
+          dispatch(setCategoriaDefault(filteredCategorias[0]));
 
           // Obtiene datos de la sucursal
           const sucursalData = await sucursalService.getById(sucursal.id);

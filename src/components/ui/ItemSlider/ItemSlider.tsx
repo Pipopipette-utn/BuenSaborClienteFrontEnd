@@ -14,6 +14,13 @@ const StyledSlide = styled.div`
 	width: "180px",
 	border-radius: 20px;
 	text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+
+  @media (600px <= width <= 1400px) {
+    padding-left: 20%; /* Incrementa el espaciado para vistas mayores a 1000px */
+  }
+
 	img {
 		border-radius: 30px;
 		border-bottom-right-radius: 0px;
@@ -40,7 +47,7 @@ const transformToSlideItems = (
 ): SlideItem[] => {
   return data.map((item) => ({
     id: item.id || 0,
-    logo: (item as ISucursal).logo || undefined,
+    logo: (item as ISucursal).imagenSucursal?.url || undefined,
     imagen: (item as IPromocion).imagenes?.[0]?.url || undefined,
     nombre:
       (item as ICategoria).denominacion ||
@@ -60,10 +67,32 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: isMobile ? 1 : isSmall ? 2 : isLarge ? 6 : 6,
+    slidesToShow: isMobile ? 1 : isSmall ? 2 : isLarge ? 4 : 6,
     slidesToScroll: 1,
-
     centerMode: true, // Centra los elementos en el slider
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   const slideItems = transformToSlideItems(items);
@@ -82,8 +111,8 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
         >
           <Stack
             sx={{
-              backgroundColor: "#DDDDDD",
-              width: "180px",
+              backgroundColor: "#FF6633   ",
+              width: "100%",
               height: "230px",
               borderRadius: "30px",
             }}
@@ -99,8 +128,9 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
             <h5
               style={{
                 marginBottom: "16%",
-                fontSize: "16px",
+                fontSize: "24px",
                 fontWeight: "bold",
+                color: "#333333",
               }}
             >
               {item.nombre}

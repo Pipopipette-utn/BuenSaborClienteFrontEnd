@@ -62,6 +62,21 @@ function ResponsiveAppBar() {
     }
     handleCloseNavMenu();
   };
+  const handleMenuItemClick = (page: string) => {
+    console.log(`Se hizo clic en la página: ${page}`);
+    //navigate(`/${page}`);
+    switch (page) {
+      case "Menú":
+        navigate(`/menu`);
+        break;
+      case "Mi Pedido":
+        navigate(`/pedido`);
+        break;
+      default:
+        break;
+    }
+    handleCloseNavMenu();
+  };
 
   const handleMenuItemSetting = (setting: string) => {
     switch (setting) {
@@ -211,7 +226,7 @@ function ResponsiveAppBar() {
                 onClose={handleCloseUserMenu}
               >
                 <Box width={"100%"} textAlign={"center"}>
-                  hola {userName}
+                  ¡Hola {userName}!
                 </Box>
                 {settings.map((setting) => (
                   <MenuItem
