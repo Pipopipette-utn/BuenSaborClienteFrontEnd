@@ -7,7 +7,7 @@ interface CartState {
   items: IDetallePedido[];
 }
 // Define el estado inicial del carrito
-const savedCart = localStorage.getItem('cart');
+//const savedCart = localStorage.getItem('cart');
 const initialState: CartState = {
   items:  [],
 };

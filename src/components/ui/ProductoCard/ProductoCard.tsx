@@ -2,10 +2,22 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
-function ProductoCard({ nombre, imagen, descripcion, precio }) {
-  const [quantity, setQuantity] = useState(1);
+interface ProductoCardProps {
+  nombre: string;
+  imagen: string;
+  descripcion: string;
+  precio: number;
+}
 
-  const handleQuantityChange = (event) => {
+function ProductoCard({
+  nombre,
+  imagen,
+  descripcion,
+  precio,
+}: ProductoCardProps) {
+  const [quantity, setQuantity] = useState<number>(1);
+
+  const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newQuantity = parseInt(event.target.value);
     if (newQuantity > 0) {
       setQuantity(newQuantity);

@@ -5,7 +5,7 @@ export function useFetch<T>(url: RequestInfo | URL) {
   const [data, setData] = useState<T | null>(null); // Usa un generico
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-  const [controller, setController] = useState<AbortController | null>(null);
+  const [controller, _setController] = useState<AbortController | null>(null);
 
   useEffect(() => {
     const abortController = new AbortController(); //Evita que se haga la request al sv en caso de cerrar la pagina

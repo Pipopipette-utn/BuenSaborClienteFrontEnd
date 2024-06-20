@@ -1,24 +1,27 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import { useState } from 'react';
-import { IUsuario } from '../types/usuario';
-
+import { Navigate, Outlet } from "react-router-dom";
+import { IUsuario } from "../types/usuario";
+import { Rol } from "../types/enums";
 
 interface Props {
-  rol: Rol;
+  rol: Rol | undefined;
 }
 
 function RolUsuario({ rol }: Props) {
-  
-    const [jsonUsuario, setJSONUsuario] = useState<any>(localStorage.getItem('usuario'));
-    const usuarioLogueado:IUsuario = JSON.parse(jsonUsuario) as IUsuario;
-    //si esta logueado y es administrador lo dejo ingresar si no
-    if((usuarioLogueado && usuarioLogueado.rol === rol)){
-        return <Outlet/>;
-    }else if(usuarioLogueado){
-        return <Navigate replace to='/#inicio' />;
-    }else{
-        return <Navigate replace to='/login' />;
-    }
-    
+  const jsonUsuario = localStorage.getItem("usuario");
+  const usuarioLogueado: IUsuario | null = jsonUsuario
+    ? (JSON.parse(jsonUsuario) as IUsuario)
+    : null;
+
+  // Si hay un usuario logueado y tiene el rol adecuado, permitir acceso
+  if (usuarioLogueado && usuarioLogueado.rol === rol) {
+    return <Outlet />;
+  } else if (usuarioLogueado) {
+    // Si hay un usuario logueado pero no tiene el rol adecuado, redirigir a inicio
+    return <Navigate replace to="/#inicio" />;
+  } else {
+    // Si no hay usuario logueado, redirigir a la página de login
+    return <Navigate replace to="/login" />;
+  }
 }
+
 export default RolUsuario;
