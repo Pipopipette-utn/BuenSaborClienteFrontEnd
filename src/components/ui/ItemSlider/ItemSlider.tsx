@@ -2,34 +2,13 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import styled from "@emotion/styled";
 import { ICategoria, IPromocion, ISucursal } from "../../../types/empresa";
 import { useAppDispatch } from "../../../redux/HookReducer";
 import { setSucursal } from "../../../redux/slices/SelectedData";
 import { useNavigate } from "react-router-dom";
 import { useWindowResize } from "../../../hooks/useWindowRezise";
 import { Stack } from "@mui/material";
-
-const StyledSlide = styled.div`
-	width: "180px",
-	border-radius: 20px;
-	text-align: center;
-  padding: 10px;
-  box-sizing: border-box;
-
-  @media (600px <= width <= 1400px) {
-    padding-left: 20%; /* Incrementa el espaciado para vistas mayores a 1000px */
-  }
-
-	img {
-		border-radius: 30px;
-		border-bottom-right-radius: 0px;
-		border-bottom-left-radius: 0px;
-		width: 100%; /* Establece el ancho al 100% del contenedor */
-		height: 150px; /* Establece la altura deseada para las imágenes */
-		object-fit: cover; /* Escala las imágenes manteniendo la relación de aspecto y recortando si es necesario */
-	}
-`;
+import "./SliderGenerico.css";
 
 interface SlideItem {
   id: number;
@@ -105,19 +84,12 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
   return (
     <Slider {...settings}>
       {slideItems.map((item) => (
-        <StyledSlide
+        <div
+          className="StyledSlide"
           key={item.id}
           onClick={() => handleSucursalClick(item as ISucursal)}
         >
-          <Stack
-            sx={{
-              backgroundColor: "#FF6633   ",
-              width: "100%",
-              height: "230px",
-              borderRadius: "30px",
-            }}
-            spacing={2}
-          >
+          <Stack className="Stack" spacing={2}>
             {(item.imagenes && item.imagenes[0] && item.imagenes[0].url) ||
               (item.logo && (
                 <img
@@ -125,18 +97,9 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
                   alt={item.nombre}
                 />
               ))}
-            <h5
-              style={{
-                marginBottom: "16%",
-                fontSize: "24px",
-                fontWeight: "bold",
-                color: "#333333",
-              }}
-            >
-              {item.nombre}
-            </h5>
+            <h5>{item.nombre}</h5>
           </Stack>
-        </StyledSlide>
+        </div>
       ))}
     </Slider>
   );
