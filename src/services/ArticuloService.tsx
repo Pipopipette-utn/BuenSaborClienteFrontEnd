@@ -10,11 +10,11 @@ import { BackendClient } from "./BackendClient";
 // Clase ArticuloService que extiende BackendClient para interactuar con la API de articulos
 export class ArticuloService extends BackendClient<IArticulo> {
   mapArticulos = (
-    articulosHijos: IArticuloInsumo[] | IArticuloManufacturado[],
+    articulosHijos: IArticuloManufacturado[],
     articulosPadres: IArticulo[],
     unidadMedidas: IUnidadMedida[],
     categorias: ICategoria[]
-  ): (IArticuloInsumo | IArticuloManufacturado)[] => {
+  ): IArticuloManufacturado[] => {
     const articulosMapeados = articulosHijos.map((producto) => {
       const articulo = articulosPadres?.find((a) => a.id == producto.id);
       const unidadMedida = unidadMedidas.find(

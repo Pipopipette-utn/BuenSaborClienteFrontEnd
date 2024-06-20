@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 
-const useCloudinary = (imagenes) => {
-  const [imageUrls, setImageUrls] = useState([]);
+interface Imagen {
+  url: string;
+}
+
+const useCloudinary = (imagenes: Imagen[]) => {
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   useEffect(() => {
     if (imagenes && imagenes.length > 0) {
