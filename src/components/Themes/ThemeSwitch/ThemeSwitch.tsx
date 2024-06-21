@@ -26,7 +26,7 @@ const ThemeSwitch: React.FC = () => {
           }}
         />
       }
-      label="Dark Mode"
+      label={isDarkMode ? "Dark Mode" : "Light Mode"}
       className={styles["theme-switch__container"]}
     />
   );
