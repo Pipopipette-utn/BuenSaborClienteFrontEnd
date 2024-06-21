@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -75,10 +75,24 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
   };
 
   const slideItems = transformToSlideItems(items);
-  const handleSucursalClick = (sucursal: ISucursal) => {
-    dispatch(setSucursal(sucursal));
-    navigate(`/menu`);
-    console.log("clickeado en la sucrusal: ", sucursal);
+
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleMouseDown = () => {
+    setIsDragging(false); // Iniciar como no arrastrando
+  };
+
+  const handleMouseMove = () => {
+    setIsDragging(true); // Cambiar a arrastrando
+  };
+
+  const handleMouseUp = (sucursal: ISucursal) => {
+    if (!isDragging) {
+      // Si no se está arrastrando, navegar a la sucursal
+      dispatch(setSucursal(sucursal));
+      navigate(`/menu`);
+      console.log("clickeado en la sucursal: ", sucursal);
+    }
   };
 
   return (
@@ -87,7 +101,9 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
         <div
           className="StyledSlide"
           key={item.id}
-          onClick={() => handleSucursalClick(item as ISucursal)}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={() => handleMouseUp(item as ISucursal)}
         >
           <Stack className="Stack" spacing={2}>
             {(item.imagenes && item.imagenes[0] && item.imagenes[0].url) ||

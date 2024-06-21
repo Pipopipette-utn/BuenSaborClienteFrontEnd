@@ -28,6 +28,12 @@ import { generarURL } from "../../../hooks/useUrlArticulo";
 import { useAppSelector } from "../../../redux/HookReducer";
 import { RootState } from "../../../redux/Store";
 
+// Función para formatear horarios
+const formatTime = (time: string) => {
+  const [hours, minutes] = time.split(":");
+  return `${hours}:${minutes}`;
+};
+
 export const Catalogo = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -40,9 +46,10 @@ export const Catalogo = () => {
   const selectedCategoria = useAppSelector(
     (state: RootState) => state.selectedData.selectedCategoria
   );
-  const selectedSucursalId = useAppSelector(
-    (state: RootState) => state.selectedData.sucursal?.id
+  const selectedSucursal = useAppSelector(
+    (state: RootState) => state.selectedData.sucursal
   );
+  const selectedSucursalId = selectedSucursal?.id;
 
   const handlePageChange = useCallback(
     (_event: ChangeEvent<unknown>, value: number) => {
@@ -72,10 +79,6 @@ export const Catalogo = () => {
     }
   }, [url, fetchArticulos]);
 
-  /*  if(selectedSucursalId === 0){
-    articulos?.map((articulo) =>) //aca esta el array de promociones, lo voy a usar para guardarlo en un articulos promocion o algo asi
-  } */
-
   useEffect(() => {
     if (articulos) {
       const sortedArticulos = [...articulos].sort((a, b) => {
@@ -97,6 +100,41 @@ export const Catalogo = () => {
   return (
     <Container maxWidth="lg">
       <Stack direction="column" width="100%" spacing={4}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "16px",
+            backgroundColor: "#f5f5f5",
+            borderRadius: "8px",
+          }}
+        >
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: "bold",
+              fontSize: "32px",
+              textAlign: "center",
+            }}
+          >
+            {selectedSucursal?.nombre}
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: "16px",
+              textAlign: "center",
+              marginTop: "8px",
+            }}
+          >
+            {selectedSucursal?.horarioApertura &&
+              formatTime(selectedSucursal.horarioApertura)}{" "}
+            -{" "}
+            {selectedSucursal?.horarioCierre &&
+              formatTime(selectedSucursal.horarioCierre)}
+          </Typography>
+        </Box>
         <Box
           sx={{
             display: "flex",
