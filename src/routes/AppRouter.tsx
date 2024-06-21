@@ -4,24 +4,23 @@ import { Home } from "../components/screens/Home/Home";
 import PantallaMenu from "../components/screens/Menu/Menu";
 import { Cuenta } from "../components/screens/Cuenta/Cuenta";
 import Footer from "../components/ui/Footer/Footer";
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import "./button.css";
-import { useThemeToggle } from "../components/Utils/ThemeUtil";
 import { RutaPrivada } from "../controlAcceso/RutaPrivada";
-import { CssBaseline } from "@mui/material";
 import { Login } from "../components/screens/Login/Login";
 import { Register } from "../components/screens/Login/Register";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import CssBaseline from "@mui/material/CssBaseline/CssBaseline";
+import { useAppSelector } from "../redux/HookReducer";
+import { RootState } from "../redux/Store";
 
 export const AppRouter = () => {
-  const { currentTheme } = useThemeToggle();
-  //const location = useLocation();
+  const theme = useAppSelector((state: RootState) => state.theme.currentTheme);
+
   return (
-    <ThemeProvider theme={currentTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <>
         <ResponsiveAppBar />
-        {/*         <ThemeSwitch currentTheme={currentTheme} toggleTheme={toggleTheme} />
-         */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<PantallaMenu />} />

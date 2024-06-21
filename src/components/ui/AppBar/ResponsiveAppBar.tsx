@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/HookReducer";
 import { RootState } from "../../../redux/Store";
 import { setLogout } from "../../../redux/slices/Auth";
+import ThemeSwitch from "../../Themes/ThemeSwitch/ThemeSwitch";
 
 const pages = ["Menú"];
 const settings = ["Mi Cuenta", "Cerrar Sesión"];
@@ -107,7 +108,6 @@ function ResponsiveAppBar() {
           >
             El Buen Sabor
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -142,6 +142,7 @@ function ResponsiveAppBar() {
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
+
               {!userLogeado && (
                 <>
                   <MenuItem
@@ -154,9 +155,12 @@ function ResponsiveAppBar() {
                   </MenuItem>
                 </>
               )}
+              <MenuItem>
+                <ThemeSwitch />
+              </MenuItem>
             </Menu>
           </Box>
-
+          {/* VISTA PARA CELULAR */}
           <Typography
             variant="h6"
             noWrap
@@ -185,8 +189,33 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-
-          {!userLogeado ? null : (
+          {/* ThemeSwitch en la barra principal */}
+          <Box sx={{ mx: 1, display: { xs: "none", md: "block" } }}>
+            <ThemeSwitch />
+          </Box>
+          {/*-------------------------SECCION USUARIOOO----------------------------*/}{" "}
+          {!userLogeado ? (
+            <Box
+              sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
+            >
+              <Button
+                variant="outlined"
+                color="inherit"
+                onClick={() => handleMenuItemClick("Iniciar Sesion")}
+                sx={{ mx: 1 }}
+              >
+                Iniciar Sesión
+              </Button>
+              <Button
+                variant="outlined"
+                color="inherit"
+                onClick={() => handleMenuItemClick("Registrarse")}
+                sx={{ mx: 1 }}
+              >
+                Registrarse
+              </Button>
+            </Box>
+          ) : (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Usuario loggeado">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

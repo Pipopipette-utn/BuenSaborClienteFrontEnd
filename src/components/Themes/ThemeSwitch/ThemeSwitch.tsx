@@ -1,25 +1,35 @@
-import Switch from "@mui/material/Switch";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Switch, FormControlLabel } from "@mui/material";
+import { RootState } from "../../../redux/Store";
+import { toggleTheme } from "../../../redux/slices/ThemeSlice";
 import styles from "./ThemeSwitch.module.css";
-import { darkTheme } from "../DarkTheme";
-import { lightTheme } from "../LightTheme";
 
-interface ThemeSwitchProps {
-  currentTheme: any;
-  toggleTheme: () => void;
-}
+const ThemeSwitch: React.FC = () => {
+  const dispatch = useDispatch();
+  const isDarkMode = useSelector((state: RootState) => state.theme.isDarkMode);
 
-export const ThemeSwitch: React.FC<ThemeSwitchProps> = ({
-  currentTheme,
-  toggleTheme,
-}) => {
+  const handleThemeChange = () => {
+    dispatch(toggleTheme());
+  };
+
   return (
-    <Switch
-      checked={currentTheme === darkTheme}
-      onChange={toggleTheme}
-      classes={{
-        switchBase:
-          currentTheme === lightTheme ? styles.sunSwitch : styles.moonSwitch,
-      }}
+    <FormControlLabel
+      control={
+        <Switch
+          checked={isDarkMode}
+          onChange={handleThemeChange}
+          name="themeSwitch"
+          color="default"
+          classes={{
+            switchBase: isDarkMode ? styles.moonSwitch : styles.sunSwitch,
+          }}
+        />
+      }
+      label="Dark Mode"
+      className={styles["theme-switch__container"]}
     />
   );
 };
+
+export default ThemeSwitch;

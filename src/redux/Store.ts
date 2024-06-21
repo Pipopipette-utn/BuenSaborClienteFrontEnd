@@ -4,6 +4,7 @@ import SelectedDataReducer from "./slices/SelectedData";
 import LocationReducer from "./slices/Location"
 import UbiReducer from "./slices/Ubi"
 import AuthReducer from "./slices/Auth"
+import ThemeReducer from "./slices/ThemeSlice"
 
 const store = configureStore({
     reducer:{ 
@@ -12,6 +13,7 @@ const store = configureStore({
         location: LocationReducer,
         ubicacion: UbiReducer,
         user: AuthReducer,
+        theme: ThemeReducer,
     }
   });
 
