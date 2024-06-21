@@ -54,6 +54,12 @@ function ResponsiveAppBar() {
       case "Menú":
         navigate(`/menu`);
         break;
+      case "Iniciar Sesion":
+        navigate("/login");
+        break;
+      case "Registrarse":
+        navigate("/register");
+        break;
       default:
         break;
     }
@@ -74,19 +80,6 @@ function ResponsiveAppBar() {
         break;
     }
     handleCloseNavMenu();
-  };
-
-  const handleLoggin = (setting: string) => {
-    switch (setting) {
-      case "Iniciar Sesion":
-        navigate("/login");
-        break;
-      case "Registrarse":
-        navigate("/register");
-        break;
-      default:
-        break;
-    }
   };
 
   return (
@@ -149,14 +142,26 @@ function ResponsiveAppBar() {
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
+              {!userLogeado && (
+                <>
+                  <MenuItem
+                    onClick={() => handleMenuItemClick("Iniciar Sesion")}
+                  >
+                    <Typography textAlign="center">Iniciar Sesión</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={() => handleMenuItemClick("Registrarse")}>
+                    <Typography textAlign="center">Registrarse</Typography>
+                  </MenuItem>
+                </>
+              )}
             </Menu>
           </Box>
-          {/* VISTA PARA CELULAR */}
+
           <Typography
-            variant="h5"
+            variant="h6"
             noWrap
             component="a"
-            href=""
+            href="/"
             sx={{
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
@@ -180,27 +185,8 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-          {/*-------------------------SECCION USUARIOOO----------------------------*/}
-          {!userLogeado ? (
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Button
-                variant="outlined"
-                color="inherit"
-                onClick={() => handleLoggin("Iniciar Sesion")}
-                sx={{ mx: 1 }}
-              >
-                Iniciar Sesión
-              </Button>
-              <Button
-                variant="outlined"
-                color="inherit"
-                onClick={() => handleLoggin("Registrarse")}
-                sx={{ mx: 1 }}
-              >
-                Registrarse
-              </Button>
-            </Box>
-          ) : (
+
+          {!userLogeado ? null : (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Usuario loggeado">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

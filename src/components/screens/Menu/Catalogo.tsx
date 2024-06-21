@@ -115,8 +115,8 @@ export const Catalogo = () => {
               label="Ordenar por"
               onChange={handleOrderChange}
             >
-              <MenuItem value="asc">Menor a Mayor</MenuItem>
-              <MenuItem value="desc">Mayor a Menor</MenuItem>
+              <MenuItem value="asc">Menor precio a Mayor precio</MenuItem>
+              <MenuItem value="desc">Mayor precio a Menor precio</MenuItem>
             </Select>
           </FormControl>
         </Box>

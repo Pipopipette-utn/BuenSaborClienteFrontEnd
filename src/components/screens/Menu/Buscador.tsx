@@ -10,11 +10,11 @@ interface BuscadorProps {
 }
 
 const Search = styled("div")(({ theme }) => ({
+  borderRadius: "15px",
   position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: alpha(theme.palette.grey[500], 0.85), // Tono más oscuro
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha(theme.palette.grey[800], 0.95), // Más oscuro al pasar el ratón
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -35,10 +35,11 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  color: theme.palette.common.white, // Color blanco para el icono de búsqueda
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
+  color: theme.palette.common.white, // Texto de entrada en blanco
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
@@ -75,12 +76,12 @@ export const Buscador: React.FC<BuscadorProps> = ({ onSearch, palabra }) => {
           width: { xs: "60%", sm: "70%", md: "80%" },
         }}
       />
-      <Button 
-        onClick={handleSearchClick} 
+      <Button
+        onClick={handleSearchClick}
         sx={{
           width: { xs: "40%", sm: "30%", md: "20%" },
           padding: { xs: "0.5rem", md: "0.7rem" },
-          fontSize: { xs: "0.8rem", md: "1rem" }
+          fontSize: { xs: "0.8rem", md: "1rem" },
         }}
       >
         Buscar
