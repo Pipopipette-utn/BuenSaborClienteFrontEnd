@@ -12,9 +12,10 @@ interface BuscadorProps {
 const Search = styled("div")(({ theme }) => ({
   borderRadius: "15px",
   position: "relative",
-  backgroundColor: alpha(theme.palette.grey[500], 0.85), // Tono más oscuro
+  backgroundColor: theme.palette.common.white, // Fondo blanco
+  border: `1px solid ${theme.palette.divider}`, // Borde utilizando el color del divisor del theme
   "&:hover": {
-    backgroundColor: alpha(theme.palette.grey[800], 0.95), // Más oscuro al pasar el ratón
+    backgroundColor: alpha(theme.palette.common.white, 0.95), // Ligero cambio al pasar el mouse
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -35,11 +36,11 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  color: theme.palette.common.white, // Color blanco para el icono de búsqueda
+  color: theme.palette.text.secondary, // Color secundario para el icono de búsqueda
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: theme.palette.common.white, // Texto de entrada en blanco
+  color: theme.palette.text.primary, // Texto de entrada en color principal del tema
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
