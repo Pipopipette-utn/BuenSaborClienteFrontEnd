@@ -10,9 +10,10 @@ import useCloudinary from "../../../hooks/useCloudinary";
 import { IArticulo } from "../../../types/empresa";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { IPromocion } from "../../../types/empresa"; // Asegúrate de que la ruta es correcta
 
 interface CardArticuloProps {
-  articulo: IArticulo;
+  articulo: IArticulo | IPromocion;
 }
 
 export const CardArticulo: React.FC<CardArticuloProps> = ({ articulo }) => {
@@ -30,6 +31,12 @@ export const CardArticulo: React.FC<CardArticuloProps> = ({ articulo }) => {
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down("xs"));
   //const isSm = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const esPromocion = (
+    articulo: IArticulo | IPromocion
+  ): articulo is IPromocion => {
+    return (articulo as IPromocion).precioPromocional !== undefined;
+  };
 
   return (
     <>
@@ -54,14 +61,26 @@ export const CardArticulo: React.FC<CardArticuloProps> = ({ articulo }) => {
           >
             {articulo.denominacion}
           </Typography>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="div"
-            sx={{ fontSize: "18px" }}
-          >
-            ${articulo.precioVenta}
-          </Typography>
+          {esPromocion(articulo) ? (
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              sx={{ fontSize: "18px", color: "red" }}
+            >
+              ${articulo.precioPromocional}{" "}
+              {/*  <del>${articulo.precioPromocional}</del> */}
+            </Typography>
+          ) : (
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              sx={{ fontSize: "18px" }}
+            >
+              ${articulo.precioVenta}
+            </Typography>
+          )}
         </CardContent>
         <CardActions sx={{ justifyContent: "center" }}>
           <Button variant="outlined" size="small" onClick={handleOpen}>
