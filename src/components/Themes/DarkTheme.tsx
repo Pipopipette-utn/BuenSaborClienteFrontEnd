@@ -23,12 +23,9 @@ export const darkTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Nunito Sans",
-    fontSize: 14,
+    fontFamily: "Roboto, sans-serif",
+    fontSize: 16,
     fontWeightMedium: 500,
-    body1: {
-      fontFamily: "Open Sans",
-    },
     caption: {
       fontWeight: 400,
     },
