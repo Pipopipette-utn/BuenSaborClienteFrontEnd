@@ -80,7 +80,7 @@ export function Carrito() {
   const handleGuardarCarrito = async () => {
     /*En caso de querer que rediriga al login, manejar aca*/
     if (!estaLogeado) {
-      return navigate("login");
+      return navigate("/login");
     }
     try {
       const pedidoService = new PedidoService("/pedidos");

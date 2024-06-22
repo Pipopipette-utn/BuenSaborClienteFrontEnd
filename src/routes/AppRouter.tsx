@@ -22,7 +22,7 @@ export const AppRouter = () => {
     <ThemeProvider theme={currentTheme}>
       <CssBaseline />
       <>
-        {location.pathname !== "/login" && <ResponsiveAppBar />}
+        <ResponsiveAppBar />
         {/*         <ThemeSwitch currentTheme={currentTheme} toggleTheme={toggleTheme} />
          */}
         <Routes>
