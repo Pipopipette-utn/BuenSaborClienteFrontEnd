@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense, useState } from "react";
-import { LinearProgress, Box } from "@mui/material";
+import { LinearProgress, Box, useMediaQuery, useTheme } from "@mui/material";
 import Sidebar from "../../ui/SideBar/Sidebar";
 import Loader from "../../ui/Loader/Loader";
 import { RootState } from "../../../redux/Store";
@@ -62,12 +62,15 @@ const PantallaMenu: React.FC = () => {
     traerCategoriasYHorario();
   }, [sucursal?.id, categoriasSucursal, dispatch]);
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Suspense fallback={<Loader />}>
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column", md: "row" },
+          flexDirection: isSmallScreen ? "column" : "row",
           width: "100%",
           padding: { xs: 2, md: 5 },
           gap: 4,
@@ -77,8 +80,8 @@ const PantallaMenu: React.FC = () => {
           <>
             <Box
               sx={{
-                width: { xs: "100%", md: "25%" },
-                minWidth: { xs: "100%", md: "25%" },
+                width: isSmallScreen ? "100%" : "25%",
+                minWidth: isSmallScreen ? "100%" : "15%",
               }}
             >
               <Sidebar />
