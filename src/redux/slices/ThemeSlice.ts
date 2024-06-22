@@ -2,6 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Theme } from '@mui/material/styles';
 import { lightTheme } from '../../components/Themes/LightTheme';
 import { darkTheme } from '../../components/Themes/DarkTheme';
+import { loadState } from '../../utils/localStorage';
+
+const savedTheme = loadState('theme') || { isDarkMode: false, currentTheme: lightTheme };
 
 interface ThemeState {
   currentTheme: Theme;
@@ -9,8 +12,8 @@ interface ThemeState {
 }
 
 const initialState: ThemeState = {
-  currentTheme: lightTheme,
-  isDarkMode: false,
+  currentTheme: savedTheme.isDarkMode ? darkTheme : lightTheme,
+  isDarkMode: savedTheme.isDarkMode,
 };
 
 const themeSlice = createSlice({
@@ -19,15 +22,21 @@ const themeSlice = createSlice({
     reducers: {
       toggleTheme: (state) => {
         const isDarkMode = !state.isDarkMode;
-        return {
+        const newTheme = isDarkMode ? darkTheme : lightTheme;
+        // Uso de inner para que no explote por inmutabilidad
+        const newState = {
           ...state,
           isDarkMode,
-          currentTheme: isDarkMode ? darkTheme : lightTheme,
+          currentTheme: newTheme,
         };
+
+        localStorage.setItem('theme', JSON.stringify({ isDarkMode, currentTheme: newTheme }));
+
+        return newState;
       },
+     
     },
   });
-  
   export const { toggleTheme } = themeSlice.actions;
   export default themeSlice.reducer;
   
