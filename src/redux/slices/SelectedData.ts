@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IArticulo, ICategoria, IEmpresa, ISucursal } from "../../types/empresa";
 import { IPedidoDTO } from "../../types/dto";
+import { loadState } from "../../utils/localStorage";
+
+// Cargar sucursal seleccionada desde localStorage si existe
+const savedSelectedSucursal = loadState("selectedSucursal");
 
 interface IInitialState {
 	empresa: IEmpresa | null;
@@ -15,7 +19,7 @@ interface IInitialState {
 const initialState: IInitialState = {
 	empresa: null,
 	sucursalesEmpresa: null,
-	sucursal: null,
+	sucursal: savedSelectedSucursal ? savedSelectedSucursal : null,
 	categoriasSucursal: null,
 	items: [],
 	selectedCategoria: null,
@@ -35,7 +39,7 @@ const SelectedDataSlice = createSlice({
 		},
 		setSucursal: (state, action: PayloadAction<ISucursal | null>) => {
 			state.sucursal = action.payload;
-			localStorage.setItem("SelectedDataSlice", JSON.stringify(state.sucursal))
+			localStorage.setItem("selectedSucursal", JSON.stringify(action.payload))
 		},
 		setCategoriasSucursal: (state, action: PayloadAction<ICategoria[] | null>) => {
 			state.categoriasSucursal = action.payload;
