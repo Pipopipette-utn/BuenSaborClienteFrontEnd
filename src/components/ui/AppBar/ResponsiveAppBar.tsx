@@ -11,7 +11,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { useNavigate } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 import PersonIcon from "@mui/icons-material/Person";
@@ -58,7 +57,7 @@ function ResponsiveAppBar() {
   const handleMenuItemClick = (page: string) => {
     switch (page) {
       case "Menú":
-        navigate(`/menu`);
+        navigate("/menu");
         break;
       case "Iniciar Sesion":
         navigate("/login");
@@ -75,11 +74,11 @@ function ResponsiveAppBar() {
   const handleMenuItemSetting = (setting: string) => {
     switch (setting) {
       case "Mi Cuenta":
-        navigate(`/cuenta`);
+        navigate("/cuenta");
         break;
       case "Cerrar Sesión": {
         dispatch(setLogout());
-        navigate(`/login`);
+        navigate("/login");
         break;
       }
       default:
@@ -88,7 +87,7 @@ function ResponsiveAppBar() {
     handleCloseNavMenu();
   };
 
-  const isMenuPage = location.pathname === "/menu";
+  //const isMenuPage = location.pathname === "/menu";
   const isHomePage = location.pathname === "/";
 
   return (
