@@ -12,6 +12,10 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import PersonIcon from "@mui/icons-material/Person";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/HookReducer";
 import { RootState } from "../../../redux/Store";
 import { setLogout } from "../../../redux/slices/Auth";
@@ -33,6 +37,7 @@ function ResponsiveAppBar() {
   );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -83,6 +88,9 @@ function ResponsiveAppBar() {
     handleCloseNavMenu();
   };
 
+  const isMenuPage = location.pathname === "/menu";
+  const isHomePage = location.pathname === "/";
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -108,17 +116,69 @@ function ResponsiveAppBar() {
           >
             El Buen Sabor
           </Typography>
+          {/* VISTA PARA CELULAR */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="menu"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
+            {!isHomePage && (
+              <IconButton
+                size="large"
+                color="inherit"
+                edge="start"
+                sx={{
+                  padding: "6px",
+                  marginRight: "22px",
+                }}
+                onClick={() => navigate("/")}
+              >
+                <HomeIcon />
+              </IconButton>
+            )}
+            {isHomePage && (
+              <IconButton
+                size="large"
+                color="inherit"
+                edge="start"
+                sx={{
+                  padding: "6px",
+                  marginRight: "22px",
+                }}
+                onClick={() => navigate("/menu")}
+              >
+                <RestaurantIcon /* fontSize="medium" */ />
+              </IconButton>
+            )}
+            <Typography
+              variant="h6"
+              fontFamily="Roboto, sans-serif"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                display: { xs: "flex", md: "none" },
+                flexGrow: 1,
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
             >
-              <MenuIcon />
-            </IconButton>
+              El Buen Sabor
+            </Typography>
+            {!userLogeado && (
+              <IconButton
+                size="large"
+                aria-label="menu"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+                sx={{
+                  padding: "6px",
+                  ml: "auto",
+                }} // ml Mueve el icono de menú al extremo derecho
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -160,24 +220,6 @@ function ResponsiveAppBar() {
               </MenuItem>
             </Menu>
           </Box>
-          {/* VISTA PARA CELULAR */}
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            El Buen Sabor
-          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
@@ -218,11 +260,18 @@ function ResponsiveAppBar() {
           ) : (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Usuario loggeado">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
+                <IconButton
+                  color="inherit"
+                  onClick={handleOpenUserMenu}
+                  sx={{
+                    p: 0,
+                  }}
+                >
+                  <PersonIcon fontSize="large" />
+                  {/*        <Avatar
                     alt="Usuario"
                     src="https://pluspng.com/img-png/user-png-icon-download-icons-logos-emojis-users-2240.png"
-                  />
+                  /> */}
                 </IconButton>
               </Tooltip>
               <Menu
