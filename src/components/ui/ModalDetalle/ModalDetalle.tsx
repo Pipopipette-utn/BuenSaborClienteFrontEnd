@@ -80,6 +80,20 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
             {(articulo as IArticuloManufacturado).descripcion}
           </Typography>
         )}
+        {esPromocion(articulo) && (
+          <>
+            <Typography variant="h6" sx={{ mt: 2, paddingLeft: "16px" }}>
+              {(articulo as IPromocion).descripcionDescuento}
+            </Typography>
+            <Typography variant="h6" sx={{ paddingLeft: "16px" }}>
+              {
+                (articulo as IPromocion).promocionDetalles?.articulo
+                  ?.denominacion
+              }{" "}
+              - {(articulo as IPromocion).promocionDetalles?.cantidad}
+            </Typography>
+          </>
+        )}
 
         {/* Muestra el precio dependiendo del tipo de artículo */}
         <Typography
