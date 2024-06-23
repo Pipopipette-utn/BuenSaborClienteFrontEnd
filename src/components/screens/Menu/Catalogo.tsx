@@ -106,7 +106,7 @@ export const Catalogo = () => {
             flexDirection: "column",
             alignItems: "center",
             padding: "16px",
-            backgroundColor: "#f5f5f5",
+            //backgroundColor: "#f5f5f5",
             borderRadius: "8px",
           }}
         >

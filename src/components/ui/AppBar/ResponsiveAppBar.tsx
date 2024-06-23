@@ -300,6 +300,9 @@ function ResponsiveAppBar() {
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
+                <MenuItem>
+                  <ThemeSwitch />
+                </MenuItem>
               </Menu>
             </Box>
           )}

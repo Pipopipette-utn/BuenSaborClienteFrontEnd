@@ -12,7 +12,6 @@ interface BuscadorProps {
 const Search = styled("div")(({ theme }) => ({
   borderRadius: "15px",
   position: "relative",
-  backgroundColor: theme.palette.common.white, // Fondo blanco
   border: `1px solid ${theme.palette.divider}`, // Borde utilizando el color del divisor del theme
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.95), // Ligero cambio al pasar el mouse
