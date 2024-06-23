@@ -6,7 +6,6 @@
   width: 90%;
   min-height: 90%;
   max-height: 95%;
-  background-color: #fff; /* Ajustar para background.paper */
   border: 2px solid #000;
   border-radius: 20px;
   box-shadow: 24px;
@@ -34,7 +33,6 @@
 @media (min-width: 600px) {
   .modalBox {
     width: 80%;
-    height: 50%;
   }
 }
 

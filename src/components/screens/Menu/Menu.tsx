@@ -66,7 +66,7 @@ const PantallaMenu: React.FC = () => {
     };
 
     traerCategoriasYHorario();
-  }, [sucursal?.id, categoriasSucursal, dispatch, selectedCategoria]);
+  }, [sucursal?.id, categoriasSucursal, dispatch]);
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));

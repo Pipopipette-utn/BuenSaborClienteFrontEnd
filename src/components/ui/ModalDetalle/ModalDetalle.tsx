@@ -7,7 +7,7 @@ import {
   IArticuloManufacturado,
 } from "../../../types/empresa";
 import useCloudinary from "../../../hooks/useCloudinary";
-import { Box, CardMedia, IconButton } from "@mui/material";
+import { Box, CardMedia, IconButton, useTheme } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import styles from "./ModalDetalle.module.css";
 import Carousel from "./CarouselModal";
@@ -23,6 +23,7 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
   handleClose,
   articulo,
 }) => {
+  const theme = useTheme(); // Obtiene el tema actual
   const imageUrls = useCloudinary(articulo.imagenes || []);
 
   // Función para verificar si el artículo es una promoción
@@ -40,7 +41,10 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Box className={styles.modalBox}>
+      <Box
+        className={styles.modalBox}
+        sx={{ backgroundColor: theme.palette.background.paper }}
+      >
         <IconButton
           aria-label="close"
           onClick={handleClose}
