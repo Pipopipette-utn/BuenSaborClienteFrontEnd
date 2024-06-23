@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/HookReducer";
 import {
   setCategoriaDefault,
   setCategoriasSucursal,
+  setSelectedCategoria,
 } from "../../../redux/slices/SelectedData";
 import { SucursalService } from "../../../services/SucursalService";
 
@@ -32,7 +33,12 @@ const PantallaMenu: React.FC = () => {
           const categorias = await sucursalService.getCategorias(sucursal.id);
           const filteredCategorias = categorias.filter((c) => c.esParaVender);
           dispatch(setCategoriasSucursal(filteredCategorias));
-          dispatch(setCategoriaDefault(filteredCategorias[0]));
+
+          // Establece una categoría default
+          if (!selectedCategoria) {
+            dispatch(setCategoriaDefault(filteredCategorias[0]));
+            dispatch(setSelectedCategoria(filteredCategorias[0]));
+          }
 
           // Obtiene datos de la sucursal
           const sucursalData = await sucursalService.getById(sucursal.id);
@@ -60,7 +66,7 @@ const PantallaMenu: React.FC = () => {
     };
 
     traerCategoriasYHorario();
-  }, [sucursal?.id, categoriasSucursal, dispatch]);
+  }, [sucursal?.id, categoriasSucursal, dispatch, selectedCategoria]);
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -86,7 +92,10 @@ const PantallaMenu: React.FC = () => {
             >
               <Sidebar />
             </Box>
-            <Box sx={{ flex: 1 }}>{selectedCategoria && <Catalogo />}</Box>
+            <Box sx={{ flex: 1 }}>
+              {selectedCategoria && <Catalogo />}
+              {!selectedCategoria && <LinearProgress />}
+            </Box>
           </>
         ) : (
           <LinearProgress sx={{ width: "100%" }} />
