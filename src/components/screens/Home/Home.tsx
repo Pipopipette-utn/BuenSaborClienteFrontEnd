@@ -3,9 +3,10 @@ import Carrousel from "../../ui/Carrousel/Carrousel";
 import { SliderGenerico } from "../../ui/ItemSlider/ItemSlider";
 import { ISucursal } from "../../../types/empresa";
 import { useFetch } from "../../../hooks/UseFetch";
-import { LinearProgress, Stack } from "@mui/material";
+import { LinearProgress, Stack, Box } from "@mui/material";
 import { useAppDispatch } from "../../../redux/HookReducer";
 import { setSucursal } from "../../../redux/slices/SelectedData";
+import styles from "./Home.module.css";
 
 export const Home: React.FC = () => {
   const {
@@ -27,7 +28,7 @@ export const Home: React.FC = () => {
   }, [sucursales, dispatch]);
 
   return (
-    <>
+    <Box className={styles.homeContainer}>
       <Carrousel />
       <Stack spacing={8} paddingTop={8}>
         {!loadingSucursal && sucursales && sucursales.length > 0 ? (
@@ -36,6 +37,6 @@ export const Home: React.FC = () => {
           <LinearProgress sx={{ width: "100%" }} />
         )}
       </Stack>
-    </>
+    </Box>
   );
 };
