@@ -7,7 +7,8 @@ import {
   IArticuloManufacturado,
 } from "../../../types/empresa";
 import useCloudinary from "../../../hooks/useCloudinary";
-import { Box, CardMedia } from "@mui/material";
+import { Box, CardMedia, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import styles from "./ModalDetalle.module.css";
 import Carousel from "./CarouselModal";
 
@@ -34,6 +35,18 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
   return (
     <Modal open={open} onClose={handleClose}>
       <Box className={styles.modalBox}>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
         <Box>
           {imageUrls.length > 1 ? (
             <Carousel images={imageUrls} />

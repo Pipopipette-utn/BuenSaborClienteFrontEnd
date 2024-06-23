@@ -27,13 +27,13 @@ const Sidebar = () => {
     (state: RootState) => state.selectedData.categoriasSucursal
   );
 
+  const [open, setOpen] = React.useState(false);
+
   const handleCategoriaClick = (categoria: ICategoria | null) => {
     dispatch(setSelectedCategoria(categoria));
     console.log("Hiciste click en : ", categoria);
+    setOpen(false);
   };
-
-  // Estado para controlar la apertura y cierre del sidebar
-  const [open, setOpen] = React.useState(false);
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
