@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { Box, useMediaQuery, useTheme, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/Store";
-import { ISucursal, ICategoria } from "../../../types/empresa";
+import { ISucursal } from "../../../types/empresa";
 import CardSucursal from "./CardSucursal";
 import { useFetch } from "../../../hooks/UseFetch";
 import Sidebar from "../../ui/SideBar/Sidebar";
+import { ISucursalDTO } from "../../../types/dto";
 
 export const SucursalesPorCategoria = () => {
   const { data: sucursales } = useFetch<ISucursal[]>("/sucursales");
@@ -18,10 +19,11 @@ export const SucursalesPorCategoria = () => {
   const [filteredSucursales, setFilteredSucursales] = useState<ISucursal[]>([]);
 
   useEffect(() => {
-    if (selectedCategoria && sucursales) {
+    if (selectedCategoria && selectedCategoria.sucursales && sucursales) {
       const filtered = sucursales.filter((sucursal: ISucursal) =>
-        sucursal.categorias?.some(
-          (categoria) => categoria.id === selectedCategoria.id
+        selectedCategoria.sucursales?.some(
+          (categoriaSucursal: ISucursalDTO) =>
+            categoriaSucursal.id === sucursal.id
         )
       );
       setFilteredSucursales(filtered);

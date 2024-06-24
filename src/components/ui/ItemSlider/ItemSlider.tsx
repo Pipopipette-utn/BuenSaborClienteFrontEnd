@@ -91,9 +91,12 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
 
   const handleMouseUp = (item: SlideItem) => {
     if (!isDragging) {
+      const categoriaSeleccionada = items.find(
+        (i) => i.id === item.id
+      ) as ICategoria;
       if (!item.logo && !item.imagenes) {
         // Es una categoría
-        dispatch(setSelectedCategoria(item as ICategoria));
+        dispatch(setSelectedCategoria(categoriaSeleccionada));
         navigate(`/sucursales`);
       } else if (item.logo !== undefined || item.imagenes !== undefined) {
         // Es una sucursal

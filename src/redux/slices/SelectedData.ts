@@ -53,7 +53,7 @@ const SelectedDataSlice = createSlice({
 		setArticulos: (state, action: PayloadAction<IArticulo[]>) => {
 			state.items = action.payload;
 		},
-		setSelectedCategoria: (state, action: PayloadAction<ICategoria | null>) => {
+		setSelectedCategoria: (state, action: PayloadAction<ICategoria>) => {
 			state.selectedCategoria = action.payload;
 			localStorage.setItem("selectedCategoria", JSON.stringify(action.payload))
 		},
