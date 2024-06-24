@@ -3,8 +3,9 @@ import { IArticulo, ICategoria, IEmpresa, ISucursal } from "../../types/empresa"
 import { IPedidoDTO } from "../../types/dto";
 import { loadState } from "../../utils/localStorage";
 
-// Cargar sucursal seleccionada desde localStorage si existe
+// Carga sucursal y categoria seleccionada desde localStorage si existe
 const savedSelectedSucursal = loadState("selectedSucursal");
+const savedSeledtedCategoria = loadState("selectedCategoria");
 
 interface IInitialState {
 	empresa: IEmpresa | null;
@@ -22,7 +23,7 @@ const initialState: IInitialState = {
 	sucursal: savedSelectedSucursal ? savedSelectedSucursal : null,
 	categoriasSucursal: null,
 	items: [],
-	selectedCategoria: null,
+	selectedCategoria: savedSeledtedCategoria ? savedSeledtedCategoria : null,
 	pedido: null,
 };
 
@@ -54,6 +55,7 @@ const SelectedDataSlice = createSlice({
 		},
 		setSelectedCategoria: (state, action: PayloadAction<ICategoria | null>) => {
 			state.selectedCategoria = action.payload;
+			localStorage.setItem("selectedCategoria", JSON.stringify(action.payload))
 		},
 		setNewPedido: (state, action: PayloadAction<IPedidoDTO | null>) => {
 			state.pedido = action.payload;

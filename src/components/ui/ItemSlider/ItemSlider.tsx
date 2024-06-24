@@ -27,7 +27,7 @@ const transformToSlideItems = (
   return data.map((item) => ({
     id: item.id || 0,
     logo: (item as ISucursal).imagenSucursal?.url || undefined,
-    imagen: (item as IPromocion).imagenes?.[0]?.url || undefined,
+    imagenes: (item as IPromocion).imagenes || undefined,
     nombre:
       (item as ICategoria).denominacion ||
       (item as ISucursal).nombre ||
@@ -88,15 +88,17 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
 
   const handleMouseUp = (item: SlideItem) => {
     if (!isDragging) {
-      // Verificar el tipo de item y realizar la acción correspondiente
-      if ("denominacion" in item) {
-        navigate(`/categorias/${item.id}`);
-      } else if ("nombre" in item) {
+      if (!item.logo && !item.imagenes) {
+        // Es una categoría
+        navigate(`/sucursales`);
+      } else if (item.logo !== undefined || item.imagenes !== undefined) {
+        // Es una sucursal
         dispatch(setSucursal(item as ISucursal));
         navigate(`/menu`);
-        console.log("clickeado en la sucursal: ", item);
+        console.log("Clickeado en la sucursal: ", item);
       } else if ("precioPromocional" in item) {
-        navigate(`/promociones/${item.id}`);
+        // En caso de que sea una promoción (mickey herramienta misteriosa)
+        // navigate(`/promociones/${item.id}`);
       }
     }
   };
@@ -112,7 +114,7 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
           onMouseUp={() => handleMouseUp(item)}
         >
           <Stack
-            className={item.logo || item.imagenes! ? "Stack" : "StackNoImg"}
+            className={item.logo || item.imagenes ? "Stack" : "StackNoImg"}
             spacing={2}
           >
             {(item.imagenes && item.imagenes[0] && item.imagenes[0].url) ||

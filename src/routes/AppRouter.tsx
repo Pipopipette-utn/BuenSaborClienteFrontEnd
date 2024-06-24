@@ -12,6 +12,7 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import CssBaseline from "@mui/material/CssBaseline/CssBaseline";
 import { useAppSelector } from "../redux/HookReducer";
 import { RootState } from "../redux/Store";
+import { SucursalesPorCategoria } from "../components/screens/SucursalesPorCategoria/SucursalesPorCategoria";
 
 export const AppRouter = () => {
   const theme = useAppSelector((state: RootState) => state.theme.currentTheme);
@@ -24,6 +25,7 @@ export const AppRouter = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<PantallaMenu />} />
+          <Route path="/sucursales" element={<SucursalesPorCategoria />} />
           <Route
             path="/cuenta"
             element={
