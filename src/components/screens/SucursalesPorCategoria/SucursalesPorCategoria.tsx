@@ -1,15 +1,24 @@
 import { memo, useEffect, useState } from "react";
-import { Box, useMediaQuery, useTheme, Typography } from "@mui/material";
+import {
+  Box,
+  useMediaQuery,
+  useTheme,
+  Typography,
+  LinearProgress,
+  Stack,
+} from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/Store";
-import { ISucursal } from "../../../types/empresa";
+import { ICategoria, ISucursal } from "../../../types/empresa";
 import CardSucursal from "./CardSucursal";
 import { useFetch } from "../../../hooks/UseFetch";
-import Sidebar from "../../ui/SideBar/Sidebar";
 import { ISucursalDTO } from "../../../types/dto";
+import { SliderGenerico } from "../../ui/ItemSlider/ItemSlider";
 
 export const SucursalesPorCategoria = () => {
   const { data: sucursales } = useFetch<ISucursal[]>("/sucursales");
+  const { data: categorias, loading: loadingCategoria } =
+    useFetch<ICategoria[]>("/categorias");
   const selectedCategoria = useSelector(
     (state: RootState) => state.selectedData.selectedCategoria
   );
@@ -35,37 +44,56 @@ export const SucursalesPorCategoria = () => {
   }
 
   return (
-    <Box
+    <Stack
       sx={{
-        display: "flex",
-        flexDirection: isSmallScreen ? "column" : "row",
         width: "100%",
-        padding: { xs: 2, md: 5 },
-        gap: 4,
+        height: "100%",
+        padding: 2,
+        gap: 2,
+        alignItems: "center",
       }}
     >
       <Box
         sx={{
-          width: isSmallScreen ? "100%" : "25%",
-          minWidth: isSmallScreen ? "100%" : "15%",
+          width: "90%",
+          borderBottom: 2,
+          borderColor: "red",
+          paddingBottom: 4,
+          marginBottom: 2,
+          margin: "0 auto",
         }}
       >
-        <Sidebar />
-      </Box>
-      <Box sx={{ flex: 1 }}>
-        {filteredSucursales.length > 0 ? (
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {filteredSucursales.map((sucursal) => (
-              <CardSucursal key={sucursal.id} sucursal={sucursal} />
-            ))}
-          </Box>
+        <Typography variant="h6">Categorías</Typography>
+        {!loadingCategoria && categorias && categorias.length > 0 ? (
+          <SliderGenerico items={categorias} />
         ) : (
-          <Typography variant="h5">
-            No hay sucursales disponibles para esta categoría.
-          </Typography>
+          <LinearProgress sx={{ width: "100%" }} />
         )}
       </Box>
-    </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: isSmallScreen ? "column" : "row",
+          width: "90%",
+          padding: { xs: 2, md: 5 },
+          gap: 4,
+        }}
+      >
+        <Box sx={{ flex: 1 }}>
+          {filteredSucursales.length > 0 ? (
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              {filteredSucursales.map((sucursal) => (
+                <CardSucursal key={sucursal.id} sucursal={sucursal} />
+              ))}
+            </Box>
+          ) : (
+            <Typography variant="h5">
+              No hay sucursales disponibles para esta categoría.
+            </Typography>
+          )}
+        </Box>
+      </Box>
+    </Stack>
   );
 };
 export default memo(SucursalesPorCategoria);
