@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import { Box, useMediaQuery, useTheme, Typography } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import Sidebar from "../../ui/SideBar/Sidebar";
-import Catalogo from "../Menu/Catalogo";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/Store";
-import { ISucursal } from "../../../types/empresa";
+import { ISucursal, ICategoria } from "../../../types/empresa";
+import CardSucursal from "./CardSucursal";
+import { useFetch } from "../../../hooks/UseFetch";
+import Sidebar from "../../ui/SideBar/Sidebar";
 
 export const SucursalesPorCategoria = () => {
-  const dispatch = useDispatch();
-  const sucursales = useSelector(
-    (state: RootState) => state.selectedData.sucursalesEmpresa
-  );
+  const { data: sucursales } = useFetch<ISucursal[]>("/sucursales");
   const selectedCategoria = useSelector(
     (state: RootState) => state.selectedData.selectedCategoria
   );
@@ -50,12 +48,15 @@ export const SucursalesPorCategoria = () => {
           minWidth: isSmallScreen ? "100%" : "15%",
         }}
       >
-        {/*         <Sidebar />
-         */}{" "}
+        <Sidebar />
       </Box>
       <Box sx={{ flex: 1 }}>
         {filteredSucursales.length > 0 ? (
-          <Catalogo sucursales={filteredSucursales} />
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            {filteredSucursales.map((sucursal) => (
+              <CardSucursal key={sucursal.id} sucursal={sucursal} />
+            ))}
+          </Box>
         ) : (
           <Typography variant="h5">
             No hay sucursales disponibles para esta categoría.

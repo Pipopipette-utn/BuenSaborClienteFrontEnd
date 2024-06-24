@@ -4,7 +4,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ICategoria, IPromocion, ISucursal } from "../../../types/empresa";
 import { useAppDispatch } from "../../../redux/HookReducer";
-import { setSucursal } from "../../../redux/slices/SelectedData";
+import {
+  setSelectedCategoria,
+  setSucursal,
+} from "../../../redux/slices/SelectedData";
 import { useNavigate } from "react-router-dom";
 import { useWindowResize } from "../../../hooks/useWindowRezise";
 import { Stack } from "@mui/material";
@@ -90,6 +93,7 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
     if (!isDragging) {
       if (!item.logo && !item.imagenes) {
         // Es una categoría
+        dispatch(setSelectedCategoria(item as ICategoria));
         navigate(`/sucursales`);
       } else if (item.logo !== undefined || item.imagenes !== undefined) {
         // Es una sucursal
