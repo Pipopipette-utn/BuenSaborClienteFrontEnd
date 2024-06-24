@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Box, useMediaQuery, useTheme, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/Store";
@@ -68,3 +68,4 @@ export const SucursalesPorCategoria = () => {
     </Box>
   );
 };
+export default memo(SucursalesPorCategoria);

@@ -5,10 +5,7 @@ import { ICategoria, ISucursal } from "../../../types/empresa";
 import { useFetch } from "../../../hooks/UseFetch";
 import { LinearProgress, Stack, Box, Typography } from "@mui/material";
 import { useAppDispatch } from "../../../redux/HookReducer";
-import {
-  setSelectedCategoria,
-  setSucursal,
-} from "../../../redux/slices/SelectedData";
+import { setSucursal } from "../../../redux/slices/SelectedData";
 import styles from "./Home.module.css";
 
 export const Home: React.FC = () => {
