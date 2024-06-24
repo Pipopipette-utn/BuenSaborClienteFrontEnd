@@ -120,7 +120,7 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
             {(item.imagenes && item.imagenes[0] && item.imagenes[0].url) ||
               (item.logo && (
                 <img
-                  src={item.logo || item.imagenes![0].url}
+                  src={item.logo || (item.imagenes && item.imagenes[0].url)}
                   alt={item.nombre}
                 />
               )) ||
