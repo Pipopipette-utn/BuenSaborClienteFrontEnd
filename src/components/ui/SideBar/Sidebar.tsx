@@ -30,7 +30,7 @@ const Sidebar = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleCategoriaClick = (categoria: ICategoria | null) => {
-    dispatch(setSelectedCategoria(categoria));
+    dispatch(setSelectedCategoria(categoria!));
     console.log("Hiciste click en : ", categoria);
     setOpen(false);
   };
