@@ -40,4 +40,12 @@
     height: 230px;
     border-radius: 30px;
   }
+
+  .StackNoImg {
+    background-color: #FF6633;
+    width: 100%;
+    height: auto;
+    padding: 20px 10px;
+    border-radius: 30px;
+  }
   

@@ -86,12 +86,18 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
     setIsDragging(true); // Cambiar a arrastrando
   };
 
-  const handleMouseUp = (sucursal: ISucursal) => {
+  const handleMouseUp = (item: SlideItem) => {
     if (!isDragging) {
-      // Si no se está arrastrando, navegar a la sucursal
-      dispatch(setSucursal(sucursal));
-      navigate(`/menu`);
-      console.log("clickeado en la sucursal: ", sucursal);
+      // Verificar el tipo de item y realizar la acción correspondiente
+      if ("denominacion" in item) {
+        navigate(`/categorias/${item.id}`);
+      } else if ("nombre" in item) {
+        dispatch(setSucursal(item as ISucursal));
+        navigate(`/menu`);
+        console.log("clickeado en la sucursal: ", item);
+      } else if ("precioPromocional" in item) {
+        navigate(`/promociones/${item.id}`);
+      }
     }
   };
 
@@ -103,16 +109,20 @@ export const SliderGenerico: React.FC<SliderProps> = ({ items }) => {
           key={item.id}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
-          onMouseUp={() => handleMouseUp(item as ISucursal)}
+          onMouseUp={() => handleMouseUp(item)}
         >
-          <Stack className="Stack" spacing={2}>
+          <Stack
+            className={item.logo || item.imagenes! ? "Stack" : "StackNoImg"}
+            spacing={2}
+          >
             {(item.imagenes && item.imagenes[0] && item.imagenes[0].url) ||
               (item.logo && (
                 <img
                   src={item.logo || item.imagenes![0].url}
                   alt={item.nombre}
                 />
-              ))}
+              )) ||
+              null}
             <h5>{item.nombre}</h5>
           </Stack>
         </div>
