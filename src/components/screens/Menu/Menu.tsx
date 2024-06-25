@@ -38,6 +38,12 @@ const PantallaMenu: React.FC = () => {
           dispatch(setCategoriasSucursal(filteredCategorias));
           dispatch(setCategoriaDefault(filteredCategorias[0]));
 
+          // Establece una categoría default
+          if (!selectedCategoria) {
+            dispatch(setCategoriaDefault(filteredCategorias[0]));
+            dispatch(setSelectedCategoria(filteredCategorias[0]));
+          }
+
           // Obtiene datos de la sucursal
           const sucursalData = await sucursalService.getById(sucursal.id);
           const horarioApertura = sucursalData!.horarioApertura;

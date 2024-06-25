@@ -144,7 +144,7 @@ export const Register = () => {
 
       console.log("Datos a enviar:", userData);
 
-      const response = await fetch("http://localhost:8080/clientes", {
+      const response = await fetch(`${baseUrl}/clientes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -169,7 +169,7 @@ export const Register = () => {
   };
 
   return (
-    <div style={{marginTop: "10%", padding: "5%"}}>
+    <div style={{ marginTop: "10%", padding: "5%" }}>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>

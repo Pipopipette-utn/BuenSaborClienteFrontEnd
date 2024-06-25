@@ -24,7 +24,7 @@ export const HistorialPedidos: React.FC = () => {
 
   useEffect(() => {
     fetchPedidos();
-  }, []);
+  }, [pedidos]);
 
   useEffect(() => {
     filterAndSortPedidos();
