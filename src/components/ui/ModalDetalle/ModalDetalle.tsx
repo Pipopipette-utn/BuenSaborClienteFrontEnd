@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { IArticulo } from "../../../types/empresa";
 import useCloudinary from "../../../hooks/useCloudinary";
-import { Box, CardMedia, IconButton } from "@mui/material";
+import { Box, CardContent, CardMedia, IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
@@ -51,7 +51,7 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Box className={styles.modalBox}>
+      <Box className={styles.modalBox} sx={{ backgroundColor: "white" }}>
         <Box>
           {imageUrls.length > 1 ? (
             <Carousel images={imageUrls} />
@@ -64,43 +64,45 @@ export const ModalDetalle: React.FC<ModalDetalleProps> = ({
             />
           )}
         </Box>
-        <Typography
-          variant="h3"
-          component="h2"
-          sx={{ fontSize: { xs: "2rem" } }}
-        >
-          {articulo.denominacion}
-        </Typography>
-        <Typography variant="h6" sx={{ mt: 2 }}>
-          {articulo.descripcion}
-        </Typography>
-        <Typography variant="h6" sx={{ mt: 2 }}>
-          Precio: ${articulo.precioVenta}
-        </Typography>
-        <Box
-          sx={{
-            mt: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <IconButton
-            disableRipple
-            className={styles.incrementDecrementButton}
-            onClick={handleDecrement}
+        <CardContent className={styles.contentModalBox}>
+          <Typography
+            variant="h3"
+            component="h2"
+            sx={{ fontSize: { xs: "2rem" } }}
           >
-            <RemoveIcon />
-          </IconButton>
-          <Typography variant="body1">{cantidad}</Typography>
-          <IconButton
-            disableRipple
-            className={styles.incrementDecrementButton}
-            onClick={handleIncrement}
+            {articulo.denominacion}
+          </Typography>
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            {articulo.descripcion}
+          </Typography>
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            Precio: ${articulo.precioVenta}
+          </Typography>
+          <Box
+            sx={{
+              mt: 2,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
-            <AddIcon />
-          </IconButton>
-        </Box>
+            <IconButton
+              disableRipple
+              className={styles.incrementDecrementButton}
+              onClick={handleDecrement}
+            >
+              <RemoveIcon />
+            </IconButton>
+            <Typography variant="body1">{cantidad}</Typography>
+            <IconButton
+              disableRipple
+              className={styles.incrementDecrementButton}
+              onClick={handleIncrement}
+            >
+              <AddIcon />
+            </IconButton>
+          </Box>
+        </CardContent>
         <Button
           variant="contained"
           onClick={handleAddToCart}

@@ -6,16 +6,27 @@
   width: 90%;
   min-height: 90%;
   max-height: 95%;
-  background-color: #fff; /* Ajustar para background.paper */
   border: 2px solid #000;
   border-radius: 20px;
   box-shadow: 24px;
-  padding: 16px; /* Ajustar para p: 4 (4 * 4 = 16px) */
+  padding: 0px; 
   display: flex;
   flex-direction: column; /* Asegura que los hijos se alineen verticalmente */
   justify-content: space-between; /* Asegura que haya espacio entre los hijos */
   box-sizing: border-box;
   overflow: hidden; /* Asegura que el contenido no se desborde */
+}
+
+.contentModalBox{
+  padding: 16px;
+}
+
+@media (min-width: 0px) {
+  .modalBox {
+    width: 80%;
+    min-height:70%;
+    max-height: 95%;
+  }
 }
 
 /* Dispositivos pequeños (sm) */
@@ -42,7 +53,7 @@
 .modalBoxMedia {
   height:auto;
   max-height: 50vh; 
-  border-radius: 20px;
+  border-radius: 0px;
   flex-shrink: 0; /* Asegura que la media no se reduzca */
 }
 
