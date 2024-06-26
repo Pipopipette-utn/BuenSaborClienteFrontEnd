@@ -51,6 +51,8 @@ export const SucursalesPorCategoria = () => {
         padding: 2,
         gap: 2,
         alignItems: "center",
+        marginBottom: "20vh",
+        boxSizing: "border-box",
       }}
     >
       <Box

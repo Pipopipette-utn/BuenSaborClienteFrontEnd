@@ -33,13 +33,13 @@ const CardSucursal: React.FC<CardSucursalProps> = ({ sucursal }) => {
   return (
     <Card
       variant="outlined"
-      sx={{ marginBottom: 2, borderRadius: isSm ? 5 : 0 }}
+      sx={{ marginBottom: 2, borderRadius: isSm ? 5 : 2 }}
     >
       <CardActionArea onClick={handleClick}>
         <Grid container>
           {" "}
           {/* Columna de la imagen */}
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={4}>
             {" "}
             {/* En vista de escritorio, ocupa la mitad del ancho */}
             <CardMedia
@@ -56,7 +56,7 @@ const CardSucursal: React.FC<CardSucursalProps> = ({ sucursal }) => {
           <Grid
             item
             xs={12}
-            sm={6}
+            sm={8}
             sx={{
               backgroundColor:
                 theme.palette.mode === "light"
