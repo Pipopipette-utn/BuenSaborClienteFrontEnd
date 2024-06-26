@@ -38,7 +38,6 @@ const CardSucursal: React.FC<CardSucursalProps> = ({ sucursal }) => {
       <CardActionArea onClick={handleClick}>
         <Grid container>
           {" "}
-          {/* Contenedor de cuadrícula */}
           {/* Columna de la imagen */}
           <Grid item xs={12} sm={6}>
             {" "}
@@ -54,17 +53,20 @@ const CardSucursal: React.FC<CardSucursalProps> = ({ sucursal }) => {
             />
           </Grid>
           {/* Columna de los datos */}
-          <Grid item xs={12} sm={6}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            sx={{
+              backgroundColor:
+                theme.palette.mode === "light"
+                  ? theme.palette.primary.dark
+                  : undefined,
+            }}
+          >
             {" "}
             {/* En vista de escritorio, ocupa la mitad del ancho */}
-            <CardContent
-              sx={{
-                backgroundColor:
-                  theme.palette.mode === "light"
-                    ? theme.palette.primary.dark
-                    : undefined,
-              }}
-            >
+            <CardContent>
               <Typography variant="h6" gutterBottom>
                 {sucursal.nombre}
               </Typography>
