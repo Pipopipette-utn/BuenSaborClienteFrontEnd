@@ -5,7 +5,7 @@ import {
   CardContent,
   CardMedia,
   Typography,
-  Grid, // Importa Grid
+  Grid,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
